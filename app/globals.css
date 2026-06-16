@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-paper text-ink font-sans;
+    font-feature-settings: 'ss01', 'cv11';
+  }
+
+  ::selection {
+    @apply bg-vermilion text-paper;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-ink/20 rounded-full;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+    letter-spacing: -0.02em;
+  }
+
+  .eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .display-xl {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    font-size: clamp(3rem, 9vw, 7.5rem);
+  }
+
+  .display-lg {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .display-md {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    font-size: clamp(1.75rem, 4vw, 3rem);
+  }
+
+  .hairline {
+    height: 1px;
+    @apply bg-ink/15;
+  }
+
+  .hairline-inverse {
+    height: 1px;
+    @apply bg-paper/20;
+  }
+
+  .seal {
+    font-family: 'Noto Serif SC', serif;
+  }
+
+  .container-prose {
+    @apply max-w-3xl mx-auto;
+  }
+
+  .section-pad {
+    @apply py-24 md:py-32;
+  }
+
+  .fade-in {
+    animation: fadeIn 0.8s ease-out both;
+  }
+
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(16px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .step-line {
+    stroke-dasharray: 300;
+    animation: draw 1.4s ease-out forwards;
+  }
+
+  @keyframes draw {
+    to { stroke-dashoffset: 0; }
+  }
+}
