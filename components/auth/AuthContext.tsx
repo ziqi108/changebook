@@ -44,25 +44,7 @@ function saveUsers(users: StoredUser[]) {
 function seedDefaultUsers() {
   const users = getStoredUsers();
   if (users.length > 0) return;
-  const defaults: StoredUser[] = [
-    {
-      id: 'u1',
-      name: 'Demo Student',
-      email: 'demo@changebook.com',
-      password: 'demo1234',
-      role: 'student',
-      enrolledCourses: ['beginner-course'],
-    },
-    {
-      id: 'u2',
-      name: 'Master Lian Chen',
-      email: 'master@changebook.com',
-      password: 'master1234',
-      role: 'master',
-      enrolledCourses: ['beginner-course', 'intermediate-course', 'advanced-course'],
-    },
-  ];
-  saveUsers(defaults);
+  saveUsers([]);
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {

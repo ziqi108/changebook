@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   html {
@@ -21,10 +21,16 @@
   }
 
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-paper;
   }
   ::-webkit-scrollbar-thumb {
     @apply bg-ink/20 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-ink/40;
   }
 }
 
@@ -35,8 +41,8 @@
   }
 
   .eyebrow {
-    font-size: 0.7rem;
-    letter-spacing: 0.35em;
+    font-size: 0.68rem;
+    letter-spacing: 0.38em;
     text-transform: uppercase;
     font-weight: 500;
   }
@@ -44,17 +50,17 @@
   .display-xl {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 300;
-    line-height: 0.95;
-    letter-spacing: -0.035em;
-    font-size: clamp(3rem, 9vw, 7.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    font-size: clamp(3.5rem, 10vw, 8.5rem);
   }
 
   .display-lg {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 300;
-    line-height: 1;
+    line-height: 0.97;
     letter-spacing: -0.03em;
-    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-size: clamp(2.75rem, 6.5vw, 5.5rem);
   }
 
   .display-md {
@@ -62,7 +68,7 @@
     font-weight: 400;
     line-height: 1.05;
     letter-spacing: -0.025em;
-    font-size: clamp(1.75rem, 4vw, 3rem);
+    font-size: clamp(1.875rem, 4vw, 3.25rem);
   }
 
   .hairline {
@@ -84,18 +90,59 @@
   }
 
   .section-pad {
-    @apply py-24 md:py-32;
+    @apply py-28 md:py-36;
   }
 
+  /* Fade-in with upward motion */
   .fade-in {
-    animation: fadeIn 0.8s ease-out both;
+    animation: fadeInUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
-  @keyframes fadeIn {
-    0% { opacity: 0; transform: translateY(16px); }
-    100% { opacity: 1; transform: translateY(0); }
+  .fade-in-delay-1 { animation: fadeInUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both; }
+  .fade-in-delay-2 { animation: fadeInUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both; }
+  .fade-in-delay-3 { animation: fadeInUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both; }
+  .fade-in-delay-4 { animation: fadeInUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both; }
+  .fade-in-delay-5 { animation: fadeInUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.7s both; }
+
+  @keyframes fadeInUp {
+    0%  { opacity: 0; transform: translateY(22px); }
+    100%{ opacity: 1; transform: translateY(0); }
   }
 
+  /* Grain texture overlay */
+  .grain-overlay::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.022;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 180px 180px;
+  }
+
+  /* Radial spotlight glow */
+  .glow-ink {
+    box-shadow: 0 0 80px 0 rgba(14, 20, 25, 0.06), 0 0 160px 0 rgba(14, 20, 25, 0.03);
+  }
+
+  .glow-vermilion {
+    box-shadow: 0 0 60px 0 rgba(192, 57, 43, 0.12);
+  }
+
+  /* Premium card surface */
+  .card-surface {
+    @apply bg-paper border border-ink/8 transition-all duration-500;
+    box-shadow: 0 1px 3px rgba(14,20,25,0.04), 0 4px 24px rgba(14,20,25,0.04);
+  }
+
+  .card-surface:hover {
+    box-shadow: 0 4px 32px rgba(14,20,25,0.09), 0 1px 4px rgba(14,20,25,0.06);
+    transform: translateY(-2px);
+  }
+
+  /* Step line draw animation */
   .step-line {
     stroke-dasharray: 300;
     animation: draw 1.4s ease-out forwards;
@@ -103,5 +150,59 @@
 
   @keyframes draw {
     to { stroke-dashoffset: 0; }
+  }
+
+  /* Shimmer for loading states */
+  @keyframes shimmer {
+    0%   { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+  }
+
+  .shimmer {
+    background: linear-gradient(90deg, transparent 0%, rgba(14,20,25,0.04) 50%, transparent 100%);
+    background-size: 400px 100%;
+    animation: shimmer 1.8s infinite;
+  }
+
+  /* Hexagram line animation */
+  @keyframes drawLine {
+    from { clip-path: inset(0 100% 0 0); }
+    to   { clip-path: inset(0 0% 0 0); }
+  }
+
+  .animate-draw-line {
+    animation: drawLine 0.5s ease-out forwards;
+  }
+
+  /* Subtle float */
+  @keyframes floatSlow {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    33%       { transform: translateY(-12px) rotate(1.5deg); }
+    66%       { transform: translateY(-6px) rotate(-1deg); }
+  }
+
+  .animate-float {
+    animation: floatSlow 9s ease-in-out infinite;
+  }
+
+  /* Pulse ring */
+  @keyframes pulseRing {
+    0%   { transform: scale(0.9); opacity: 0.7; }
+    70%  { transform: scale(1.5); opacity: 0; }
+    100% { transform: scale(1.5); opacity: 0; }
+  }
+
+  .animate-pulse-ring {
+    animation: pulseRing 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  }
+
+  /* Rotate slow */
+  @keyframes rotateSlow {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  .animate-rotate-slow {
+    animation: rotateSlow 60s linear infinite;
   }
 }

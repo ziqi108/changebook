@@ -12,68 +12,115 @@ export function DailyHexagram() {
   const prev = () => setIndex((i) => (i - 1 + DAILY_HEXAGRAM_IDS.length) % DAILY_HEXAGRAM_IDS.length);
 
   return (
-    <section className="py-32 md:py-40 bg-paper text-ink border-y border-ink/10">
-      <div className="max-w-[960px] mx-auto px-6 md:px-10 text-center">
-        <div className="flex items-center justify-center gap-3 mb-8">
-          <span className="h-px w-10 bg-ink/40" />
-          <span className="eyebrow text-ink/50 tracking-[0.35em]">Chapter · 02</span>
-          <span className="h-px w-10 bg-ink/40" />
+    <section className="relative py-36 md:py-48 bg-ink text-paper overflow-hidden">
+      {/* Background decoration */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 55% 70% at 15% 50%, rgba(192,57,43,0.06) 0%, transparent 70%), radial-gradient(ellipse 50% 60% at 85% 50%, rgba(45,106,79,0.05) 0%, transparent 70%)',
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Large background glyph */}
+      <div
+        className="absolute right-8 md:right-16 top-1/2 -translate-y-1/2 opacity-[0.025] pointer-events-none select-none"
+        aria-hidden="true"
+      >
+        <span className="font-display text-[20rem] leading-none seal">{hex.nameZh}</span>
+      </div>
+
+      <div className="relative max-w-[960px] mx-auto px-6 md:px-10 text-center">
+        {/* Header */}
+        <div className="flex items-center justify-center gap-4 mb-8">
+          <span className="h-px w-10 bg-paper/20" />
+          <span className="eyebrow text-paper/40 tracking-[0.38em]">Chapter · 02</span>
+          <span className="h-px w-10 bg-paper/20" />
         </div>
 
-        <h2 className="font-display text-4xl md:text-5xl leading-tight mb-20">
-          Let the hexagram <span className="italic text-vermilion">speak to you.</span>
+        <h2 className="font-display text-4xl md:text-5xl leading-tight mb-20 text-paper">
+          Let the hexagram{' '}
+          <span className="italic text-vermilion">speak to you.</span>
         </h2>
 
+        {/* Oracle panel */}
         <div key={hex.id} className="fade-in">
+          {/* Hexagram symbol */}
           <div className="flex justify-center mb-10">
-            <HexagramSvg lines={hex.lines} size={140} color="#0E1419" />
-          </div>
-
-          <div className="mb-8">
-            <div className="font-display text-3xl">{hex.nameZh}</div>
-            <div className="text-[10px] tracking-[0.35em] uppercase text-ink/40 mt-2">
-              {hex.namePinyin} · #{String(hex.id).padStart(2, '0')} · {hex.element}
+            <div className="relative">
+              {/* Glow ring */}
+              <div
+                className="absolute inset-[-28px] rounded-full border border-vermilion/10"
+                style={{ animation: 'pulseRing 3.5s ease-in-out infinite' }}
+              />
+              <div className="absolute inset-[-14px] rounded-full border border-paper/5" />
+              <HexagramSvg lines={hex.lines} size={120} color="#F5F1E8" />
             </div>
           </div>
 
-          <div className="mx-auto h-px w-16 bg-ink/15 mb-8" />
+          {/* Name row */}
+          <div className="mb-8">
+            <div className="font-display text-4xl md:text-5xl text-paper mb-2">
+              {hex.nameZh}
+            </div>
+            <div className="text-[10px] tracking-[0.45em] uppercase text-paper/35 mt-3">
+              {hex.namePinyin} &nbsp;·&nbsp; #{String(hex.id).padStart(2, '0')} &nbsp;·&nbsp; {hex.element}
+            </div>
+          </div>
 
-          <blockquote className="font-display text-xl md:text-2xl italic text-ink/80 leading-relaxed max-w-2xl mx-auto">
-            "{hex.description}"
+          <div className="mx-auto h-px w-16 bg-paper/15 mb-10" />
+
+          {/* Quote */}
+          <blockquote className="font-display text-xl md:text-2xl lg:text-3xl italic text-paper/75 leading-relaxed max-w-2xl mx-auto">
+            &ldquo;{hex.description}&rdquo;
           </blockquote>
 
-          <p className="mt-10 text-sm text-ink/60 leading-relaxed max-w-2xl mx-auto">
+          {/* Reflection question */}
+          <p className="mt-10 text-sm text-paper/50 leading-relaxed max-w-xl mx-auto">
             {hex.question}
           </p>
         </div>
 
-        <div className="mt-16 flex items-center justify-center gap-6">
+        {/* Navigation controls */}
+        <div className="mt-16 flex items-center justify-center gap-8">
           <button
             onClick={prev}
-            className="text-ink/50 hover:text-ink transition-colors text-sm tracking-widest"
+            aria-label="Previous hexagram"
+            className="flex items-center gap-2 text-paper/40 hover:text-paper transition-colors text-sm tracking-[0.3em] uppercase group"
           >
-            ← PREV
+            <span className="transition-transform duration-300 group-hover:-translate-x-1">←</span>
+            <span>Prev</span>
           </button>
-          <span className="text-ink/20">·</span>
+
+          <div className="flex items-center gap-1.5">
+            {DAILY_HEXAGRAM_IDS.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setIndex(i)}
+                aria-label={`Hexagram ${i + 1}`}
+                className={`rounded-full transition-all duration-300 ${
+                  i === index
+                    ? 'w-8 h-1 bg-vermilion'
+                    : 'w-2 h-1 bg-paper/15 hover:bg-paper/30'
+                }`}
+              />
+            ))}
+          </div>
+
           <button
             onClick={next}
-            className="text-ink/50 hover:text-ink transition-colors text-sm tracking-widest"
+            aria-label="Next hexagram"
+            className="flex items-center gap-2 text-paper/40 hover:text-paper transition-colors text-sm tracking-[0.3em] uppercase group"
           >
-            NEXT →
+            <span>Next</span>
+            <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
           </button>
         </div>
 
-        <div className="mt-6 flex items-center justify-center gap-2">
-          {DAILY_HEXAGRAM_IDS.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setIndex(i)}
-              className={`h-1 rounded-full transition-all ${
-                i === index ? 'w-8 bg-ink' : 'w-3 bg-ink/15 hover:bg-ink/30'
-              }`}
-              aria-label={`Hexagram ${i + 1}`}
-            />
-          ))}
+        {/* Counter */}
+        <div className="mt-6 text-[10px] tracking-[0.3em] uppercase text-paper/25">
+          {String(index + 1).padStart(2, '0')} / {String(DAILY_HEXAGRAM_IDS.length).padStart(2, '0')}
         </div>
       </div>
     </section>
