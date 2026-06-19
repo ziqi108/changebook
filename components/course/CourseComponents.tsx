@@ -1,11 +1,96 @@
 'use client';
 
 import Link from 'next/link';
-import type { CourseDetail } from '@/lib/course-details';
+import { useState } from 'react';
+import type { CourseDetail, Lesson } from '@/lib/course-details';
 import type { User as AuthUser } from '@/components/auth/AuthContext';
 import type { Instructor } from '@/lib/instructors';
 import { BackToHome } from '@/components/ui/BackToHome';
-import { LogOut, Video, FileText, Users, CheckCircle2, Star, Calendar } from 'lucide-react';
+import { LogOut, Video, FileText, Users, CheckCircle2, Star, Calendar, ChevronDown, ChevronUp } from 'lucide-react';
+
+function LessonContent({ lesson }: { lesson: Lesson }) {
+  const [open, setOpen] = useState(false);
+
+  const renderInline = (text: string) => {
+    const parts: React.ReactNode[] = [];
+    let remaining = text;
+    const regex = /\*\*([^*]+)\*\*|\*([^*]+)\*|`([^`]+)`/g;
+    let lastIdx = 0;
+    let match: RegExpExecArray | null;
+    let key = 0;
+    while ((match = regex.exec(text)) !== null) {
+      if (match.index > lastIdx) parts.push(text.slice(lastIdx, match.index));
+      if (match[1]) parts.push(<strong key={`b-${key++}`}>{match[1]}</strong>);
+      else if (match[2]) parts.push(<em key={`i-${key++}`}>{match[2]}</em>);
+      else if (match[3]) parts.push(<code key={`c-${key++}`} className="font-mono text-xs bg-black/5 px-1 py-0.5 rounded">{match[3]}</code>);
+      lastIdx = regex.lastIndex;
+    }
+    if (lastIdx < text.length) parts.push(text.slice(lastIdx));
+    return parts;
+  };
+
+  const renderContent = (desc: string) => {
+    const blocks = desc.split(/\n\n+/);
+    return blocks.map((block, idx) => {
+      const trimmed = block.trim();
+      if (!trimmed) return null;
+      if (/^> /.test(trimmed)) {
+        const lines = trimmed.split('\n').filter(l => l.startsWith('> ')).map(l => l.replace(/^> /, ''));
+        return (
+          <blockquote key={idx} className="my-3 pl-4 py-2 border-l-2 text-sm italic" style={{ borderColor: 'rgba(192,57,43,0.35)', color: 'rgba(14,20,25,0.65)', backgroundColor: 'rgba(192,57,43,0.04)' }}>
+            {lines.map((line, i) => (
+              <p key={i} className="leading-relaxed">{renderInline(line)}</p>
+            ))}
+          </blockquote>
+        );
+      }
+      if (/^[-*] /.test(trimmed)) {
+        const items = trimmed.split('\n').filter(l => /^[-*] /.test(l)).map(l => l.replace(/^[-*] /, ''));
+        return (
+          <ul key={idx} className="my-3 space-y-1.5">
+            {items.map((item, i) => (
+              <li key={i} className="flex items-start gap-2 text-sm leading-relaxed" style={{ color: 'rgba(14,20,25,0.70)' }}>
+                <span className="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style={{ backgroundColor: 'rgba(192,57,43,0.60)' }} />
+                <span>{renderInline(item)}</span>
+              </li>
+            ))}
+          </ul>
+        );
+      }
+      return (
+        <p key={idx} className="my-3 text-sm leading-relaxed" style={{ color: 'rgba(14,20,25,0.70)' }}>
+          {renderInline(trimmed)}
+        </p>
+      );
+    });
+  };
+
+  return (
+    <li className="rounded-lg transition-colors" style={{ borderBottom: '1px solid rgba(14,20,25,0.07)' }}>
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-baseline gap-4 py-3.5 px-2 -mx-2 text-left rounded-lg hover:bg-black/[0.015] transition-colors"
+        aria-expanded={open}
+      >
+        <span className="font-display text-sm w-8 flex-shrink-0" style={{ color: 'rgba(14,20,25,0.30)' }}>
+          &nbsp;
+        </span>
+        <span className="flex-1 text-sm" style={{ color: 'rgba(14,20,25,0.80)' }}>{lesson.title}</span>
+        <span className="text-[10px] tracking-[0.25em] uppercase flex items-center gap-1" style={{ color: 'rgba(14,20,25,0.35)' }}>
+          {lesson.duration}
+          {open ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+        </span>
+      </button>
+      {open && (
+        <div className="px-2 pb-5 pt-1 -mx-2" style={{ backgroundColor: 'rgba(14,20,25,0.015)' }}>
+          <div className="px-5 py-4 rounded-lg" style={{ border: '1px solid rgba(14,20,25,0.06)', backgroundColor: 'rgba(255,255,255,0.7)' }}>
+            {renderContent(lesson.description)}
+          </div>
+        </div>
+      )}
+    </li>
+  );
+}
 
 export function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -118,16 +203,9 @@ export function CourseBody({ course, instructor, hasContent, hasIncludes }: {
             {course.chapters.map((ch, ci) => (
               <div key={ch.id}>
                 <h3 className="font-display text-2xl mb-5">{String(ci + 1).padStart(2, '0')} · {ch.title}</h3>
-                <ul>
-                  {ch.lessons.map((lesson, li) => (
-                    <li key={lesson.id} className="flex items-baseline gap-4 py-3.5 px-2 -mx-2 rounded-lg transition-colors hover:bg-black/[0.015]"
-                      style={{ borderBottom: '1px solid rgba(14,20,25,0.07)' }}>
-                      <span className="font-display text-sm w-8 flex-shrink-0" style={{ color: 'rgba(14,20,25,0.30)' }}>
-                        {String(li + 1).padStart(2, '0')}
-                      </span>
-                      <span className="flex-1 text-sm" style={{ color: 'rgba(14,20,25,0.80)' }}>{lesson.title}</span>
-                      <span className="text-[10px] tracking-[0.25em] uppercase" style={{ color: 'rgba(14,20,25,0.35)' }}>{lesson.duration}</span>
-                    </li>
+                <ul className="divide-y divide-black/[0.05]">
+                  {ch.lessons.map((lesson) => (
+                    <LessonContent key={lesson.id} lesson={lesson} />
                   ))}
                 </ul>
               </div>
