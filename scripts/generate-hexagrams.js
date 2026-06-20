@@ -4,11 +4,12 @@
 const fs = require('fs');
 const path = require('path');
 const { validators } = require('./content-validator.cjs');
+const { getLines, getUse } = require('./hexagram-lines.js');
 
 // Standard I Ching 64 hexagrams: name, pinyin, English, judgment, symbol, elements
 const HEXAGRAMS = [
   { num: 1,  cn: '乾', py: 'Qián',   en: 'The Creative',    judgment: '元，亨，利，贞。',                                               en_j: 'Qian: Origination, Penetration, Advantage, Uprightness.',                                              symbol: '乾为天', inner: 'heaven over heaven' },
-  { num: 2,  cn: '坤', py: 'Kūn',    en: 'The Earth',       judgment: '元，亨，利牝马之贞。君子有攸往，先迷后得主，利西南得朋，东北丧朋。安贞，吉。', en_j: 'Kun: Origination, Penetration, and the Advantage of a mare\'s Uprightness. Peaceful Uprightness brings fortune.', symbol: '坤为地', inner: 'earth over earth' },
+  { num: 2,  cn: '坤', py: 'Kūn',    en: 'The Earth',       judgment: '元，亨，利牝马之贞。君子有攸往，先迷后得主，利西南得朋，东北丧朋。安贞，吉。', en_j: 'Kun: Origination, Penetration, and the Advantage of a mare\'s Uprightness. The superior man has somewhere to go: first he loses his way, then he finds his master. Advantage in the southwest to gain companions, in the northeast to lose them. Peaceful Uprightness brings fortune.', symbol: '坤为地', inner: 'earth over earth' },
   { num: 3,  cn: '屯', py: 'Zhūn',   en: 'Initial Difficulty', judgment: '元亨利贞，勿用有攸往，利建侯。',                                       en_j: 'Zhun: Origination, Penetration, Advantage, Uprightness. Do not act; it is advantageous to establish helpers.', symbol: '水雷屯', inner: 'water over thunder' },
   { num: 4,  cn: '蒙', py: 'Méng',   en: 'Youthful Folly',  judgment: '亨。匪我求童蒙，童蒙求我。初筮告，再三渎，渎则不告。利贞。',                 en_j: 'Meng: Penetration. Not I seek the youthful, the youthful seeks me. The first oracle instructs; repeated questioning profanes.', symbol: '山水蒙', inner: 'spring below mountain' },
   { num: 5,  cn: '需', py: 'Xū',     en: 'Waiting',         judgment: '有孚，光亨，贞吉。',                                               en_j: 'Xu: With sincerity, radiant penetration; uprightness is auspicious.',                                    symbol: '水天需', inner: 'water over heaven' },
@@ -73,8 +74,272 @@ const HEXAGRAMS = [
   { num: 64, cn: '未济', py: 'Wèi Jì', en: 'Not Yet Finished', judgment: '亨。小狐汔济，濡其尾，无攸利。',                                     en_j: 'Wei Ji: Penetration. The small fox nearly crosses, wets its tail — nothing advantageous.',                   symbol: '火水未济', inner: 'fire over water' },
 ];
 
-// Tuan & Xiang commentary templates (classical formulation)
+// Tuan commentary (彖传) — classical Chinese text with English translation for all 64 hexagrams
+const tuanMap = {
+  "1": {
+    "zh": "大哉乾元，万物资始，乃统天。云行雨施，品物流形。大明终始，六位时成。时乘六龙以御天。乾道变化，各正性命。保合太和，乃利贞。首出庶物，万国咸宁。",
+    "en": "Great is the Qian yuan, the source of all things, governing heaven itself. Clouds move and rain descends, giving form to every being. The great light illuminates beginning and end; the six positions take shape in time. Riding the six dragons at the right moment, one guides heaven. The way of Qian transforms and evolves, each thing attaining its proper nature and destiny. Preserving the great harmony, one finds advantage and uprightness. It brings forth all things and the whole world finds peace."
+  },
+  "2": {
+    "zh": "至哉坤元，万物资生，乃顺承天。坤厚载物，德合无疆。含弘光大，品物咸亨。牝马地类，行地无疆。柔顺利贞，君子攸行。先迷失道，后顺得常。西南得朋，乃与类行。东北丧朋，乃终有庆。安贞之吉，应地无疆。",
+    "en": "Ultimate is the Kun yuan, the source of all beings born, receiving heaven in obedience. Kun is vast and carries all things, its virtue boundless as the earth. It embraces, expands, shines and illumines; all beings find penetration. The mare belongs to the nature of earth, journeying without bound across the land. Soft, yielding and upright — this is the exemplary person's way. First one loses the path, then follows and finds constancy. Gaining companions in the southwest, one walks with one's kind; losing them in the northeast, one finds joy in the end. The fortune of peaceful uprightness responds to the boundless earth."
+  },
+  "3": {
+    "zh": "云雷，屯；君子以经纶。",
+    "en": "Cloud and thunder form Tun; the exemplary person weaves the pattern of governance."
+  },
+  "4": {
+    "zh": "山下出泉，蒙；君子以果行育德。",
+    "en": "A spring emerges beneath the mountain — Meng; the exemplary person acts resolutely and cultivates virtue."
+  },
+  "5": {
+    "zh": "云上于天，需；君子以饮食宴乐。",
+    "en": "Clouds above heaven — Xu; the exemplary person feasts, drinks and enjoys leisure while waiting."
+  },
+  "6": {
+    "zh": "天与水违行，讼；君子以作事谋始。",
+    "en": "Heaven and water move in contrary directions — Song; the exemplary person plans carefully from the outset."
+  },
+  "7": {
+    "zh": "地中有水，师；君子以容民畜众。",
+    "en": "Water within the earth — Shi; the exemplary person contains the people and nourishes the multitude."
+  },
+  "8": {
+    "zh": "地上有水，比；先王以建万国，亲诸侯。",
+    "en": "Water upon the earth — Bi; the former kings established the myriad states and drew the feudal lords into closeness."
+  },
+  "9": {
+    "zh": "风行天上，小畜；君子以懿文德。",
+    "en": "Wind moves across heaven — Xiao Chu; the exemplary person refines and beautifies virtue."
+  },
+  "10": {
+    "zh": "上天下泽，履；君子以辩上下，定民志。",
+    "en": "Above is heaven, below is the lake — Lü; the exemplary person distinguishes high and low, and settles the will of the people."
+  },
+  "11": {
+    "zh": "天地交，泰。后以财成天地之道，辅相天地之宜，以左右民。",
+    "en": "Heaven and earth commune — Tai. The sovereign regulates the way of heaven and earth, assists what is appropriate, and aids the people."
+  },
+  "12": {
+    "zh": "天地不交，否。君子以俭德辟难，不可荣以禄。",
+    "en": "Heaven and earth do not commune — Pi. The exemplary person conceals virtue and avoids difficulty; one cannot be honored with rank and salary."
+  },
+  "13": {
+    "zh": "天与火，同人。君子以类族辨物。",
+    "en": "Heaven and fire — Tong Ren. The exemplary person groups clans and distinguishes things."
+  },
+  "14": {
+    "zh": "火在天上，大有。君子以遏恶扬善，顺天休命。",
+    "en": "Fire above heaven — Da You. The exemplary person restrains evil and promotes good, following heaven's benevolent mandate."
+  },
+  "15": {
+    "zh": "地中有山，谦。君子以裒多益寡，称物平施。",
+    "en": "A mountain within the earth — Qian. The exemplary person takes from surplus and adds to scarcity, weighing things and distributing fairly."
+  },
+  "16": {
+    "zh": "雷出地奋，豫。先王以作乐崇德，殷荐之上帝，以配祖考。",
+    "en": "Thunder bursts forth from the earth — Yu. The former kings created music to exalt virtue, making a grand offering to the Supreme Lord, in concert with ancestors."
+  },
+  "17": {
+    "zh": "泽中有雷，随。君子以向晦入宴息。",
+    "en": "Thunder within the lake — Sui. The exemplary person turns to evening and enters to rest."
+  },
+  "18": {
+    "zh": "山下有风，蛊。君子以振民育德。",
+    "en": "Wind beneath the mountain — Gu. The exemplary person rouses the people and cultivates virtue."
+  },
+  "19": {
+    "zh": "泽上有地，临。君子以教思无穷，容保民无疆。",
+    "en": "Earth above the lake — Lin. The exemplary person teaches with endless thought, containing and protecting the people without bound."
+  },
+  "20": {
+    "zh": "风行地上，观。先王以省方观民设教。",
+    "en": "Wind moves over the earth — Guan. The former kings inspected the regions, observed the people, and established teachings."
+  },
+  "21": {
+    "zh": "雷电噬嗑。先王以明罚敕法。",
+    "en": "Thunder and lightning — Shi He. The former kings made penalties clear and rectified the laws."
+  },
+  "22": {
+    "zh": "山下有火，贲。君子以明庶政，无敢折狱。",
+    "en": "Fire beneath the mountain — Bi. The exemplary person illumines the manifold affairs of government, but dares not decide lawsuits."
+  },
+  "23": {
+    "zh": "山地剥。上以厚下安宅。",
+    "en": "Mountain over earth — Bo. Those above enrich those below and dwell securely."
+  },
+  "24": {
+    "zh": "地雷复。先王以至日闭关，商旅不行，后不省方。",
+    "en": "Earth over thunder — Fu. The former kings closed the frontier on the shortest day; merchants and travelers did not go forth, and the sovereign did not inspect the regions."
+  },
+  "25": {
+    "zh": "天下雷行，物与无妄。先王以茂对时育万物。",
+    "en": "Thunder moves beneath heaven — Wu Wang. The former kings vigorously responded to the time and nourished the myriad beings."
+  },
+  "26": {
+    "zh": "天在山中，大畜。君子以多识前言往行，以畜其德。",
+    "en": "Heaven within the mountain — Da Chu. The exemplary person learns much from the words and deeds of the ancients to accumulate virtue."
+  },
+  "27": {
+    "zh": "山下有雷，颐。君子以慎言语，节饮食。",
+    "en": "Thunder beneath the mountain — Yi. The exemplary person is careful in speech and moderate in eating and drinking."
+  },
+  "28": {
+    "zh": "泽无风，大过。君子以独立不惧，遁世无闷。",
+    "en": "Lake without wind — Da Guo. The exemplary person stands alone without fear, withdraws from the world without resentment."
+  },
+  "29": {
+    "zh": "水洊至，习坎。君子以常德行，习教事。",
+    "en": "Water comes again and again — Xi Kan. The exemplary person preserves constant virtue and practices teaching."
+  },
+  "30": {
+    "zh": "明两作，离。大人以继明照于四方。",
+    "en": "Two lights arise — Li. The great person continues the light and illumines the four quarters."
+  },
+  "31": {
+    "zh": "山上有泽，咸。君子以虚受人。",
+    "en": "A lake upon the mountain — Xian. The exemplary person empties oneself and receives others."
+  },
+  "32": {
+    "zh": "雷风恒。君子以立不易方。",
+    "en": "Thunder and wind — Heng. The exemplary person stands firm and does not change one's direction."
+  },
+  "33": {
+    "zh": "天下有山，遁。君子以远小人，不恶而严。",
+    "en": "A mountain beneath heaven — Dun. The exemplary person keeps distant from the petty person, without hatred yet with severity."
+  },
+  "34": {
+    "zh": "雷在天上，大壮。君子以非礼弗履。",
+    "en": "Thunder upon heaven — Da Zhuang. The exemplary person does not tread where propriety does not permit."
+  },
+  "35": {
+    "zh": "明出地上，晋。君子以自昭明德。",
+    "en": "Light emerges above the earth — Jin. The exemplary person manifests one's own clear virtue."
+  },
+  "36": {
+    "zh": "明入地中，明夷。君子以莅众，用晦而明。",
+    "en": "Light enters into the earth — Ming Yi. The exemplary person approaches the multitude, using darkness yet preserving clarity."
+  },
+  "37": {
+    "zh": "风自火出，家人。君子以言有物而行有恒。",
+    "en": "Wind comes forth from fire — Jia Ren. The exemplary person speaks with substance and acts with constancy."
+  },
+  "38": {
+    "zh": "上火下泽，睽。君子以同而异。",
+    "en": "Fire above, lake below — Kui. The exemplary person unites yet preserves differences."
+  },
+  "39": {
+    "zh": "山上有水，蹇。君子以反身修德。",
+    "en": "Water upon the mountain — Jian. The exemplary person turns inward to cultivate virtue."
+  },
+  "40": {
+    "zh": "雷雨作，解。君子以赦过宥罪。",
+    "en": "Thunder and rain arise — Jie. The exemplary person pardons faults and forgives crimes."
+  },
+  "41": {
+    "zh": "山下有泽，损。君子以惩忿窒欲。",
+    "en": "A lake beneath the mountain — Sun. The exemplary person curbs anger and checks desire."
+  },
+  "42": {
+    "zh": "风雷益。君子以见善则迁，有过则改。",
+    "en": "Wind and thunder — Yi. The exemplary person moves toward what is good and corrects one's faults."
+  },
+  "43": {
+    "zh": "泽上于天，夬。君子以施禄及下，居德则忌。",
+    "en": "Lake above heaven — Guai. The exemplary person bestows benefits on those below; dwelling in virtue alone is despised."
+  },
+  "44": {
+    "zh": "天下有风，姤。后以施命诰四方。",
+    "en": "Wind beneath heaven — Gou. The sovereign issues commands to the four quarters."
+  },
+  "45": {
+    "zh": "泽上于地，萃。君子以除戎器，戒不虞。",
+    "en": "Lake above the earth — Cui. The exemplary person prepares weapons and guards against the unexpected."
+  },
+  "46": {
+    "zh": "地中生木，升。君子以顺德，积小以高大。",
+    "en": "Wood grows from the earth — Sheng. The exemplary person follows virtue and accumulates the small to reach the high and great."
+  },
+  "47": {
+    "zh": "泽中无水，困。君子以致命遂志。",
+    "en": "No water in the lake — Kun. The exemplary person gives up life to fulfill one's will."
+  },
+  "48": {
+    "zh": "木上有水，井。君子以劳民劝相。",
+    "en": "Water above wood — Jing. The exemplary person toils for the people and encourages mutual aid."
+  },
+  "49": {
+    "zh": "泽中有火，革。君子以治历明时。",
+    "en": "Fire within the lake — Ge. The exemplary person regulates the calendar and clarifies the seasons."
+  },
+  "50": {
+    "zh": "木上有火，鼎。君子以正位凝命。",
+    "en": "Fire above wood — Ding. The exemplary person rectifies one's position and consolidates the mandate."
+  },
+  "51": {
+    "zh": "洊雷震。君子以恐惧修省。",
+    "en": "Repeated thunder shakes — Zhen. The exemplary person is fearful, trembles, and cultivates self-examination."
+  },
+  "52": {
+    "zh": "兼山艮。君子以思不出其位。",
+    "en": "Mountains joined — Gen. The exemplary person thinks not beyond one's position."
+  },
+  "53": {
+    "zh": "山上有木，渐。君子以居贤德善俗。",
+    "en": "Wood upon the mountain — Jian. The exemplary person dwells in worthy virtue and improves customs."
+  },
+  "54": {
+    "zh": "雷动泽随，归妹。君子以永终知敝。",
+    "en": "Thunder moves, lake follows — Gui Mei. The exemplary person contemplates the end and knows the decay."
+  },
+  "55": {
+    "zh": "雷电皆至，丰。君子以折狱致刑。",
+    "en": "Both thunder and lightning arrive — Feng. The exemplary person decides lawsuits and metes out punishment."
+  },
+  "56": {
+    "zh": "山上有火，旅。君子以明慎用刑而不留狱。",
+    "en": "Fire upon the mountain — Lü. The exemplary person is clear and cautious in punishment and does not delay judgments."
+  },
+  "57": {
+    "zh": "随风巽。君子以申命行事。",
+    "en": "Following the wind — Xun. The exemplary person repeats commands and carries out affairs."
+  },
+  "58": {
+    "zh": "丽泽兑。君子以朋友讲习。",
+    "en": "Adjacent lakes — Dui. The exemplary person studies and practices with friends."
+  },
+  "59": {
+    "zh": "风行水上，涣。先王以享于帝立庙。",
+    "en": "Wind moves upon water — Huan. The former kings sacrificed to the Lord and established temples."
+  },
+  "60": {
+    "zh": "泽上有水，节。君子以制数度，议德行。",
+    "en": "Water above the lake — Jie. The exemplary person establishes measures and discusses conduct."
+  },
+  "61": {
+    "zh": "泽上有风，中孚。君子以议狱缓死。",
+    "en": "Wind above the lake — Zhong Fu. The exemplary person discusses lawsuits and delays the death penalty."
+  },
+  "62": {
+    "zh": "山上有雷，小过。君子以行过乎恭，丧过乎哀，用过乎俭。",
+    "en": "Thunder upon the mountain — Xiao Guo. The exemplary person exceeds in reverence, in mourning exceeds in grief, and in use exceeds in frugality."
+  },
+  "63": {
+    "zh": "水在火上，既济。君子以思患而预防之。",
+    "en": "Water above fire — Ji Ji. The exemplary person thinks on calamity and prevents it."
+  },
+  "64": {
+    "zh": "火在水上，未济。君子以慎辨物居方。",
+    "en": "Fire above water — Wei Ji. The exemplary person is careful in distinguishing things and assigning them to their places."
+  }
+};
+
+// Commentary templates (classical formulation)
 const tuanTemplate = (h) => {
+  const t = tuanMap[h.num];
+  if (t) {
+    return `**The Tuan Commentary (彖传)**\n   > ${h.cn}卦：${t.zh}\n   > *The Tuan Commentary on ${h.cn}: ${t.en}*`;
+  }
   const enBody = h.en_j.replace(/\*[^*]+\*/g, '');
   const firstClauseRaw = enBody.split(/[。！？]/)[0].replace(/[.!?]+$/g, '').trim();
   const firstClauseClean = validators.judgmentClause(firstClauseRaw);
@@ -148,64 +413,270 @@ const xiangMap = {
   63: '水在火上',
   64: '火在水上',
 };
-const xiangTemplate = (h) => `**The Xiang Commentary (象传)**\n   > ${xiangMap[h.num] || h.symbol}\n   > *The Image of ${h.cn}: ${h.symbol} (${h.inner}). The exemplary person reflects upon this pattern.*`;
+const xiangMeaning = {
+  "1": "The exemplary person vigorously strives and never ceases.",
+  "2": "The exemplary person holds the earth's virtue and supports all.",
+  "3": "The exemplary person weaves the pattern of governance through difficulty.",
+  "4": "The exemplary person acts resolutely and cultivates virtue.",
+  "5": "The exemplary person waits with dignity, feasting and enjoying leisure.",
+  "6": "The exemplary person plans carefully from the very beginning.",
+  "7": "The exemplary person contains the people and nourishes the multitude.",
+  "8": "The exemplary person establishes states and draws the lords into closeness.",
+  "9": "The exemplary person refines and beautifies virtue.",
+  "10": "The exemplary person distinguishes high and low and settles the people.",
+  "11": "The sovereign regulates the way of heaven and earth.",
+  "12": "The exemplary person conceals virtue and avoids difficulty.",
+  "13": "The exemplary person groups clans and distinguishes things.",
+  "14": "The exemplary person restrains evil and promotes good.",
+  "15": "The exemplary person takes from surplus and adds to scarcity.",
+  "16": "The former kings created music to exalt virtue.",
+  "17": "The exemplary person follows the time and rests.",
+  "18": "The exemplary person rouses the people and cultivates virtue.",
+  "19": "The exemplary person teaches with endless thought and protects the people.",
+  "20": "The former kings inspected regions and established teachings.",
+  "21": "The former kings made penalties clear and rectified laws.",
+  "22": "The exemplary person illumines government but dares not decide lawsuits.",
+  "23": "Those above enrich those below and dwell securely.",
+  "24": "The former kings closed the frontier on the shortest day.",
+  "25": "The former kings responded to time and nourished all beings.",
+  "26": "The exemplary person learns much from the ancients to accumulate virtue.",
+  "27": "The exemplary person is careful in speech and moderate in eating.",
+  "28": "The exemplary person stands alone without fear.",
+  "29": "The exemplary person preserves constant virtue and practices teaching.",
+  "30": "The great person continues the light to illumine the four quarters.",
+  "31": "The exemplary person empties oneself and receives others.",
+  "32": "The exemplary person stands firm and does not change direction.",
+  "33": "The exemplary person keeps distant from the petty person.",
+  "34": "The exemplary person does not tread where propriety does not permit.",
+  "35": "The exemplary person manifests one's own clear virtue.",
+  "36": "The exemplary person approaches the multitude using darkness yet preserving clarity.",
+  "37": "The exemplary person speaks with substance and acts with constancy.",
+  "38": "The exemplary person unites yet preserves differences.",
+  "39": "The exemplary person turns inward to cultivate virtue.",
+  "40": "The exemplary person pardons faults and forgives crimes.",
+  "41": "The exemplary person curbs anger and checks desire.",
+  "42": "The exemplary person moves toward good and corrects faults.",
+  "43": "The exemplary person bestows benefits on those below.",
+  "44": "The sovereign issues commands to the four quarters.",
+  "45": "The exemplary person prepares weapons and guards against the unexpected.",
+  "46": "The exemplary person follows virtue and accumulates the small.",
+  "47": "The exemplary person gives up life to fulfill one's will.",
+  "48": "The exemplary person toils for the people and encourages mutual aid.",
+  "49": "The exemplary person regulates the calendar and clarifies seasons.",
+  "50": "The exemplary person rectifies one's position and consolidates the mandate.",
+  "51": "The exemplary person is fearful and cultivates self-examination.",
+  "52": "The exemplary person thinks not beyond one's position.",
+  "53": "The exemplary person dwells in worthy virtue and improves customs.",
+  "54": "The exemplary person contemplates the end and knows the decay.",
+  "55": "The exemplary person decides lawsuits and metes out punishment.",
+  "56": "The exemplary person is clear and cautious in punishment.",
+  "57": "The exemplary person repeats commands and carries out affairs.",
+  "58": "The exemplary person studies and practices with friends.",
+  "59": "The former kings sacrificed to the Lord and established temples.",
+  "60": "The exemplary person establishes measures and discusses conduct.",
+  "61": "The exemplary person discusses lawsuits and delays the death penalty.",
+  "62": "The exemplary person exceeds in reverence and grief.",
+  "63": "The exemplary person thinks on calamity and prevents it.",
+  "64": "The exemplary person is careful in distinguishing things and assigning their places."
+};
+const xiangTemplate = (h) => `**The Xiang Commentary (象传)**\n   > ${xiangMap[h.num] || h.symbol}\n   > *The Image of ${h.cn}: ${h.symbol} (${h.inner}). ${xiangMeaning[h.num] || 'The exemplary person reflects upon this pattern.'}*`;
 
-// Generic line structure for each hexagram (based on position, yin/yang)
+// Line (爻辞) rendering based on classical I Ching text
+const YAO_POSITIONS = ['初', '二', '三', '四', '五', '上'];
+const YAO_POSITIONS_EN = ['Initial', 'Second', 'Third', 'Fourth', 'Fifth', 'Top'];
+
+// Determine yáo suffix (九 or 六) for each line of hexagram `num`.
+// Rules:
+//   - 乾卦 (1) uses 九 for all six lines, with 用九 instruction.
+//   - 坤卦 (2) uses 六 for all six lines, with 用六 instruction.
+//   - Other hexagrams alternate based on yáo parity: 初/三/五 are 九, 二/四/上 are 六.
+const YAO_TYPE_MAP = {
+  1: '九', 2: '六', 3: '九', 4: '六', 5: '九', 6: '六',
+};
+
+function isPureYang(num) { return num === 1; }
+function isPureYin(num) { return num === 2; }
+
 const lineTemplates = (h) => {
-  // Distinguish yang hexagrams (1,3,4,5,6,7,8,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64)
-  const yangHexs = new Set([1,3,4,5,6,7,8,11,12,13,14,25,26,27,28,32,33,34,39,40,41,42,43,44,45,46,47,48,51,52,55,56,57,58,59,60,61,62,63,64]);
-  const isYang = yangHexs.has(h.num) || h.num === 9 || h.num === 10 || h.num === 15 || h.num === 16 || h.num === 17 || h.num === 18 || h.num === 19 || h.num === 20 || h.num === 21 || h.num === 22 || h.num === 23 || h.num === 24 || h.num === 29 || h.num === 30 || h.num === 31 || h.num === 35 || h.num === 36 || h.num === 37 || h.num === 38 || h.num === 49 || h.num === 50 || h.num === 53 || h.num === 54;
-
-  const positions = ['Initial', 'Second', 'Third', 'Fourth', 'Fifth', 'Top'];
-  const suffixes = ['初', '二', '三', '四', '五', '上'];
+  const linesData = getLines(h.num);
   const lines = [];
 
-  const nature = isYang ? 'firm and active' : 'yielding and receptive';
-  const element = h.cn;
-
   for (let i = 0; i < 6; i++) {
-    const pos = positions[i];
-    const suf = suffixes[i];
-    const isYangLine = isYang ? (i === 0 || i === 2 || i === 4) : (i === 1 || i === 3 || i === 5);
-    const lineType = isYangLine ? 'yang' : 'yin';
-    const zh = (i === 5 ? `上${lineType === 'yang' ? '九' : '六'}` : `${lineType === 'yang' ? suffixes[i].replace('初','初') : suffixes[i].replace('初','初')}${lineType === 'yang' ? '九' : '六'}`);
-    // Build line-specific insight
-    let advice = '';
-    if (i === 0) advice = 'the first stirring — small, hidden beginnings require caution and patience.';
-    else if (i === 1) advice = 'emergence and visibility — the line begins to act in the world.';
-    else if (i === 2) advice = 'the lower trigram\'s summit — poised between advancement and reflection.';
-    else if (i === 3) advice = 'the threshold — a crucial moment of transition from lower to upper trigram.';
-    else if (i === 4) advice = 'approaching the heights — influence grows, but humility is required.';
-    else advice = 'the summit of the hexagram — extreme position warns of reversal.';
+    const data = linesData[i];
+    const pos = YAO_POSITIONS[i];
+    const posEn = YAO_POSITIONS_EN[i];
 
-    lines.push(`- **${zh} (${pos} ${lineType === 'yang' ? 'Nine' : 'Six'})**: The ${lineType} line at ${pos.toLowerCase()} position of ${element}. *In the context of ${h.en}: ${advice}*`);
+    let yaoTypeChar;
+    if (isPureYang(h.num)) {
+      yaoTypeChar = '九';
+    } else if (isPureYin(h.num)) {
+      yaoTypeChar = '六';
+    } else {
+      yaoTypeChar = YAO_TYPE_MAP[i + 1];
+    }
+
+    const zh = i === 0 ? `初${yaoTypeChar}` : i === 5 ? `上${yaoTypeChar}` : `${pos}${yaoTypeChar}`;
+    const enYaoType = yaoTypeChar === '九' ? 'Nine' : 'Six';
+
+    lines.push(
+      `- **${zh} (${posEn} ${enYaoType})**: ${data.cn}\n   > *${data.en}*`,
+    );
   }
 
-  // Add 用九 / 用六 for pure hexagrams
-  if ([1,2,29,30,51,52,57,58,63,64].includes(h.num)) {
-    const use = [1,51,57].includes(h.num) ? '用九 (Using Nine)' : [2,52,58].includes(h.num) ? '用六 (Using Six)' : null;
-    if (use) {
-      lines.push(`- **${use}**: The hidden instruction of the pure ${element} hexagram — transcending the fixed polarity to grasp the living spirit of ${h.en.toLowerCase()}.`);
+  // Append 用九 / 用六 for the pure hexagrams
+  const use = getUse(h.num);
+  if (use) {
+    const useLabel = h.num === 1 ? '用九 (Using Nine)' : h.num === 2 ? '用六 (Using Six)' : null;
+    if (useLabel) {
+      lines.push(
+        `- **${useLabel}**: ${use.cn}\n   > *${use.en}*`,
+      );
     }
   }
 
   return lines.join('\n');
 };
 
-// Symbolic correspondences generator
+// Symbolic correspondences — complete map for all 64 hexagrams
+const symbolicMap = {
+  "1": "heaven (天), metal (金), father (父), horse (马), northwest (西北), autumn (秋), white (白), creation (健)",
+  "2": "earth (地), soil (土), mother (母), mare (牝马), southwest (西南), late summer (季夏), yellow (黄), reception (顺)",
+  "3": "cloud (云), thunder (雷), water (水), sprout (芽), movement (动) — beginning of growth amidst difficulty",
+  "4": "spring water (泉水), mountain (山), child (童), student (学生) — youthful seeking and first instruction",
+  "5": "cloud (云), heaven (天), water (水), dragon (龙) — patient anticipation before action",
+  "6": "heaven (天), water (水), sword (剑), debate (争) — contention between opposed forces",
+  "7": "earth (地), water (水), army (师), soldiers (兵), commander (将) — disciplined collective action",
+  "8": "water (水), earth (地), friend (友), companion (伴), alliance (盟) — bonding and mutual support",
+  "9": "wind (风), heaven (天), cloud (云), rain (雨) — small accumulation of influence",
+  "10": "heaven (天), lake (泽), tiger (虎), foot (足), step (步) — cautious treading on dangerous ground",
+  "11": "earth (地), heaven (天), harmony (和), union (交), peace (平) — flourishing through communion",
+  "12": "heaven (天), earth (地), barrier (障), decline (衰), isolation (隔离) — obstruction and withdrawal",
+  "13": "heaven (天), fire (火), community (同人), fellowship (交) — open fellowship in the wild",
+  "14": "fire (火), heaven (天), treasure (宝), wealth (富), sun (日) — great possession and abundance",
+  "15": "earth (地), mountain (山), modesty (谦), humility (虚) — hidden virtue within",
+  "16": "thunder (雷), earth (地), music (乐), drum (鼓), joy (豫) — enthusiasm stirring the multitude",
+  "17": "lake (泽), thunder (雷), follow (随), companion (伴) — following the rhythm of time",
+  "18": "mountain (山), wind (风), remedy (治), reform (革) — correcting decay from the root",
+  "19": "earth (地), lake (泽), approach (临), supervision (监) — drawing near and overseeing",
+  "20": "wind (风), earth (地), contemplate (观), worship (祭) — observing and being observed",
+  "21": "fire (火), thunder (雷), bite (噬), chew (啮) — biting through obstruction with clarity",
+  "22": "mountain (山), fire (火), adornment (饰), beauty (美) — outward adornment of form",
+  "23": "mountain (山), earth (地), peel (剥), decay (衰) — stripping away to the core",
+  "24": "earth (地), thunder (雷), return (复), comeback (返) — return of light after darkness",
+  "25": "heaven (天), thunder (雷), innocence (妄), spontaneity (自然) — natural action without contrivance",
+  "26": "mountain (山), heaven (天), accumulate (畜), store (蓄) — great accumulation of strength",
+  "27": "mountain (山), thunder (雷), nourish (养), mouth (口) — nourishment of body and mind",
+  "28": "lake (泽), wind (风), beam (梁), wood (木) — great excess bearing heavy weight",
+  "29": "water (水), abyss (渊), danger (险), ear (耳), blood (血), north (北), winter (冬) — repeated peril",
+  "30": "fire (火), light (光), radiance (明), eye (目), south (南), summer (夏) — clinging and illumination",
+  "31": "lake (泽), mountain (山), sense (感), touch (触), heart (心) — mutual influence and response",
+  "32": "thunder (雷), wind (风), persist (恒), endure (久) — long continuance and constancy",
+  "33": "heaven (天), mountain (山), retreat (遁), withdraw (退) — timely withdrawal from the world",
+  "34": "thunder (雷), heaven (天), strength (壮), power (力) — great strength in the ascendancy",
+  "35": "fire (火), earth (地), advance (晋), rise (升), sun (日) — brilliant progress into the light",
+  "36": "earth (地), fire (火), light hidden (明夷), darkness (暗) — brightness concealed within",
+  "37": "wind (风), fire (火), home (家), household (户) — order within the family",
+  "38": "fire (火), lake (泽), opposition (睽), contrariety (乖) — things out of alignment",
+  "39": "water (水), mountain (山), limp (蹇), halt (停) — difficult progress, must turn inward",
+  "40": "thunder (雷), water (水), release (解), deliver (释) — loosing and resolving tension",
+  "41": "mountain (山), lake (泽), decrease (损), loss (失) — decreasing the lower to benefit the high",
+  "42": "wind (风), thunder (雷), increase (益), benefit (利) — adding to the lower from above",
+  "43": "lake (泽), heaven (天), breakthrough (夬), resolve (决) — decisive breakthrough and announcement",
+  "44": "heaven (天), wind (风), encounter (姤), meet (遇) — unexpected meeting, caution needed",
+  "45": "lake (泽), earth (地), gather (萃), collect (集) — gathering together in assembly",
+  "46": "earth (地), wind (风), ascend (升), rise (升) — ascending like a tree from the earth",
+  "47": "lake (泽), water (水), exhaust (困), distress (厄) — parched lake, words without water",
+  "48": "water (水), wind (风), well (井), spring (泉) — the well, source of shared water",
+  "49": "lake (泽), fire (火), revolution (革), change (变) — radical change and renewal",
+  "50": "fire (火), wind (风), cauldron (鼎), vessel (器) — transformation through refinement",
+  "51": "thunder (雷), shake (震), tremble (动), foot (足), east (东), spring (春) — thunderous shock",
+  "52": "mountain (山), rest (止), stop (停), hand (手), northeast (东北) — stillness and cessation",
+  "53": "wind (风), mountain (山), progress (渐), advance (进), tree (木) — gradual progress step by step",
+  "54": "thunder (雷), lake (泽), maiden (归妹), bride (妻) — the younger woman marrying",
+  "55": "thunder (雷), fire (火), abundance (丰), fullness (盛) — fullness and the zenith of light",
+  "56": "fire (火), mountain (山), wander (旅), travel (行) — the lonely traveler on the road",
+  "57": "wind (风), gentle (巽), penetrate (入), elbow (肱), southeast (东南) — subtle penetration of wind",
+  "58": "lake (泽), joy (兑), pleasure (悦), mouth (口), west (西) — joy and spoken delight",
+  "59": "wind (风), water (水), disperse (涣), scatter (散) — dispersing tension and binding",
+  "60": "water (水), lake (泽), moderation (节), measure (度) — regulated balance and measure",
+  "61": "wind (风), lake (泽), inner truth (中孚), sincerity (诚) — inward sincerity reaching even fish",
+  "62": "thunder (雷), mountain (山), small excess (小过) — small matters exceed the mark",
+  "63": "water (水), fire (火), already finished (既济) — completion already past",
+  "64": "fire (火), water (水), not yet finished (未济), unfinished (未) — not yet across the river"
+};
+
+// Practice guidance for each hexagram
+const practiceMap = {
+  "1": "Embody creative initiative and strength; lead with virtue and vision.",
+  "2": "Embody receptive support and patience; nurture rather than command.",
+  "3": "In new beginnings, weave order through persistent effort.",
+  "4": "Approach learning with sincere humility and resolution.",
+  "5": "Wait with composure; timing favors the prepared.",
+  "6": "Plan from the start; avoid contention when possible.",
+  "7": "Organize collective effort with disciplined leadership.",
+  "8": "Build alliances through sincerity and mutual respect.",
+  "9": "Accumulate small deeds of influence and refinement.",
+  "10": "Tread carefully amid danger; uphold ritual and propriety.",
+  "11": "Cherish harmony and the open exchange of ideas.",
+  "12": "In times of obstruction, conceal virtue and wait.",
+  "13": "Seek fellowship in the open; be transparent and inclusive.",
+  "14": "Use abundance to benefit others; restrain evil, promote good.",
+  "15": "Cultivate hidden virtue; humility draws fortune.",
+  "16": "Stir enthusiasm in others through music and shared vision.",
+  "17": "Follow the right people and the natural rhythm of time.",
+  "18": "Address decay at its source; reform with vigor.",
+  "19": "Approach others with teaching and protective care.",
+  "20": "Observe deeply; be mindful of how you appear to others.",
+  "21": "Bite through obstacles with clarity and decisive action.",
+  "22": "Adorn outward forms, but keep inner substance paramount.",
+  "23": "When stripping away, nourish the foundation before rebuilding.",
+  "24": "After return, nurture the seed of new light patiently.",
+  "25": "Act naturally without contrivance; remain innocent in intent.",
+  "26": "Accumulate knowledge and strength for the great task ahead.",
+  "27": "Nourish your own body and mind before nourishing others.",
+  "28": "Stand alone in your truth even when the weight is heavy.",
+  "29": "In repeated peril, keep your heart constant and sincere.",
+  "30": "Cling to what is right and bright; shine without burning.",
+  "31": "Empty yourself to truly sense and respond to others.",
+  "32": "Persevere in your direction; let constancy mark your path.",
+  "33": "Know when to retreat; withdraw before exhaustion.",
+  "34": "Use strength with restraint; never violate propriety.",
+  "35": "Advance openly; let your clear virtue shine forth.",
+  "36": "Hide your light when the world is dark; preserve clarity within.",
+  "37": "Order the household through sincere speech and steady conduct.",
+  "38": "Find unity amid differences; avoid unnecessary conflict.",
+  "39": "Turn inward when the path is blocked; cultivate virtue.",
+  "40": "Release and forgive; loosen what has been bound too long.",
+  "41": "Curb anger and desire; decrease the lower to gain the higher.",
+  "42": "Act swiftly when you see good; correct faults without delay.",
+  "43": "Announce your breakthrough sincerely; bestow benefits below.",
+  "44": "Be cautious of unexpected encounters; guard your boundaries.",
+  "45": "Gather the right people; prepare for the unexpected.",
+  "46": "Ascend gradually like a tree; let virtue grow steadily.",
+  "47": "In exhaustion, hold to your will even if speech fails.",
+  "48": "Be a source for others; ensure your wellspring never runs dry.",
+  "49": "Know the time for radical change; reform decisively when ripe.",
+  "50": "Rectify your position; be the vessel that refines virtue.",
+  "51": "Meet shock with fear and trembling; then reflect and improve.",
+  "52": "Rest where you stand; go not beyond your proper place.",
+  "53": "Advance gradually; each step prepares the next.",
+  "54": "Contemplate the end from the beginning; know when to hold back.",
+  "55": "Enjoy abundance while it lasts; the full moon wanes.",
+  "56": "As a traveler, keep your belongings close and your heart light.",
+  "57": "Penetrate gently like wind; repeat commands with subtlety.",
+  "58": "Speak with joy and care; words unite or divide.",
+  "59": "Disperse tension and boundaries; foster openness and flow.",
+  "60": "Set measures; find the sweet spot between excess and want.",
+  "61": "Let sincerity reach even the fishes; trust transforms hearts.",
+  "62": "In small matters, exceed only in reverence and frugality.",
+  "63": "After completion, guard against disorder; anticipate decay.",
+  "64": "Before completion, be cautious at every step; the fox almost slips."
+};
+
 const symbolic = (h) => {
-  const map = {
-    1: 'heaven (天), metal (金), father (父), horse (马), northwest (西北), autumn (秋)',
-    2: 'earth (地), soil (土), mother (母), mare (牝马), southwest (西南), late summer (季夏)',
-    29: 'water (水), liquid (液), ear (耳), blood (血), north (北), winter (冬)',
-    30: 'fire (火), flame (焰), eye (目), brightness (明), south (南), summer (夏)',
-    51: 'thunder (雷), movement (动), foot (足), east (东), spring (春)',
-    52: 'mountain (山), stillness (止), hand (手), northeast (东北)',
-    57: 'wind (风), wood (木), penetration (入), elbow (肱), southeast (东南)',
-    58: 'lake (泽), marsh (沼), mouth (口), west (西)',
-  };
-  const basic = map[h.num] || `the inner trigram and outer trigram of ${h.cn}, whose virtue ${h.en.toLowerCase()} manifests through the interplay of yin and yang`;
-  return `**Symbolic Correspondences (象征对应)**\n${h.cn} (${h.en}) corresponds to: ${basic}.\n\n**Practice (实践)**\nIn divination, ${h.cn} (${h.en}) advises reading the moment through the lens of ${h.en.toLowerCase()}. Carry its pattern into daily life — whether as reflection, timing, or guidance in relationship and work — and let its classical wisdom speak to your present question.`;
+  const sym = symbolicMap[h.num] || `the inner trigram and outer trigram of ${h.cn}`;
+  const practice = practiceMap[h.num] || 'Reflect on the pattern and let it guide your conduct.';
+  return `**Symbolic Correspondences (象征对应)**\n${h.cn} (${h.en}) corresponds to: ${sym}.\n\n**Practice (实践)**\nIn divination, ${h.cn} (${h.en}) advises: ${practice} Carry its pattern into daily life — as reflection, timing, guidance in relationship and work.`;
 };
 
 // Generate full description for a hexagram

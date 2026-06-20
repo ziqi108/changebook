@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { ClientProviders } from '@/components/auth/ClientProviders';
+import { DevHydrationGuard } from '@/components/dev/DevHydrationGuard';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ichingmaster.com'),
@@ -43,9 +44,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="grain-overlay">
-        <ClientProviders>{children}</ClientProviders>
+    <html lang="en" suppressHydrationWarning>
+      <body className="grain-overlay" suppressHydrationWarning>
+        <DevHydrationGuard>
+          <ClientProviders>{children}</ClientProviders>
+        </DevHydrationGuard>
       </body>
     </html>
   );

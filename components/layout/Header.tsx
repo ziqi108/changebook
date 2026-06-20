@@ -35,6 +35,7 @@ export function Header() {
   return (
     <>
       <header
+        suppressHydrationWarning
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
             ? 'bg-paper/95 backdrop-blur-md border-b border-ink/8 shadow-sm'
@@ -43,7 +44,7 @@ export function Header() {
       >
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 h-[68px] md:h-[80px] flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group" aria-label="ChangeBook Home">
+          <Link href="/" suppressHydrationWarning className="flex items-center gap-3 group" aria-label="ChangeBook Home">
             <div className="relative">
               <span className="font-display text-xl md:text-2xl tracking-tight text-ink group-hover:text-vermilion transition-colors duration-300">
                 ChangeBook
