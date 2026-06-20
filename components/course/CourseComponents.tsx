@@ -30,33 +30,90 @@ function LessonContent({ lesson }: { lesson: Lesson }) {
   };
 
   const renderContent = (desc: string) => {
-    const blocks = desc.split(/\n\n+/);
+    const lines = desc.split('\n');
+    const blocks: string[] = [];
+    let currentBlock: string[] = [];
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const trimmed = line.trim();
+
+      if (!trimmed) {
+        if (currentBlock.length > 0) {
+          blocks.push(currentBlock.join('\n'));
+          currentBlock = [];
+        }
+      } else if (/^[-*] /.test(trimmed)) {
+        if (currentBlock.length > 0) {
+          blocks.push(currentBlock.join('\n'));
+        }
+        currentBlock = [line];
+      } else if (/^> /.test(trimmed) && currentBlock.length > 0 && /^[-*] /.test(currentBlock[currentBlock.length - 1].trim())) {
+        currentBlock.push(line);
+      } else {
+        if (currentBlock.length > 0) {
+          blocks.push(currentBlock.join('\n'));
+          currentBlock = [];
+        }
+        currentBlock = [line];
+      }
+    }
+    if (currentBlock.length > 0) {
+      blocks.push(currentBlock.join('\n'));
+    }
+
     return blocks.map((block, idx) => {
       const trimmed = block.trim();
       if (!trimmed) return null;
-      if (/^> /.test(trimmed)) {
-        const lines = trimmed.split('\n').filter(l => l.startsWith('> ')).map(l => l.replace(/^> /, ''));
-        return (
-          <blockquote key={idx} className="my-3 pl-4 py-2 border-l-2 text-sm italic" style={{ borderColor: 'rgba(192,57,43,0.35)', color: 'rgba(14,20,25,0.65)', backgroundColor: 'rgba(192,57,43,0.04)' }}>
-            {lines.map((line, i) => (
-              <p key={i} className="leading-relaxed">{renderInline(line)}</p>
-            ))}
-          </blockquote>
-        );
-      }
+
       if (/^[-*] /.test(trimmed)) {
-        const items = trimmed.split('\n').filter(l => /^[-*] /.test(l)).map(l => l.replace(/^[-*] /, ''));
+        const linesArr = trimmed.split('\n');
+        const items: { text: string; quote?: string }[] = [];
+        let currentItem: { text: string; quote?: string } | null = null;
+
+        for (const line of linesArr) {
+          const lineTrimmed = line.trim();
+          if (/^[-*] /.test(lineTrimmed)) {
+            if (currentItem) items.push(currentItem);
+            currentItem = { text: lineTrimmed.replace(/^[-*] /, '') };
+          } else if (/^> /.test(lineTrimmed) && currentItem) {
+            currentItem.quote = lineTrimmed.replace(/^> /, '');
+          }
+        }
+        if (currentItem) items.push(currentItem);
+
         return (
-          <ul key={idx} className="my-3 space-y-1.5">
+          <ul key={idx} className="my-3 space-y-3">
             {items.map((item, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm leading-relaxed" style={{ color: 'rgba(14,20,25,0.70)' }}>
-                <span className="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style={{ backgroundColor: 'rgba(192,57,43,0.60)' }} />
-                <span>{renderInline(item)}</span>
+              <li key={i} className="flex items-start gap-3">
+                <span className="mt-2 w-1 h-1 rounded-full flex-shrink-0" style={{ backgroundColor: 'rgba(192,57,43,0.60)' }} />
+                <div className="flex-1">
+                  <div className="text-sm leading-relaxed" style={{ color: 'rgba(14,20,25,0.85)' }}>
+                    {renderInline(item.text)}
+                  </div>
+                  {item.quote && (
+                    <blockquote className="mt-1.5 pl-3 py-1 border-l-2 text-xs italic" style={{ borderColor: 'rgba(192,57,43,0.35)', color: 'rgba(14,20,25,0.60)', backgroundColor: 'rgba(192,57,43,0.03)' }}>
+                      {renderInline(item.quote)}
+                    </blockquote>
+                  )}
+                </div>
               </li>
             ))}
           </ul>
         );
       }
+
+      if (/^> /.test(trimmed)) {
+        const linesArr = trimmed.split('\n').filter(l => l.startsWith('> ')).map(l => l.replace(/^> /, ''));
+        return (
+          <blockquote key={idx} className="my-3 pl-4 py-2 border-l-2 text-sm italic" style={{ borderColor: 'rgba(192,57,43,0.35)', color: 'rgba(14,20,25,0.65)', backgroundColor: 'rgba(192,57,43,0.04)' }}>
+            {linesArr.map((line, i) => (
+              <p key={i} className="leading-relaxed">{renderInline(line)}</p>
+            ))}
+          </blockquote>
+        );
+      }
+
       return (
         <p key={idx} className="my-3 text-sm leading-relaxed" style={{ color: 'rgba(14,20,25,0.70)' }}>
           {renderInline(trimmed)}
