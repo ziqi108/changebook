@@ -33,8 +33,8 @@ export const COURSE_DETAILS: Record<string, CourseDetail> = {
     heroImage: 'from-ink to-ink-deep',
     level: 'Beginner',
     levelZh: '初 級',
-    price: '$340',
-    currency: 'USD',
+    price: '免费',
+    currency: '',
     nextCohort: 'July 14, 2026',
     includes: [
       'Introduction to yin and yang',
@@ -66,8 +66,8 @@ export const COURSE_DETAILS: Record<string, CourseDetail> = {
     heroImage: 'from-paper to-paper-soft',
     level: 'Intermediate',
     levelZh: '中 級',
-    price: '$880',
-    currency: 'USD',
+    price: '免费',
+    currency: '',
     nextCohort: 'August 28, 2026',
     includes: [
       'Complete translation and commentary on all 64 hexagrams',
