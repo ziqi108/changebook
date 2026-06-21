@@ -33,7 +33,7 @@ export const COURSE_DETAILS: Record<string, CourseDetail> = {
     heroImage: 'from-ink to-ink-deep',
     level: 'Beginner',
     levelZh: '初 級',
-    price: '免费',
+    price: 'Free',
     currency: '',
     nextCohort: 'July 14, 2026',
     includes: [
@@ -66,7 +66,7 @@ export const COURSE_DETAILS: Record<string, CourseDetail> = {
     heroImage: 'from-paper to-paper-soft',
     level: 'Intermediate',
     levelZh: '中 級',
-    price: '免费',
+    price: 'Free',
     currency: '',
     nextCohort: 'August 28, 2026',
     includes: [

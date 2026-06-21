@@ -29,7 +29,7 @@ export const MODULES: ModuleItem[] = [
     features: ['Yin & Yang foundations', 'Eight trigrams', 'Coin casting practice', 'First 10 hexagrams', 'Daily ritual guide'],
     rating: 4.92,
     students: 4280,
-    price: '$340',
+    price: 'Free',
   },
   {
     slug: 'intermediate-course',
@@ -45,7 +45,7 @@ export const MODULES: ModuleItem[] = [
     features: ['Full 64 hexagram canon', 'Jungian interpretation', 'Monthly live Q&A', 'Psychological framework', 'Lifetime access'],
     rating: 4.95,
     students: 2840,
-    price: '$880',
+    price: 'Free',
   },
   {
     slug: 'advanced-course',
