@@ -11,25 +11,11 @@ export const metadata: Metadata = {
 
 const MASTERS = [
   {
-    name: 'Master Yang Wen',
-    initials: 'YW',
-    title: 'Senior I Ching Teacher',
-    zh: '楊文',
-    bio: 'Over 25 years of dedicated study in the classical I Ching tradition. Trained in Sichuan Province under two lineage holders. Author of three works on Jungian applications of the Book of Changes.',
-  },
-  {
-    name: 'Master Lian Chen',
-    initials: 'LC',
-    title: 'Hexagram & Mei Hua Specialist',
-    zh: '廉晨',
-    bio: 'Specialises in Mei Hua numerology and the Xici Great Commentary. Has taught privately for 18 years across Europe and Asia. Conducts consultations in English, 中文, and Deutsch.',
-  },
-  {
-    name: 'Master Wu Xi',
-    initials: 'WX',
-    title: 'Depth Psychology & I Ching',
-    zh: '吳曦',
-    bio: 'Bridges classical I Ching practice with contemporary depth psychology. PhD in Comparative Religion. Former visiting scholar at the C. G. Jung Institute, Zürich.',
+    name: 'Liu Xize',
+    initials: 'LX',
+    title: 'I Ching Practical Mentor',
+    zh: '刘锡泽',
+    bio: 'Proficient in BaZi, Purple Star Astrology, He Luo Five Elements, and residential Feng Shui. Free of empty and exaggerated formulas. He interprets destiny based on real-life scenarios including modern careers, property investment, and family life. He analyzes the underlying patterns of career development, wealth fortune, spiritual blessing, and physical health, and teaches practical methods of Five Elements adjustment and spiritual cultivation to gather blessings. Provides systematic I Ching courses for beginners, guiding learners to understand the Yin-Yang laws of the Book of Changes, plan life with ancient wisdom, pursue good fortune, accumulate wealth, and stabilize body and mind.',
   },
 ];
 
@@ -145,7 +131,7 @@ export default function AboutPage() {
               <span className="h-px w-10 bg-ink/30" />
               <span className="eyebrow text-ink/40 tracking-[0.38em]">Our teachers</span>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 gap-5">
               {MASTERS.map((m) => (
                 <div key={m.name} className="border border-ink/8 rounded-2xl p-8 card-surface flex flex-col gap-6">
                   <div className="flex items-center gap-4">

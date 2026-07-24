@@ -106,8 +106,8 @@ export const FEATURED_ARTICLES: Article[] = [
     date: 'May 28, 2026',
     readTime: '7 min read',
     tags: ['Philosophy', 'Wellness'],
-    author: 'Master Yang Wen',
-    authorInitials: 'YW',
+    author: 'Liu Xize',
+    authorInitials: 'LX',
     featured: true,
   },
   {
@@ -120,8 +120,8 @@ export const FEATURED_ARTICLES: Article[] = [
     date: 'May 21, 2026',
     readTime: '9 min read',
     tags: ['Hexagrams', 'Relationships'],
-    author: 'Master Lian Chen',
-    authorInitials: 'LC',
+    author: 'Liu Xize',
+    authorInitials: 'LX',
   },
   {
     slug: 'i-ching-vs-tarot',
@@ -133,8 +133,8 @@ export const FEATURED_ARTICLES: Article[] = [
     date: 'May 14, 2026',
     readTime: '6 min read',
     tags: ['Comparison', 'Divination'],
-    author: 'Master Wu Xi',
-    authorInitials: 'WX',
+    author: 'Liu Xize',
+    authorInitials: 'LX',
   },
   {
     slug: 'decision-making-64-hexagrams',
@@ -146,8 +146,8 @@ export const FEATURED_ARTICLES: Article[] = [
     date: 'May 7, 2026',
     readTime: '11 min read',
     tags: ['Practice', 'Decision Making'],
-    author: 'Master Yang Wen',
-    authorInitials: 'YW',
+    author: 'Liu Xize',
+    authorInitials: 'LX',
   },
   {
     slug: 'burnout-as-yin-deficit',
@@ -159,8 +159,8 @@ export const FEATURED_ARTICLES: Article[] = [
     date: 'April 30, 2026',
     readTime: '8 min read',
     tags: ['Wellness', 'Philosophy'],
-    author: 'Master Wu Xi',
-    authorInitials: 'WX',
+    author: 'Liu Xize',
+    authorInitials: 'LX',
   },
   {
     slug: 'career-cycles-hexagram-24',
@@ -172,8 +172,8 @@ export const FEATURED_ARTICLES: Article[] = [
     date: 'April 23, 2026',
     readTime: '10 min read',
     tags: ['Career', 'Hexagrams'],
-    author: 'Master Lian Chen',
-    authorInitials: 'LC',
+    author: 'Liu Xize',
+    authorInitials: 'LX',
   },
   {
     slug: 'synchronicity-and-the-i-ching',
@@ -185,8 +185,8 @@ export const FEATURED_ARTICLES: Article[] = [
     date: 'April 16, 2026',
     readTime: '12 min read',
     tags: ['Psychology', 'History'],
-    author: 'Master Yang Wen',
-    authorInitials: 'YW',
+    author: 'Liu Xize',
+    authorInitials: 'LX',
   },
   {
     slug: 'reading-hexagrams-for-creatives',
@@ -198,8 +198,8 @@ export const FEATURED_ARTICLES: Article[] = [
     date: 'April 9, 2026',
     readTime: '9 min read',
     tags: ['Creativity', 'Practice'],
-    author: 'Master Wu Xi',
-    authorInitials: 'WX',
+    author: 'Liu Xize',
+    authorInitials: 'LX',
   },
   {
     slug: 'the-eight-trigrams-explained',
@@ -211,8 +211,8 @@ export const FEATURED_ARTICLES: Article[] = [
     date: 'April 2, 2026',
     readTime: '14 min read',
     tags: ['Foundations', 'Education'],
-    author: 'Master Lian Chen',
-    authorInitials: 'LC',
+    author: 'Liu Xize',
+    authorInitials: 'LX',
   },
 ];
 
@@ -267,7 +267,7 @@ export const DISPATCHES: DispatchItem[] = [
   },
   {
     id: 'd2',
-    title: 'Master Lian\'s summer retreat: Booking opens July 1',
+    title: 'Liu Xize\'s summer retreat: Booking opens July 1',
     tag: 'Announcement',
     date: 'May 28, 2026',
   },
