@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { FEATURED_ARTICLES } from '@/lib/data';
 
-const SITE_URL = 'https://ichingmaster.com';
+const SITE_URL = 'https://www.yiwisdom.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
