@@ -6,7 +6,7 @@ import { Footer } from '@/components/layout/Footer';
 import { BackToHome } from '@/components/ui/BackToHome';
 import { FEATURED_ARTICLES } from '@/lib/data';
 
-const SITE_URL = 'https://ichingmaster.com';
+const SITE_URL = 'https://www.yiwisdom.org';
 
 type Params = { slug: string };
 

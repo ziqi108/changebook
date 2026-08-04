@@ -5,7 +5,7 @@ import { Footer } from '@/components/layout/Footer';
 import { BackToHome } from '@/components/ui/BackToHome';
 import { FEATURED_ARTICLES, Article } from '@/lib/data';
 
-const SITE_URL = 'https://ichingmaster.com';
+const SITE_URL = 'https://www.yiwisdom.org';
 
 export const metadata: Metadata = {
   title: 'The Journal — I Ching Articles & Readings',

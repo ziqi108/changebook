@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { getCourseBySlug } from '@/lib/course-details';
 import { INSTRUCTORS } from '@/lib/instructors';
 
-const SITE_URL = 'https://ichingmaster.com';
+const SITE_URL = 'https://www.yiwisdom.org';
 
 function formatStartDate(dateStr: string): string {
   const months: Record<string, string> = {
@@ -63,7 +63,7 @@ export function generateCourseJsonLd(slug: string) {
   const course = getCourseBySlug(slug);
   if (!course) return null;
 
-  const instructor = INSTRUCTORS.find((i) => i.id === 'master-lian');
+  const instructor = INSTRUCTORS.find((i) => i.id === 'liu-xize');
   const totalLessons = course.chapters.reduce((sum, ch) => sum + ch.lessons.length, 0);
   const lastChapter = course.chapters[course.chapters.length - 1];
 

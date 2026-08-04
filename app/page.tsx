@@ -7,7 +7,7 @@ import { DailyHexagram } from '@/components/home/DailyHexagram';
 import { FeaturedArticles } from '@/components/home/FeaturedArticles';
 import { Testimonials } from '@/components/home/Testimonials';
 
-const SITE_URL = 'https://ichingmaster.com';
+const SITE_URL = 'https://www.yiwisdom.org';
 
 export const metadata: Metadata = {
   title: {

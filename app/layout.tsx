@@ -4,7 +4,7 @@ import { ClientProviders } from '@/components/auth/ClientProviders';
 import { DevHydrationGuard } from '@/components/dev/DevHydrationGuard';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://ichingmaster.com'),
+  metadataBase: new URL('https://www.yiwisdom.org'),
   title: {
     default: 'I Ching Master — Ancient Chinese Wisdom for Modern Life',
     template: '%s | I Ching Master',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     title: 'I Ching Master — Ancient Chinese Wisdom for Modern Life',
     description:
       'A modern gateway to the I Ching. Study hexagrams, consult a master, and integrate ancient Chinese wisdom into daily life.',
-    url: 'https://ichingmaster.com',
+    url: 'https://www.yiwisdom.org',
     siteName: 'I Ching Master',
     type: 'website',
     images: [{ url: '/og-image.png' }],
