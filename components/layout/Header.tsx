@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
-import { useAuth } from '@/components/auth/AuthContext';
 
 const NAV_LINKS = [
   { href: '/beginner-course', label: 'Learn', zh: '学习' },
@@ -15,7 +14,6 @@ const NAV_LINKS = [
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { user, logout } = useAuth();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -72,30 +70,6 @@ export function Header() {
 
           {/* Right side */}
           <div className="flex items-center gap-5">
-            {user ? (
-              <div className="hidden md:flex items-center gap-5">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-full bg-ink text-paper flex items-center justify-center text-xs font-bold">
-                    {user.name.charAt(0).toUpperCase()}
-                  </div>
-                  <span className="text-sm text-ink/70">{user.name.split(' ')[0]}</span>
-                </div>
-                <button
-                  onClick={logout}
-                  className="text-[10px] tracking-[0.25em] uppercase text-ink/40 hover:text-ink transition-colors"
-                >
-                  Sign out
-                </button>
-              </div>
-            ) : (
-              <Link
-                href="/login"
-                className="hidden md:inline-flex items-center gap-2 text-sm px-5 py-2 border border-ink/20 rounded-full text-ink/70 hover:text-ink hover:border-ink/50 transition-all duration-200"
-              >
-                Sign in
-              </Link>
-            )}
-
             {/* Mobile toggle */}
             <button
               onClick={() => setMobileOpen((v) => !v)}
@@ -151,45 +125,6 @@ export function Header() {
               </Link>
             ))}
           </nav>
-
-          <div className="px-6 pb-10">
-            {user ? (
-              <div className="space-y-4">
-                <div className="flex items-center gap-3 py-4 border-t border-ink/8">
-                  <div className="w-8 h-8 rounded-full bg-ink text-paper flex items-center justify-center text-xs font-bold">
-                    {user.name.charAt(0).toUpperCase()}
-                  </div>
-                  <div>
-                    <div className="text-sm">{user.name}</div>
-                    <div className="text-[10px] tracking-[0.2em] uppercase text-ink/40">Student</div>
-                  </div>
-                </div>
-                <button
-                  onClick={() => { logout(); setMobileOpen(false); }}
-                  className="w-full py-3 text-sm text-ink/60 border border-ink/15 rounded-full hover:bg-ink hover:text-paper transition-colors"
-                >
-                  Sign out
-                </button>
-              </div>
-            ) : (
-              <div className="flex flex-col gap-3 pt-4 border-t border-ink/8">
-                <Link
-                  href="/login"
-                  onClick={() => setMobileOpen(false)}
-                  className="w-full py-3 text-sm text-center border border-ink/20 rounded-full text-ink/70 hover:text-ink transition-colors"
-                >
-                  Sign in
-                </Link>
-                <Link
-                  href="/register"
-                  onClick={() => setMobileOpen(false)}
-                  className="w-full py-3 text-sm text-center bg-ink text-paper rounded-full hover:bg-vermilion transition-colors"
-                >
-                  Create account
-                </Link>
-              </div>
-            )}
-          </div>
         </div>
       </div>
     </>

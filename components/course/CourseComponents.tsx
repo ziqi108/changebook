@@ -3,10 +3,9 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import type { CourseDetail, Lesson } from '@/lib/course-details';
-import type { User as AuthUser } from '@/components/auth/AuthContext';
 import type { Instructor } from '@/lib/instructors';
 import { BackToHome } from '@/components/ui/BackToHome';
-import { LogOut, Video, FileText, Users, CheckCircle2, Star, Calendar, ChevronDown, ChevronUp } from 'lucide-react';
+import { Video, FileText, Users, CheckCircle2, Star, Calendar, ChevronDown, ChevronUp } from 'lucide-react';
 
 function LessonContent({ lesson }: { lesson: Lesson }) {
   const [open, setOpen] = useState(false);
@@ -158,10 +157,8 @@ export function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function CourseHero({ course, user, logout, levelText, hasContent }: {
+export function CourseHero({ course, levelText, hasContent }: {
   course: CourseDetail;
-  user: AuthUser | null;
-  logout: () => void;
   levelText: string;
   hasContent: boolean;
 }) {
@@ -177,24 +174,6 @@ export function CourseHero({ course, user, logout, levelText, hasContent }: {
       <div className="relative max-w-[1000px] mx-auto">
         <div className="flex items-center justify-between mb-14">
           <BackToHome label="All Courses" href="/" />
-          {user && (
-            <div className="flex items-center gap-5">
-              <div className="flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold"
-                  style={{ backgroundColor: 'rgba(245,241,232,0.15)', color: '#F5F1E8' }}>
-                  {user.name.charAt(0).toUpperCase()}
-                </div>
-                <span className="text-sm hidden sm:inline" style={{ color: 'rgba(245,241,232,0.60)' }}>
-                  {user.name.split(' ')[0]}
-                </span>
-              </div>
-              <button onClick={logout}
-                className="inline-flex items-center gap-1.5 text-[10px] tracking-[0.25em] uppercase hover:opacity-70 transition-opacity"
-                style={{ color: 'rgba(245,241,232,0.35)' }}>
-                <LogOut size={12} /> Sign out
-              </button>
-            </div>
-          )}
         </div>
         <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-[10px] tracking-[0.3em] uppercase font-medium mb-6 bg-white/10 ${levelText}`}>
           {course.level} &nbsp;·&nbsp; {course.levelZh}
