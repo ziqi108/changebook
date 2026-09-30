@@ -30,8 +30,8 @@ export default function CookiePolicyPage() {
             <h1 className="display-lg max-w-3xl mb-8">Cookie Policy</h1>
 
             <p className="text-lg md:text-xl text-ink/55 leading-relaxed max-w-2xl">
-              We use cookies sparingly &mdash; only for the site to work and to
-              understand, in aggregate, how it is read.
+              We use cookies sparingly &mdash; only for the site to work. No
+              third-party analytics or advertising cookies are currently deployed.
             </p>
           </div>
         </div>
@@ -60,11 +60,11 @@ export default function CookiePolicyPage() {
                   without them.
                 </li>
                 <li>
-                  <span className="text-ink">Analytics cookies.</span> We use
-                  privacy-friendly analytics to understand, in aggregate, which
-                  pages are read and how visitors find the site. This helps us
-                  improve the material. Analytics data is aggregated and is not
-                  used to identify individuals.
+                  <span className="text-ink">Analytics cookies.</span> At the
+                  time of writing, no third-party analytics cookies are deployed
+                  on this site. If privacy-friendly, aggregate-only analytics is
+                  introduced in the future, this page will be updated in advance.
+                  Such data would never be used to identify individuals.
                 </li>
               </ul>
               <p>

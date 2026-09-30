@@ -94,7 +94,7 @@ export const COURSE_DETAILS: Record<string, CourseDetail> = {
     currency: '',
     nextCohort: 'Open enrollment',
     includes: [
-      'Translation and commentary on the hexagrams',
+      'Translation and commentary on all 64 hexagrams',
       'Classical texts: Tuan Zhuan, Xiang Zhuan, Wenyan Zhuan',
       'Symbolic correspondences and inner logic',
       'Case studies for daily life application',

@@ -1,49 +1,33 @@
 # CONTENT_TODO.md
 
-> Real business information that **cannot be confirmed from the source** and must be supplied by the site owner before publication of the corresponding claims. Nothing below was fabricated into the site; these items are intentionally left as honest placeholders / "currently unavailable" until verified.
+> Updated: 2026-09-30. Status of real business information that cannot be fabricated. Items are either **Verified** (confirmed from source), **Resolved by owner decision** (2026-09-30), or **Open** (owner must supply before the claim is published).
 
-## 1. Contact & identity
+## Verified from source (this audit)
 
-- [ ] **Real contact email** for `/contact` and privacy/data requests. Currently `/contact` points to the newsletter on the home page and states a contact email will be published once verified.
-- [ ] **Legal entity name & jurisdiction** for `/terms` and `/privacy`. Currently the pages use the generic "Yi Wisdom" / "the site operator" wording rather than a registered entity name.
-- [ ] **Data controller / privacy contact** if different from the general contact.
+- **Intermediate course is a complete 64-hexagram curriculum.** `lib/course-details.ts` contains 64 chapters `hex-01` … `hex-64`, each with one lesson (verified via grep, count = 64, last entry `hex-64` at line 862). The course page includes-list states "Translation and commentary on all 64 hexagrams" — this is **true and retained**. The homepage card does **not** display a lesson count (per the "不得显示 64 Lessons" instruction; duration "12 weeks" also hidden as unverified).
+- **Beginner course actually has 3 lessons** (`lesson-01`, `lesson-02`, `lesson-03` in `lib/course-details.ts`), **not** the 22 previously claimed in `MODULES`. The fabricated "22" is removed and the count is hidden on the card. `MODULES.lessons` set to the real value `3` for data accuracy (not displayed).
+- **No analytics integration exists.** Grep for `gtag`, `google-analytics`, `@vercel/analytics`, `plausible`, `fathom`, `umami`, `googletagmanager` → 0 matches. The Cookie Policy has been corrected to state "no third-party analytics cookies are currently deployed".
+- **No newsletter signup mechanism exists.** The 5 files mentioning "newsletter" contain only text references (no `<input type="email">` form, no provider embed). Per owner decision, text references are retained but no form is added.
+- **Google Search Console verification file exists:** `public/google5014ded934957857.html` (verified). Sitemap can be submitted in GSC.
+- **No PWA manifest / service worker** exists (no client-side cache to manage).
 
-## 2. Teacher / instructor credentials
+## Resolved by owner decision (2026-09-30)
 
-- [ ] Verify **Liu Xize**'s title/role. Currently shown as "I Ching Practical Mentor" (from `lib/instructors.ts` / `app/about/page.tsx`). Confirm this is the desired public title and that the experience claim ("15 years") is accurate.
-- [ ] The About page no longer claims "38 countries" or a "master teacher" — confirm the revised mission/story copy is acceptable.
-- [ ] If additional real teachers exist, provide verified names/titles/bios before re-adding a "Teachers" section (currently removed from Footer and About).
+- **Reflection Sessions** → keep as `Currently Unavailable`. No booking/payment flow exists or is being added now. Educational Notice retained on `/educational-disclaimer` and FAQ.
+- **Newsletter** → keep text references ("join the newsletter") with no signup form, until a provider is chosen.
+- **Legal entity** → no formal entity; keep the generic "the site operator" wording in `/terms` and `/privacy`. No fabricated entity name or jurisdiction.
+- **Social media** → no verifiable official accounts; social links stay removed from Footer and JSON-LD `sameAs`.
+- **Cohort schedules** → beginner & intermediate `nextCohort` kept as `Open enrollment` (the previous dates were in the past). Advanced `TBA`, consult `Currently unavailable`.
+- **Refund policy** → no paid products; `/refund-policy` states honestly that no payment is collected. No refund process published.
 
-## 3. Course details
+## Open — owner action still required
 
-- [ ] **Beginner Course lesson count:** `MODULES` previously claimed "22 lessons" / "4 weeks"; the count is now hidden on the homepage card. Confirm the actual lesson count in `lib/course-details.ts` and whether "4 weeks" is a real schedule before re-displaying.
-- [ ] **Intermediate Course completeness:** `lib/course-details.ts` contains ~770 lines of real curriculum, but it is **not confirmed** whether all 64 hexagrams are covered. The homepage no longer claims "64 Lessons"/"12 weeks" and the includes no longer says "all 64 hexagrams". Confirm scope and update copy if the full 64 are complete (or mark scope explicitly if partial).
-- [ ] **Cohort schedules:** Beginner & Intermediate `nextCohort` were stale past dates (Jul/Aug 2026); set to `Open enrollment`. If scheduled cohorts exist, provide real future dates.
-- [ ] **Advanced Study:** currently `In Development` with empty chapters. When content is ready, populate `lib/course-details.ts` and flip `status` to `Available` with a real `nextCohort`.
+- [ ] **OG images / logo.** `public/` currently contains **only** the Google verification file. Metadata and JSON-LD reference `/og-image.png` (`app/layout.tsx`), `/og-course.png` (`lib/seo.ts`), `/og-article.png` (`app/articles/[slug]/page.tsx`), and `/logo.png` (JSON-LD Organization) — **none of these files exist** (social sharing shows no preview; platforms degrade gracefully). Owner must provide branded assets, or the references should be removed. Auto-generation was attempted but the image endpoint required unavailable authentication.
+- [ ] **Real contact email** for `/contact` and privacy/data requests. Currently `/contact` points to the newsletter text and states an email will be published once verified.
+- [ ] **Liu Xize public title.** Currently "I Ching Practical Mentor" (`lib/instructors.ts`, `app/about/page.tsx`). Owner to confirm this is the desired title and that the "15 years" experience claim is accurate, or provide a corrected title/bio.
+- [ ] **Beginner lesson count display.** Verified = 3 lessons. Currently hidden (conservative). If the owner wants it shown, set `ModuleGrid` to display the verified count; until then it stays hidden.
+- [ ] **Cohort dates**, if scheduled cohorts (not open enrollment) are intended — provide real future dates for beginner/intermediate.
 
-## 4. Reflection sessions (consultation)
+## Notes for paid-program introduction (future)
 
-- [ ] **Booking flow:** no booking mechanism exists (the "Enroll"/"Book" button is non-functional). Currently shown as `Currently Unavailable`. If/when sessions reopen, provide a real booking path.
-- [ ] **Payment / pricing:** sessions are Free / no payment taken. If a paid model is introduced, define price, currency, payment provider, and a real refund process, then update `/refund-policy` **before** collecting payment.
-- [ ] **Delivery & scheduling:** session length, format (video?), languages available, lead time, and follow-up deliverables — all currently removed/unspecified. Provide verified details before re-adding to the `includes` list.
-- [ ] **Educational Notice** is present (FAQ + `/educational-disclaimer`). Confirm the disclaimer wording with legal counsel if the service is offered commercially.
-
-## 5. Refund policy
-
-- [ ] No paid products exist, so no refund process is published. `/refund-policy` states this honestly. If paid programs are introduced, publish a complete, executable refund policy **before** any purchase.
-
-## 6. Newsletter
-
-- [ ] The site references "join the newsletter" in several places (Hero, FAQ, course CTAs, consult page), but **no newsletter signup mechanism** exists in the codebase. Owner must provide a real newsletter embed/provider (e.g., a form endpoint or third-party widget) before relying on this as a contact/update channel.
-
-## 7. Social media
-
-- [ ] All social links were removed (Twitter/YouTube/Reddit could not be verified as owned by Yi Wisdom). If official accounts exist, provide verified URLs before re-adding them to the Footer or JSON-LD `sameAs`.
-
-## 8. Analytics & cookies
-
-- [ ] `/cookie-policy` describes essential + analytics cookies generically. Confirm which analytics tool (if any) is actually deployed and update the cookie list to match. No advertising/tracking cookies are in use.
-
-## 9. Assets
-
-- [ ] `og-image.png`, `og-course.png`, `og-article.png`, and `logo.png` are referenced in metadata/JSON-LD. Verify these files exist in `/public` and reflect the "Yi Wisdom" brand (not "I Ching Master"). Update imagery if outdated.
+If paid courses or paid Reflection Sessions are introduced, the owner MUST — **before** collecting any payment — provide: real price/currency, payment provider, a complete executable refund process, and updated `/refund-policy`, `/terms`, and `/educational-disclaimer` copy reviewed by legal counsel.
