@@ -7,8 +7,6 @@ export type Instructor = {
   specialties: string[];
   experience: string;
   avatar: string;
-  rating: number;
-  sessions: number;
   languages: string[];
 };
 
@@ -22,8 +20,6 @@ export const INSTRUCTORS: Instructor[] = [
     specialties: ['BaZi', 'Purple Star Astrology', 'He Luo Five Elements', 'Feng Shui'],
     experience: '15 years',
     avatar: 'LX',
-    rating: 4.98,
-    sessions: 3847,
     languages: ['English', '中文'],
   },
 ];

@@ -21,7 +21,7 @@ export default function LoginPage() {
         />
         <div className="relative">
           <Link href="/" className="font-display text-xl text-paper hover:text-vermilion transition-colors">
-            ChangeBook
+            Yi Wisdom
           </Link>
         </div>
         <div className="relative">
@@ -41,7 +41,7 @@ export default function LoginPage() {
           </div>
         </div>
         <div className="relative text-[10px] tracking-[0.25em] uppercase text-paper/25">
-          © 2026 ChangeBook
+          © 2026 Yi Wisdom
         </div>
       </div>
 

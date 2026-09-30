@@ -6,38 +6,38 @@ import { DevHydrationGuard } from '@/components/dev/DevHydrationGuard';
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.yiwisdom.org'),
   title: {
-    default: 'I Ching Master — Ancient Chinese Wisdom for Modern Life',
-    template: '%s | I Ching Master',
+    default: 'Yi Wisdom | I Ching Philosophy and Self-Cultivation',
+    template: '%s | Yi Wisdom',
   },
   description:
-    'Learn the I Ching (Book of Changes) with authentic English courses, interactive hexagram readings, and private consultations with a master teacher. A modern gateway to ancient Chinese philosophy.',
+    'Explore the I Ching through classical sources, clear English explanations, thoughtful reflection, and practical self-cultivation. No false certainty or guaranteed predictions.',
   keywords: [
     'I Ching',
     'Book of Changes',
     'learn I Ching',
-    'hexagram reading',
+    'hexagram reflection',
     'Chinese philosophy',
     'ancient wisdom',
     'bagua',
     'yin yang',
     'I Ching course',
-    'I Ching consultation',
+    'I Ching self-cultivation',
   ],
-  authors: [{ name: 'I Ching Master' }],
+  authors: [{ name: 'Yi Wisdom' }],
   openGraph: {
-    title: 'I Ching Master — Ancient Chinese Wisdom for Modern Life',
+    title: 'Yi Wisdom | I Ching Philosophy and Self-Cultivation',
     description:
-      'A modern gateway to the I Ching. Study hexagrams, consult a master, and integrate ancient Chinese wisdom into daily life.',
+      'Explore the I Ching through classical sources, clear English explanations, thoughtful reflection, and practical self-cultivation.',
     url: 'https://www.yiwisdom.org',
-    siteName: 'I Ching Master',
+    siteName: 'Yi Wisdom',
     type: 'website',
     images: [{ url: '/og-image.png' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'I Ching Master — Ancient Chinese Wisdom for Modern Life',
+    title: 'Yi Wisdom | I Ching Philosophy and Self-Cultivation',
     description:
-      'A modern gateway to the I Ching. Study hexagrams, consult a master, and integrate ancient Chinese wisdom into daily life.',
+      'Explore the I Ching through classical sources, clear English explanations, and thoughtful reflection.',
     images: ['/og-image.png'],
   },
 };

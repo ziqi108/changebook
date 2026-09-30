@@ -9,9 +9,8 @@ export type ModuleItem = {
   duration: string;
   lessons: number;
   features: string[];
-  rating: number;
-  students: number;
   price: string;
+  status: 'Available' | 'In Development' | 'Currently Unavailable';
 };
 
 export const MODULES: ModuleItem[] = [
@@ -27,57 +26,53 @@ export const MODULES: ModuleItem[] = [
     duration: '4 weeks',
     lessons: 22,
     features: ['Yin & Yang foundations', 'Eight trigrams', 'Coin casting practice', 'First 10 hexagrams', 'Daily ritual guide'],
-    rating: 4.92,
-    students: 4280,
     price: 'Free',
+    status: 'Available',
   },
   {
     slug: 'intermediate-course',
     level: 'intermediate',
     title: 'Intermediate Course',
-    tagline: 'The 64 Hexagrams',
+    tagline: 'The Hexagram Path',
     description:
-      'A guided journey through all sixty-four hexagrams with modern life applications — relationships, career, self-cultivation.',
+      'A guided journey through the hexagrams with modern life applications — relationships, career, self-cultivation.',
     accent: 'gold',
     hexagramIds: [11, 12],
-    duration: '12 weeks',
-    lessons: 64,
-    features: ['Full 64 hexagram canon', 'Jungian interpretation', 'Monthly live Q&A', 'Psychological framework', 'Lifetime access'],
-    rating: 4.95,
-    students: 2840,
+    duration: '',
+    lessons: 0,
+    features: [],
     price: 'Free',
+    status: 'Available',
   },
   {
     slug: 'advanced-course',
     level: 'advanced',
-    title: 'Advanced Course',
-    tagline: 'The Classical Texts',
+    title: 'Advanced Study',
+    tagline: 'In Development',
     description:
-      'Deep study of the Xici (Great Commentary), the Shuo Gua, and Mei Hua numerology. Bridging I Ching with Jungian psychology.',
+      'Deep study of the classical commentaries. This program is currently in development; join the newsletter for future program updates.',
     accent: 'jade',
     hexagramIds: [63, 64],
-    duration: '20 weeks',
-    lessons: 36,
-    features: ['Xici & Shuo Gua classics', 'Mei Hua numerology', 'Qimen Dunjia', 'Depth psychology', 'Printed texts included'],
-    rating: 4.98,
-    students: 1240,
+    duration: '',
+    lessons: 0,
+    features: [],
     price: 'Free',
+    status: 'In Development',
   },
   {
     slug: 'consult',
     level: 'consult',
-    title: 'Private Consultation',
-    tagline: 'Direct Guidance',
+    title: 'Private Reflection Session',
+    tagline: 'Currently Unavailable',
     description:
-      'A one-on-one reading with a master teacher. Career decisions, relationship clarity, life transitions — meet the wisdom face to face.',
+      'A one-to-one educational conversation using I Ching concepts to reflect on change, responsibility, priorities, and possible next steps. Currently unavailable; join the newsletter for updates.',
     accent: 'vermilion',
     hexagramIds: [3, 4],
-    duration: '60 min',
-    lessons: 1,
-    features: ['60-min video session', 'Full hexagram report', 'Follow-up summary', 'Multilingual available', '7-day booking'],
-    rating: 4.99,
-    students: 10200,
+    duration: '',
+    lessons: 0,
+    features: [],
     price: 'Free',
+    status: 'Currently Unavailable',
   },
 ];
 
@@ -314,65 +309,18 @@ export const FAQS: FAQ[] = [
   },
   {
     question: 'Is the content available in other languages?',
-    answer: 'Currently, all courses are in English with bilingual (English-Chinese) texts in the classical sections. Our master teachers are available for private consultations in English, 中文, 日本語, Deutsch, and Français.',
+    answer: 'Currently, all courses are in English with bilingual (English-Chinese) texts in the classical sections. Reflection sessions are currently unavailable; join the newsletter for future updates.',
   },
   {
-    question: 'What if I am not satisfied with the course?',
-    answer: 'We offer a 14-day money-back guarantee, no questions asked. If the I Ching does not resonate with you in the first two weeks, we will refund your full tuition. We are confident in the quality because we have seen the transformation for thousands of students.',
+    question: 'What if the courses are not for me?',
+    answer: 'All current courses are offered free of charge, so there is no payment to refund. If the material does not resonate, you are free to step away at any time, no questions asked.',
   },
   {
-    question: 'How does a private consultation work?',
-    answer: 'After booking, you will receive a detailed intake form. The master will prepare your session in advance, casting the hexagrams based on your question. The 60-minute video session includes the full reading, interpretation, and a written report delivered within 48 hours.',
+    question: 'What is a Private Reflection Session?',
+    answer: 'A Reflection Session is a one-to-one educational conversation that uses I Ching concepts to reflect on change, responsibility, priorities, and possible next steps. It is educational and exploratory, and does not provide medical, psychological, legal, financial, or other professional advice. No specific future outcome is guaranteed. Sessions are currently unavailable; join the newsletter for updates.',
   },
   {
     question: 'Can I take multiple courses simultaneously?',
-    answer: 'We recommend completing the Beginner Course before starting Intermediate, but it is not mandatory. Many students take the Intermediate course after self-studying the basics. The Advanced course requires completion of at least one prior course or an assessment call with a master.',
+    answer: 'The Beginner Course is available now. The Intermediate and Advanced programs are currently in development. Join the newsletter to be notified as new programs become available.',
   },
-];
-
-export type DispatchItem = {
-  id: string;
-  title: string;
-  tag: string;
-  date: string;
-};
-
-export const DISPATCHES: DispatchItem[] = [
-  {
-    id: 'd1',
-    title: 'The monthly dispatch: What the I Ching says about 2026',
-    tag: 'Cosmic Calendar',
-    date: 'June 1, 2026',
-  },
-  {
-    id: 'd2',
-    title: 'Liu Xize\'s summer retreat: Booking opens July 1',
-    tag: 'Announcement',
-    date: 'May 28, 2026',
-  },
-  {
-    id: 'd3',
-    title: 'New Mei Hua course starts in October — early access for alumni',
-    tag: 'Course News',
-    date: 'May 15, 2026',
-  },
-  {
-    id: 'd4',
-    title: 'Reader spotlight: How therapists are using hexagrams with clients',
-    tag: 'Community',
-    date: 'May 1, 2026',
-  },
-];
-
-export type StatItem = {
-  number: string;
-  label: string;
-  sublabel?: string;
-};
-
-export const GLOBAL_STATS: StatItem[] = [
-  { number: '12,400+', label: 'Students Worldwide', sublabel: 'Across 38 countries' },
-  { number: '3', label: 'Master Teachers', sublabel: 'Lineage-holding practitioners' },
-  { number: '4.96', label: 'Average Rating', sublabel: 'From 2,400+ verified reviews' },
-  { number: '64', label: 'Hexagrams Taught', sublabel: 'Complete canonical canon' },
 ];

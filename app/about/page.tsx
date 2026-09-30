@@ -60,7 +60,7 @@ export default function AboutPage() {
             </h1>
 
             <p className="text-lg md:text-xl text-ink/55 leading-relaxed max-w-2xl">
-              ChangeBook exists to carry the living voice of the I Ching into
+              Yi Wisdom exists to carry the living voice of the I Ching into
               contemporary English — without dilution, without mysticism, and without
               losing the rigour of the classical tradition.
             </p>
@@ -100,9 +100,9 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
               <div className="space-y-6 text-ink/70 leading-[1.85] text-base">
                 <p>
-                  ChangeBook began as a private notes project — a single master teacher
-                  translating her decades of practice into precise, living English for
-                  a small group of Western students.
+                  Yi Wisdom began as a private notes project — translating years of
+                  practice with the I Ching into clear, living English for a small
+                  group of students.
                 </p>
                 <p>
                   What emerged was something unexpected: the translations were teaching
@@ -112,9 +112,10 @@ export default function AboutPage() {
               </div>
               <div className="space-y-6 text-ink/70 leading-[1.85] text-base">
                 <p>
-                  Today, ChangeBook serves students in 38 countries — from therapists
-                  using hexagrams with clients, to executives navigating transitions,
-                  to artists seeking a compass for the creative unknown.
+                  Today, Yi Wisdom offers free courses and reflective writing to
+                  readers wherever the I Ching finds them — from therapists using
+                  hexagrams with clients, to executives navigating transitions, to
+                  artists seeking a compass for the creative unknown.
                 </p>
                 <p>
                   The I Ching has survived 3,000 years because it speaks to something
@@ -163,7 +164,7 @@ export default function AboutPage() {
               <h2 className="font-display text-3xl md:text-4xl mb-2">
                 Ready to begin?
               </h2>
-              <p className="text-sm text-ink/50">Start with the beginner course — or book a private reading.</p>
+              <p className="text-sm text-ink/50">Start with the beginner course — or learn about reflection sessions.</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
@@ -176,7 +177,7 @@ export default function AboutPage() {
                 href="/consult"
                 className="inline-flex items-center justify-center gap-2 px-7 py-4 border border-ink/20 rounded-full text-sm text-ink/60 hover:text-ink hover:border-ink/40 transition-all duration-300"
               >
-                Book a Reading
+                Reflection Sessions
               </Link>
             </div>
           </section>

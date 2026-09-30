@@ -6,7 +6,7 @@ import { Menu, X } from 'lucide-react';
 
 const NAV_LINKS = [
   { href: '/beginner-course', label: 'Learn', zh: '学习' },
-  { href: '/consult', label: 'Consult', zh: '咨询' },
+  { href: '/consult', label: 'Reflect', zh: '咨询' },
   { href: '/articles', label: 'Journal', zh: '文章' },
   { href: '/about', label: 'About', zh: '关于' },
 ];
@@ -42,10 +42,10 @@ export function Header() {
       >
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 h-[68px] md:h-[80px] flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" suppressHydrationWarning className="flex items-center gap-3 group" aria-label="ChangeBook Home">
+          <Link href="/" suppressHydrationWarning className="flex items-center gap-3 group" aria-label="Yi Wisdom Home">
             <div className="relative">
               <span className="font-display text-xl md:text-2xl tracking-tight text-ink group-hover:text-vermilion transition-colors duration-300">
-                ChangeBook
+                Yi Wisdom
               </span>
               <span className="absolute -bottom-0.5 left-0 right-0 h-px bg-vermilion scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
             </div>
@@ -102,7 +102,7 @@ export function Header() {
         >
           <div className="flex items-center justify-between px-6 h-[68px] border-b border-ink/8">
             <Link href="/" onClick={() => setMobileOpen(false)} className="font-display text-xl">
-              ChangeBook
+              Yi Wisdom
             </Link>
             <button
               onClick={() => setMobileOpen(false)}

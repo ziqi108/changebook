@@ -10,7 +10,7 @@ const SITE_URL = 'https://www.yiwisdom.org';
 export const metadata: Metadata = {
   title: 'The Journal — I Ching Articles & Readings',
   description:
-    'Contemporary articles on the I Ching, Chinese philosophy, daily practice, hexagram readings, and interviews with master teachers. New essays every week.',
+    'Contemporary articles on the I Ching, Chinese philosophy, daily practice, and hexagram readings for reflection and self-cultivation. New essays periodically.',
   keywords: [
     'I Ching articles',
     'Book of Changes journal',
@@ -23,9 +23,9 @@ export const metadata: Metadata = {
     type: 'website',
     title: 'The Journal — I Ching Articles & Readings',
     description:
-      'Contemporary articles on the I Ching, Chinese philosophy, and daily practice. New essays every week.',
+      'Contemporary articles on the I Ching, Chinese philosophy, and daily practice. New essays periodically.',
     url: `${SITE_URL}/articles`,
-    siteName: 'I Ching Master',
+    siteName: 'Yi Wisdom',
   },
   twitter: {
     card: 'summary_large_image',

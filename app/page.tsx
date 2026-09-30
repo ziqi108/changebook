@@ -11,11 +11,11 @@ const SITE_URL = 'https://www.yiwisdom.org';
 
 export const metadata: Metadata = {
   title: {
-    default: 'I Ching Master — Ancient Chinese Wisdom for Modern Life',
-    template: '%s | I Ching Master',
+    default: 'Yi Wisdom | I Ching Philosophy and Self-Cultivation',
+    template: '%s | Yi Wisdom',
   },
   description:
-    'Learn the I Ching (Book of Changes) with authentic English courses, interactive hexagram readings, and private consultations with a master teacher. A modern gateway to 3,000 years of Chinese philosophy.',
+    'Explore the I Ching through classical sources, clear English explanations, thoughtful reflection, and practical self-cultivation. No false certainty or guaranteed predictions.',
   keywords: [
     'I Ching',
     'Book of Changes',
@@ -29,23 +29,22 @@ export const metadata: Metadata = {
     '易经',
     '易经学习',
   ],
-  authors: [{ name: 'I Ching Master' }],
-  creator: 'I Ching Master',
+  authors: [{ name: 'Yi Wisdom' }],
+  creator: 'Yi Wisdom',
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: SITE_URL,
-    title: 'I Ching Master — Ancient Chinese Wisdom for Modern Life',
+    title: 'Yi Wisdom | I Ching Philosophy and Self-Cultivation',
     description:
-      'A modern gateway to the I Ching. Study hexagrams, practice daily, and consult a master teacher. Courses, readings, and community in masterful English.',
-    siteName: 'I Ching Master',
+      'Explore the I Ching through classical sources, clear English explanations, thoughtful reflection, and practical self-cultivation. No false certainty or guaranteed predictions.',
+    siteName: 'Yi Wisdom',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'I Ching Master — Ancient Chinese Wisdom for Modern Life',
+    title: 'Yi Wisdom | I Ching Philosophy and Self-Cultivation',
     description:
-      'A modern gateway to the I Ching. Study hexagrams, practice daily, and consult a master teacher.',
-    creator: '@ichingmaster',
+      'Explore the I Ching through classical sources, clear English explanations, thoughtful reflection, and practical self-cultivation.',
   },
   robots: {
     index: true,
@@ -63,9 +62,9 @@ const jsonLd = {
       '@type': 'WebSite',
       '@id': `${SITE_URL}/#website`,
       url: SITE_URL,
-      name: 'I Ching Master',
+      name: 'Yi Wisdom',
       description:
-        'Online academy for learning the I Ching (Book of Changes) — hexagram courses, daily readings, and master consultations.',
+        'Online home for learning the I Ching (Book of Changes) — hexagram study, daily reflection, and educational courses.',
       inLanguage: 'en-US',
       potentialAction: {
         '@type': 'SearchAction',
@@ -76,19 +75,14 @@ const jsonLd = {
     {
       '@type': 'Organization',
       '@id': `${SITE_URL}/#organization`,
-      name: 'I Ching Master',
+      name: 'Yi Wisdom',
       url: SITE_URL,
       logo: {
         '@type': 'ImageObject',
         url: `${SITE_URL}/logo.png`,
       },
-      sameAs: [
-        'https://twitter.com/ichingmaster',
-        'https://www.youtube.com/@ichingmaster',
-        'https://www.reddit.com/r/iching',
-      ],
       description:
-        'An online academy dedicated to teaching the I Ching in authentic English — bridging 3,000 years of Chinese wisdom with modern life.',
+        'An online study space dedicated to the I Ching in clear English — bridging 3,000 years of Chinese wisdom with modern life.',
       address: {
         '@type': 'PostalAddress',
         addressCountry: 'CN',
@@ -98,11 +92,11 @@ const jsonLd = {
     {
       '@type': 'EducationalOrganization',
       '@id': `${SITE_URL}/#eduorg`,
-      name: 'I Ching Master Academy',
+      name: 'Yi Wisdom',
       url: SITE_URL,
       description:
-        'Offers structured courses on the I Ching from beginner to advanced, plus private consultations with master teachers.',
-      teaches: ['I Ching', 'Chinese Philosophy', 'Divination', 'Yin Yang', 'Bagua'],
+        'Offers structured study of the I Ching from beginner to advanced levels, plus educational reflection sessions.',
+      teaches: ['I Ching', 'Chinese Philosophy', 'Yin Yang', 'Bagua'],
     },
   ],
 };

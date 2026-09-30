@@ -4,22 +4,6 @@ import { INSTRUCTORS } from '@/lib/instructors';
 
 const SITE_URL = 'https://www.yiwisdom.org';
 
-function formatStartDate(dateStr: string): string {
-  const months: Record<string, string> = {
-    January: '01', February: '02', March: '03', April: '04',
-    May: '05', June: '06', July: '07', August: '08',
-    September: '09', October: '10', November: '11', December: '12',
-  };
-  const match = dateStr.match(/(\w+)\s+(\d{1,2}),\s+(\d{4})/);
-  if (match) {
-    const month = months[match[1]];
-    const day = match[2].padStart(2, '0');
-    const year = match[3];
-    return `${year}-${month}-${day}`;
-  }
-  return dateStr;
-}
-
 export function generateCourseMetadata(slug: string): Metadata {
   const course = getCourseBySlug(slug);
   if (!course) return {};
@@ -47,7 +31,7 @@ export function generateCourseMetadata(slug: string): Metadata {
       title,
       description,
       url: `${SITE_URL}/${slug}`,
-      siteName: 'I Ching Master',
+      siteName: 'Yi Wisdom',
       locale: 'en_US',
     },
     twitter: {
@@ -64,8 +48,6 @@ export function generateCourseJsonLd(slug: string) {
   if (!course) return null;
 
   const instructor = INSTRUCTORS.find((i) => i.id === 'liu-xize');
-  const totalLessons = course.chapters.reduce((sum, ch) => sum + ch.lessons.length, 0);
-  const lastChapter = course.chapters[course.chapters.length - 1];
 
   return {
     '@context': 'https://schema.org',
@@ -79,7 +61,7 @@ export function generateCourseJsonLd(slug: string) {
         image: `${SITE_URL}/og-course.png`,
         provider: {
           '@type': 'Organization',
-          name: 'I Ching Master',
+          name: 'Yi Wisdom',
           url: SITE_URL,
         },
         author: instructor
@@ -93,17 +75,7 @@ export function generateCourseJsonLd(slug: string) {
         inLanguage: 'en',
         learningResourceType: 'Course',
         courseMode: 'online',
-        timeToComplete: `PT${totalLessons * 45}M`,
-        numberOfCredits: totalLessons,
         educationalProgramMode: 'online',
-        startDate: formatStartDate(course.nextCohort),
-        offers: {
-          '@type': 'Offer',
-          price: course.price === 'Free' ? 0 : course.price.replace(/[^0-9.]/g, ''),
-          priceCurrency: 'USD',
-          availability: 'https://schema.org/InStock',
-          url: `${SITE_URL}/${slug}`,
-        },
         syllabusSections: course.chapters.map((ch) => ({
           '@type': 'SyllabusSection',
           name: ch.title,

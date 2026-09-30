@@ -76,9 +76,15 @@ export function DailyHexagram() {
             &ldquo;{hex.description}&rdquo;
           </blockquote>
 
-          {/* Reflection question */}
-          <p className="mt-10 text-sm text-paper/50 leading-relaxed max-w-xl mx-auto">
-            {hex.question}
+          {/* Reflection questions */}
+          <ul className="mt-10 mx-auto max-w-xl space-y-2 text-sm text-paper/50 leading-relaxed text-left">
+            <li>What is changing in this situation?</li>
+            <li>Which responsibilities require attention?</li>
+            <li>What information may still be missing?</li>
+            <li>What action would be proportionate to current conditions?</li>
+          </ul>
+          <p className="mt-6 text-xs italic text-paper/35">
+            For reflection, not prediction.
           </p>
         </div>
 
@@ -116,11 +122,6 @@ export function DailyHexagram() {
             <span>Next</span>
             <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
           </button>
-        </div>
-
-        {/* Counter */}
-        <div className="mt-6 text-[10px] tracking-[0.3em] uppercase text-paper/25">
-          {String(index + 1).padStart(2, '0')} / {String(DAILY_HEXAGRAM_IDS.length).padStart(2, '0')}
         </div>
       </div>
     </section>

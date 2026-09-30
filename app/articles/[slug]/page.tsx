@@ -59,7 +59,7 @@ export default function ArticlePage({ params }: { params: Params }) {
         datePublished: article.date,
         dateModified: article.date,
         author: { '@type': 'Person', name: article.author, url: `${SITE_URL}/about` },
-        publisher: { '@type': 'Organization', name: 'I Ching Master', url: SITE_URL },
+        publisher: { '@type': 'Organization', name: 'Yi Wisdom', url: SITE_URL },
         mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/articles/${article.slug}` },
         keywords: article.tags.join(', '),
         inLanguage: 'en-US',
@@ -206,12 +206,11 @@ export default function ArticlePage({ params }: { params: Params }) {
             <div>
               <div className="font-display text-xl mb-1">{article.author}</div>
               <div className="text-[10px] tracking-[0.3em] uppercase text-vermilion mb-3">
-                Master Teacher · ChangeBook
+                Writer · Yi Wisdom
               </div>
               <p className="text-sm text-ink/55 leading-relaxed">
-                A lineage-holding teacher of the I Ching with over two decades of
-                practice, {article.author} teaches the classical tradition with
-                clarity and depth.
+                {article.author} writes on the I Ching and the classical Chinese
+                tradition, offering reflections rather than predictions.
               </p>
             </div>
           </div>

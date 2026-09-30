@@ -115,8 +115,8 @@ export function Hero() {
         {/* Descriptor */}
         <p className="fade-in-delay-3 text-base md:text-lg text-ink/55 leading-relaxed max-w-lg mb-14 font-light">
           A living philosophy of change, harmony, and self‑mastery — now
-          accessible in masterful English. Study the 64 hexagrams, practice
-          daily, and consult a teacher when the path seems unclear.
+          accessible in clear English. Study the 64 hexagrams, practice
+          daily, and reflect with its help when the path seems unclear.
         </p>
 
         {/* CTA row */}
@@ -132,7 +132,7 @@ export function Hero() {
             href="/consult"
             className="inline-flex items-center gap-2 px-7 py-4 text-sm text-ink/60 hover:text-ink border border-ink/15 rounded-full hover:border-ink/40 transition-all duration-300"
           >
-            Book a Reading
+            Learn About Reflection Sessions
           </Link>
         </div>
 
@@ -157,20 +157,6 @@ export function Hero() {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Stats bar */}
-        <div className="mt-24 w-full max-w-2xl grid grid-cols-3 gap-px bg-ink/8 rounded-xl overflow-hidden fade-in-delay-5">
-          {[
-            { n: '12,400+', l: 'Students worldwide' },
-            { n: '64', l: 'Hexagrams taught' },
-            { n: '4.96', l: 'Average rating' },
-          ].map((s) => (
-            <div key={s.n} className="bg-paper px-6 py-5 text-center">
-              <div className="font-display text-2xl md:text-3xl text-ink">{s.n}</div>
-              <div className="text-[10px] tracking-[0.25em] uppercase text-ink/40 mt-1">{s.l}</div>
-            </div>
-          ))}
         </div>
       </div>
 

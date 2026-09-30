@@ -32,7 +32,7 @@ export function ModuleGrid() {
           </div>
           <p className="text-sm text-ink/50 leading-relaxed max-w-xs">
             From your first hexagram to the classical texts —
-            each path is carefully sequenced by our master teachers.
+            each path is carefully sequenced for self-cultivation.
           </p>
         </div>
 
@@ -89,18 +89,14 @@ function ModuleCard({ mod, index }: { mod: ModuleItem; index: number }) {
       {/* Footer row */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-6">
-          <div>
-            <div className="text-[10px] tracking-[0.3em] uppercase text-ink/35 mb-0.5">Duration</div>
-            <div className="text-xs text-ink/60">{mod.duration}</div>
-          </div>
-          <div>
-            <div className="text-[10px] tracking-[0.3em] uppercase text-ink/35 mb-0.5">Lessons</div>
-            <div className="text-xs text-ink/60">{mod.lessons}</div>
-          </div>
-          <div>
-            <div className="text-[10px] tracking-[0.3em] uppercase text-ink/35 mb-0.5">Price</div>
-            <div className="text-xs font-medium text-ink/80">{mod.price}</div>
-          </div>
+          <span
+            className={`text-[10px] tracking-[0.3em] uppercase ${
+              mod.status === 'Available' ? 'text-ink/45' : 'text-vermilion'
+            }`}
+          >
+            {mod.status}
+          </span>
+          <span className="text-xs font-medium text-ink/80">{mod.price}</span>
         </div>
         <span className={`text-xl transition-all duration-300 ${accent.arrow} group-hover:translate-x-1`}>
           →

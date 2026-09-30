@@ -272,24 +272,46 @@ export function CourseBody({ course, instructor, hasContent, hasIncludes }: {
         <div className="bg-ink text-paper p-10 md:p-14 rounded-2xl relative overflow-hidden">
           <div className="absolute inset-0 pointer-events-none" aria-hidden="true"
             style={{ background: 'radial-gradient(ellipse 50% 80% at 0% 100%, rgba(192,57,43,0.10) 0%, transparent 60%)' }} />
-          <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-8">
-            <div>
-              <div className="font-display text-3xl md:text-4xl mb-2">Join the next cohort</div>
-              <div className="flex items-center gap-3 text-xs tracking-[0.25em] uppercase" style={{ color: 'rgba(245,241,232,0.40)' }}>
-                <Calendar size={12} /> Starts · {course.nextCohort}
+          {course.nextCohort === 'Currently unavailable' || course.nextCohort === 'TBA' ? (
+            <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-8">
+              <div>
+                <div className="font-display text-3xl md:text-4xl mb-2">
+                  {course.nextCohort === 'Currently unavailable' ? 'Currently Unavailable' : 'In Development'}
+                </div>
+                <div className="text-sm" style={{ color: 'rgba(245,241,232,0.55)' }}>
+                  Join the newsletter for updates.
+                </div>
               </div>
-              <div className="mt-3 font-display text-2xl text-vermilion">{course.price}</div>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link href="/" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-paper text-ink rounded-full text-sm tracking-wide hover:bg-vermilion hover:text-paper transition-all duration-300">
+                  Back to Home
+                </Link>
+                <Link href="/educational-disclaimer" className="inline-flex items-center justify-center gap-2 px-7 py-4 text-sm rounded-full transition-all duration-300"
+                  style={{ color: 'rgba(245,241,232,0.50)', border: '1px solid rgba(245,241,232,0.15)' }}>
+                  Educational Disclaimer
+                </Link>
+              </div>
             </div>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <button className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-paper text-ink rounded-full text-sm tracking-wide hover:bg-vermilion hover:text-paper transition-all duration-300">
-                Enroll Now →
-              </button>
-              <Link href="/" className="inline-flex items-center justify-center gap-2 px-7 py-4 text-sm rounded-full transition-all duration-300"
-                style={{ color: 'rgba(245,241,232,0.50)', border: '1px solid rgba(245,241,232,0.15)' }}>
-                Back to Home
-              </Link>
+          ) : (
+            <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-8">
+              <div>
+                <div className="font-display text-3xl md:text-4xl mb-2">Begin studying</div>
+                <div className="flex items-center gap-3 text-xs tracking-[0.25em] uppercase" style={{ color: 'rgba(245,241,232,0.40)' }}>
+                  <Calendar size={12} /> {course.nextCohort}
+                </div>
+                <div className="mt-3 font-display text-2xl text-vermilion">{course.price}</div>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-paper text-ink rounded-full text-sm tracking-wide hover:bg-vermilion hover:text-paper transition-all duration-300">
+                  Begin Free Study →
+                </button>
+                <Link href="/" className="inline-flex items-center justify-center gap-2 px-7 py-4 text-sm rounded-full transition-all duration-300"
+                  style={{ color: 'rgba(245,241,232,0.50)', border: '1px solid rgba(245,241,232,0.15)' }}>
+                  Back to Home
+                </Link>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
     </>

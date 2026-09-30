@@ -8,14 +8,13 @@ const FOOTER_LINKS = {
     { label: 'Journal', href: '/articles' },
   ],
   Practice: [
-    { label: 'Consult a Master', href: '/consult' },
+    { label: 'Reflection Sessions', href: '/consult' },
     { label: 'Daily Hexagram', href: '/#hexagram' },
     { label: 'All Articles', href: '/articles' },
   ],
   About: [
     { label: 'Our Mission', href: '/about' },
-    { label: 'Teachers', href: '/consult' },
-    { label: 'Contact', href: '/about' },
+    { label: 'Contact', href: '/contact' },
   ],
 };
 
@@ -42,32 +41,14 @@ export function Footer() {
           <div className="md:col-span-2">
             <Link href="/" className="inline-block mb-5">
               <span className="font-display text-2xl tracking-tight hover:text-vermilion transition-colors duration-300">
-                ChangeBook
+                Yi Wisdom
               </span>
             </Link>
             <p className="text-sm text-ink/50 leading-relaxed max-w-xs mb-8">
-              A modern gateway to the{' '}
-              <span className="italic">I&nbsp;Ching</span> — carrying 3,000&nbsp;years
-              of Chinese wisdom into contemporary life.
+              Ancient Chinese Wisdom for Modern Life. Explore the{' '}
+              <span className="italic">I&nbsp;Ching</span> through classical sources
+              and thoughtful reflection.
             </p>
-            {/* Social row */}
-            <div className="flex items-center gap-5">
-              {[
-                { label: 'Twitter', href: 'https://twitter.com/ichingmaster' },
-                { label: 'YouTube', href: 'https://youtube.com/@ichingmaster' },
-                { label: 'Reddit', href: 'https://reddit.com/r/iching' },
-              ].map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[10px] tracking-[0.25em] uppercase text-ink/35 hover:text-ink transition-colors"
-                >
-                  {s.label}
-                </a>
-              ))}
-            </div>
           </div>
 
           {/* Link columns */}
@@ -95,17 +76,23 @@ export function Footer() {
         {/* Bottom row */}
         <div className="mt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <span className="text-[10px] tracking-[0.3em] uppercase text-ink/30">
-            © 2026 ChangeBook · All rights reserved
+            © 2026 Yi Wisdom · All rights reserved
           </span>
           <div className="flex items-center gap-6">
-            {['Privacy', 'Terms', 'Cookies'].map((item) => (
-              <a
-                key={item}
-                href="#"
+            {[
+              { label: 'Privacy', href: '/privacy' },
+              { label: 'Terms', href: '/terms' },
+              { label: 'Cookies', href: '/cookie-policy' },
+              { label: 'Refunds', href: '/refund-policy' },
+              { label: 'Disclaimer', href: '/educational-disclaimer' },
+            ].map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
                 className="text-[10px] tracking-[0.3em] uppercase text-ink/30 hover:text-ink/60 transition-colors"
               >
-                {item}
-              </a>
+                {item.label}
+              </Link>
             ))}
           </div>
         </div>
