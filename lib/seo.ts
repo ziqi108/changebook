@@ -99,7 +99,7 @@ export function generateCourseJsonLd(slug: string) {
         startDate: formatStartDate(course.nextCohort),
         offers: {
           '@type': 'Offer',
-          price: course.price.replace(/[^0-9.]/g, ''),
+          price: course.price === 'Free' ? 0 : course.price.replace(/[^0-9.]/g, ''),
           priceCurrency: 'USD',
           availability: 'https://schema.org/InStock',
           url: `${SITE_URL}/${slug}`,

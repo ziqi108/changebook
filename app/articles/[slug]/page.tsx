@@ -132,40 +132,58 @@ export default function ArticlePage({ params }: { params: Params }) {
               {article.excerpt}
             </p>
 
-            <p className="text-base leading-[1.85]">
-              The I Ching speaks not in dogma but in living metaphor. Every line, every hexagram,
-              offers a mirror for the reader&apos;s own inner process — inviting us to see ourselves
-              more clearly, and to act in harmony with the currents around us.
-            </p>
+            {article.body ? (
+              article.body.map((block, i) =>
+                block.type === 'quote' ? (
+                  <blockquote key={i} className="border-l-2 border-vermilion pl-8 py-3 my-10">
+                    <p className="font-display text-2xl italic leading-relaxed text-ink/75">
+                      {block.text}
+                    </p>
+                  </blockquote>
+                ) : (
+                  <p key={i} className="text-base leading-[1.85]">
+                    {block.text}
+                  </p>
+                )
+              )
+            ) : (
+              <>
+                <p className="text-base leading-[1.85]">
+                  The I Ching speaks not in dogma but in living metaphor. Every line, every hexagram,
+                  offers a mirror for the reader&apos;s own inner process — inviting us to see ourselves
+                  more clearly, and to act in harmony with the currents around us.
+                </p>
 
-            <blockquote className="border-l-2 border-vermilion pl-8 py-3 my-10">
-              <p className="font-display text-2xl italic leading-relaxed text-ink/75">
-                &ldquo;The I Ching is not a book to be read, but a practice to be entered.&rdquo;
-              </p>
-            </blockquote>
+                <blockquote className="border-l-2 border-vermilion pl-8 py-3 my-10">
+                  <p className="font-display text-2xl italic leading-relaxed text-ink/75">
+                    &ldquo;The I Ching is not a book to be read, but a practice to be entered.&rdquo;
+                  </p>
+                </blockquote>
 
-            <p className="text-base leading-[1.85]">
-              In this article, we explore the deeper dimensions of{' '}
-              <em>{article.tags[0].toLowerCase()}</em> through the lens of the I Ching&apos;s
-              3,000-year-old wisdom tradition. Drawing on classical commentaries and
-              contemporary lived practice, we see how the ancient text remains remarkably
-              alive for the modern reader.
-            </p>
+                <p className="text-base leading-[1.85]">
+                  In this article, we explore the deeper dimensions of{' '}
+                  <em>{article.tags[0].toLowerCase()}</em> through the lens of the I Ching&apos;s
+                  3,000-year-old wisdom tradition. Drawing on classical commentaries and
+                  contemporary lived practice, we see how the ancient text remains remarkably
+                  alive for the modern reader.
+                </p>
 
-            <p className="text-base leading-[1.85]">
-              Each hexagram is not merely a symbol — it is an event, a moment in the
-              eternal cycle of change that the ancient Chinese sages mapped so precisely.
-              When we cast the yarrow stalks or toss the coins, we are not invoking
-              superstition; we are invoking attentiveness. We are asking: what is
-              the shape of this moment?
-            </p>
+                <p className="text-base leading-[1.85]">
+                  Each hexagram is not merely a symbol — it is an event, a moment in the
+                  eternal cycle of change that the ancient Chinese sages mapped so precisely.
+                  When we cast the yarrow stalks or toss the coins, we are not invoking
+                  superstition; we are invoking attentiveness. We are asking: what is
+                  the shape of this moment?
+                </p>
 
-            <p className="text-base leading-[1.85]">
-              Whether you are a newcomer encountering the Book of Changes for the
-              first time, or a seasoned student returning to its wellsprings, the
-              reflections that follow are written for you. May they offer a doorway,
-              a path, and ultimately a mirror.
-            </p>
+                <p className="text-base leading-[1.85]">
+                  Whether you are a newcomer encountering the Book of Changes for the
+                  first time, or a seasoned student returning to its wellsprings, the
+                  reflections that follow are written for you. May they offer a doorway,
+                  a path, and ultimately a mirror.
+                </p>
+              </>
+            )}
           </div>
 
           {/* Tags */}
