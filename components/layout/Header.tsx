@@ -3,17 +3,34 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import { LocaleSwitcher } from '@/components/layout/LocaleSwitcher';
+import type { Locale } from '@/lib/i18n';
 
-const NAV_LINKS = [
-  { href: '/beginner-course', label: 'Learn', zh: '学习' },
-  { href: '/consult', label: 'Reflect', zh: '咨询' },
-  { href: '/articles', label: 'Journal', zh: '文章' },
-  { href: '/about', label: 'About', zh: '关于' },
-];
+const NAV_LINKS: Record<Locale, { href: string; label: string }[]> = {
+  en: [
+    { href: '/beginner-course', label: 'Learn' },
+    { href: '/consult', label: 'Reflect' },
+    { href: '/articles', label: 'Journal' },
+    { href: '/about', label: 'About' },
+  ],
+  'zh-CN': [
+    { href: '/zh/about', label: '关于' },
+    { href: '/zh/articles', label: '文章' },
+    { href: '/zh/contact', label: '联系' },
+  ],
+};
 
-export function Header() {
+export function Header({
+  locale = 'en',
+  counterpartOverride,
+}: {
+  locale?: Locale;
+  /** 传给 LocaleSwitcher：当前页对应语言版本的路径（如文章按 translationKey 查找） */
+  counterpartOverride?: string;
+}) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const links = NAV_LINKS[locale];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -42,7 +59,7 @@ export function Header() {
       >
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 h-[68px] md:h-[80px] flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" suppressHydrationWarning className="flex items-center gap-3 group" aria-label="Yi Wisdom Home">
+          <Link href={locale === 'zh-CN' ? '/zh' : '/'} suppressHydrationWarning className="flex items-center gap-3 group" aria-label="Yi Wisdom Home">
             <div className="relative">
               <span className="font-display text-xl md:text-2xl tracking-tight text-ink group-hover:text-vermilion transition-colors duration-300">
                 Yi Wisdom
@@ -55,8 +72,8 @@ export function Header() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-10" aria-label="Primary navigation">
-            {NAV_LINKS.map((l) => (
+          <nav className="hidden md:flex items-center gap-10" aria-label={locale === 'zh-CN' ? '主导航' : 'Primary navigation'}>
+            {links.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
@@ -70,11 +87,12 @@ export function Header() {
 
           {/* Right side */}
           <div className="flex items-center gap-5">
+            <LocaleSwitcher locale={locale} counterpartOverride={counterpartOverride} />
             {/* Mobile toggle */}
             <button
               onClick={() => setMobileOpen((v) => !v)}
               className="md:hidden w-9 h-9 flex items-center justify-center rounded-full hover:bg-ink/5 transition-colors"
-              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+              aria-label={mobileOpen ? (locale === 'zh-CN' ? '关闭菜单' : 'Close menu') : (locale === 'zh-CN' ? '打开菜单' : 'Open menu')}
             >
               {mobileOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
@@ -101,7 +119,7 @@ export function Header() {
           }`}
         >
           <div className="flex items-center justify-between px-6 h-[68px] border-b border-ink/8">
-            <Link href="/" onClick={() => setMobileOpen(false)} className="font-display text-xl">
+            <Link href={locale === 'zh-CN' ? '/zh' : '/'} onClick={() => setMobileOpen(false)} className="font-display text-xl">
               Yi Wisdom
             </Link>
             <button
@@ -112,8 +130,8 @@ export function Header() {
             </button>
           </div>
 
-          <nav className="flex-1 px-6 py-10 flex flex-col gap-1">
-            {NAV_LINKS.map((l) => (
+          <nav className="flex-1 px-6 py-10 flex flex-col gap-1" aria-label={locale === 'zh-CN' ? '主导航' : 'Primary navigation'}>
+            {links.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
@@ -121,9 +139,12 @@ export function Header() {
                 className="flex items-center justify-between py-4 border-b border-ink/8 text-ink/70 hover:text-ink transition-colors group"
               >
                 <span className="font-display text-2xl">{l.label}</span>
-                <span className="text-[10px] tracking-[0.3em] text-ink/30">{l.zh}</span>
+                <span className="text-[10px] tracking-[0.3em] text-ink/30">→</span>
               </Link>
             ))}
+            <div className="pt-6">
+              <LocaleSwitcher locale={locale} counterpartOverride={counterpartOverride} />
+            </div>
           </nav>
         </div>
       </div>

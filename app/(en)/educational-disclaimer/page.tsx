@@ -3,11 +3,13 @@ import Link from 'next/link';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { BackToHome } from '@/components/ui/BackToHome';
+import { buildAlternates, getCounterpart } from '@/lib/i18n';
 
 export const metadata: Metadata = {
   title: 'Educational Disclaimer',
   description:
     'Yi Wisdom content is educational and exploratory, and is not professional advice of any kind.',
+  alternates: buildAlternates('/educational-disclaimer', 'en', getCounterpart('/educational-disclaimer')),
 };
 
 export default function EducationalDisclaimerPage() {

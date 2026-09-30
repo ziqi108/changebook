@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import './globals.css';
+import '../globals.css';
 import { ClientProviders } from '@/components/auth/ClientProviders';
 import { DevHydrationGuard } from '@/components/dev/DevHydrationGuard';
 

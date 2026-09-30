@@ -3,11 +3,13 @@ import Link from 'next/link';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { BackToHome } from '@/components/ui/BackToHome';
+import { buildAlternates, getCounterpart } from '@/lib/i18n';
 
 export const metadata: Metadata = {
   title: 'Terms of Use',
   description:
     'The terms under which Yi Wisdom provides its educational content about the I Ching.',
+  alternates: buildAlternates('/terms', 'en', getCounterpart('/terms')),
 };
 
 export default function TermsPage() {

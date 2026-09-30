@@ -153,7 +153,7 @@ export function Hero() {
                 Hexagram #11 · Flowering
               </div>
               <div className="text-xs text-ink/45 mt-2 italic font-display">
-                "Heaven and earth in accord"
+                &ldquo;Heaven and earth in accord&rdquo;
               </div>
             </div>
           </div>

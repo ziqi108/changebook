@@ -3,11 +3,13 @@ import Link from 'next/link';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { BackToHome } from '@/components/ui/BackToHome';
+import { buildAlternates, getCounterpart } from '@/lib/i18n';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
   description:
     'How Yi Wisdom collects, uses, and protects the minimal personal data you share with us.',
+  alternates: buildAlternates('/privacy', 'en', getCounterpart('/privacy')),
 };
 
 export default function PrivacyPage() {

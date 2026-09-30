@@ -3,11 +3,13 @@ import Link from 'next/link';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { BackToHome } from '@/components/ui/BackToHome';
+import { buildAlternates, getCounterpart } from '@/lib/i18n';
 
 export const metadata: Metadata = {
   title: 'Cookie Policy',
   description:
     'The types of cookies Yi Wisdom uses and how to manage them in your browser.',
+  alternates: buildAlternates('/cookie-policy', 'en', getCounterpart('/cookie-policy')),
 };
 
 export default function CookiePolicyPage() {

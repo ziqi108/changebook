@@ -3,10 +3,20 @@ import Link from 'next/link';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { BackToHome } from '@/components/ui/BackToHome';
+import { buildAlternates, getCounterpart } from '@/lib/i18n';
 
 export const metadata: Metadata = {
   title: 'About',
   description: 'Our mission to share authentic Chinese wisdom with the modern world.',
+  alternates: buildAlternates('/about', 'en', getCounterpart('/about')),
+  openGraph: {
+    title: 'About | Yi Wisdom',
+    description: 'Our mission to share authentic Chinese wisdom with the modern world.',
+    url: 'https://www.yiwisdom.org/about',
+    locale: 'en_US',
+    siteName: 'Yi Wisdom',
+    type: 'website',
+  },
 };
 
 const MASTERS = [

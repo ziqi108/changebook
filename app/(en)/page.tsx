@@ -6,6 +6,7 @@ import { ModuleGrid } from '@/components/home/ModuleGrid';
 import { DailyHexagram } from '@/components/home/DailyHexagram';
 import { FeaturedArticles } from '@/components/home/FeaturedArticles';
 import { Testimonials } from '@/components/home/Testimonials';
+import { buildAlternates, getCounterpart } from '@/lib/i18n';
 
 const SITE_URL = 'https://www.yiwisdom.org';
 
@@ -26,8 +27,7 @@ export const metadata: Metadata = {
     'bagua',
     'yin yang',
     'I Ching consultation',
-    '易经',
-    '易经学习',
+    'I Ching self-cultivation',
   ],
   authors: [{ name: 'Yi Wisdom' }],
   creator: 'Yi Wisdom',
@@ -50,9 +50,7 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  alternates: {
-    canonical: SITE_URL,
-  },
+  alternates: buildAlternates('/', 'en', getCounterpart('/')),
 };
 
 const jsonLd = {
@@ -65,7 +63,7 @@ const jsonLd = {
       name: 'Yi Wisdom',
       description:
         'Online home for learning the I Ching (Book of Changes) — hexagram study, daily reflection, and educational courses.',
-      inLanguage: 'en-US',
+      inLanguage: 'en',
       potentialAction: {
         '@type': 'SearchAction',
         target: `${SITE_URL}/articles?q={search_term_string}`,

@@ -3,11 +3,22 @@ import Link from 'next/link';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { BackToHome } from '@/components/ui/BackToHome';
+import { buildAlternates, getCounterpart } from '@/lib/i18n';
 
 export const metadata: Metadata = {
   title: 'Contact',
   description:
     'How to reach Yi Wisdom, including the newsletter and where to direct questions.',
+  alternates: buildAlternates('/contact', 'en', getCounterpart('/contact')),
+  openGraph: {
+    title: 'Contact | Yi Wisdom',
+    description:
+      'How to reach Yi Wisdom, including the newsletter and where to direct questions.',
+    url: 'https://www.yiwisdom.org/contact',
+    locale: 'en_US',
+    siteName: 'Yi Wisdom',
+    type: 'website',
+  },
 };
 
 export default function ContactPage() {

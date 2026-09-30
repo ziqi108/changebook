@@ -3,11 +3,13 @@ import Link from 'next/link';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { BackToHome } from '@/components/ui/BackToHome';
+import { buildAlternates, getCounterpart } from '@/lib/i18n';
 
 export const metadata: Metadata = {
   title: 'Refund Policy',
   description:
     'Yi Wisdom currently offers free courses and unavailable Reflection Sessions, so no refund is applicable at this time.',
+  alternates: buildAlternates('/refund-policy', 'en', getCounterpart('/refund-policy')),
 };
 
 export default function RefundPolicyPage() {

@@ -4,24 +4,34 @@ import { notFound } from 'next/navigation';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { BackToHome } from '@/components/ui/BackToHome';
-import { FEATURED_ARTICLES } from '@/lib/data';
+import { FEATURED_ARTICLES, GET_TRANSLATION } from '@/lib/data';
+import { buildAlternates } from '@/lib/i18n';
 
 const SITE_URL = 'https://www.yiwisdom.org';
 
 type Params = { slug: string };
 
 export function generateStaticParams(): Params[] {
-  return FEATURED_ARTICLES.map((a) => ({ slug: a.slug }));
+  return FEATURED_ARTICLES.filter((a) => a.locale === 'en').map((a) => ({ slug: a.slug }));
 }
 
 export function generateMetadata({ params }: { params: Params }): Metadata {
   const article = FEATURED_ARTICLES.find((a) => a.slug === params.slug);
   if (!article) return {};
+  /**
+   * 守卫式 hreflang：仅当存在另一语言的已发布对应文章（translationKey 相同）时
+   * 才输出双向 hreflang；否则只输出英文自引用 canonical，绝不指向 404/noindex。
+   */
+  const zhCounterpart = GET_TRANSLATION(article, 'zh-CN');
   return {
     title: article.title,
     description: article.excerpt,
     keywords: article.tags,
-    alternates: { canonical: `${SITE_URL}/articles/${article.slug}` },
+    alternates: buildAlternates(
+      `/articles/${article.slug}`,
+      'en',
+      zhCounterpart ? `/zh/articles/${zhCounterpart.slug}` : null
+    ),
     openGraph: {
       type: 'article',
       title: article.title,
@@ -30,6 +40,7 @@ export function generateMetadata({ params }: { params: Params }): Metadata {
       publishedTime: article.date,
       authors: [article.author],
       tags: article.tags,
+      locale: 'en_US',
     },
     twitter: {
       card: 'summary_large_image',
@@ -43,8 +54,14 @@ export default function ArticlePage({ params }: { params: Params }) {
   const article = FEATURED_ARTICLES.find((a) => a.slug === params.slug);
   if (!article) notFound();
 
+  // 语言切换器按 translationKey 查找中文对应文章；不存在则不显示中文链接
+  const zhCounterpart = GET_TRANSLATION(article, 'zh-CN');
+
   const related = FEATURED_ARTICLES.filter(
-    (a) => a.slug !== article.slug && a.tags.some((t) => article.tags.includes(t))
+    (a) =>
+      a.locale === 'en' &&
+      a.slug !== article.slug &&
+      a.tags.some((t) => article.tags.includes(t))
   ).slice(0, 3);
 
   const jsonLd = {
@@ -62,7 +79,7 @@ export default function ArticlePage({ params }: { params: Params }) {
         publisher: { '@type': 'Organization', name: 'Yi Wisdom', url: SITE_URL },
         mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/articles/${article.slug}` },
         keywords: article.tags.join(', '),
-        inLanguage: 'en-US',
+        inLanguage: 'en',
         wordCount: 800,
       },
       {
@@ -79,7 +96,11 @@ export default function ArticlePage({ params }: { params: Params }) {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <Header />
+      <Header
+        counterpartOverride={
+          zhCounterpart ? `/zh/articles/${zhCounterpart.slug}` : undefined
+        }
+      />
       <main className="pt-28 pb-28">
         <div className="max-w-[780px] mx-auto px-6 md:px-10">
 
@@ -114,7 +135,7 @@ export default function ArticlePage({ params }: { params: Params }) {
                 <div>
                   <div className="text-sm font-medium text-ink">{article.author}</div>
                   <div className="text-[10px] tracking-[0.2em] uppercase text-ink/40">
-                    Master Teacher
+                    Writer
                   </div>
                 </div>
               </div>

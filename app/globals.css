@@ -199,3 +199,25 @@
     animation: rotateSlow 60s linear infinite;
   }
 }
+
+/* —— 简体中文页面（.lang-zh，由 app/(zh)/layout.tsx 挂载）—— */
+.lang-zh {
+  font-family: 'Inter', 'Noto Serif SC', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', sans-serif;
+}
+
+.lang-zh .font-display {
+  font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+  letter-spacing: 0.02em;
+}
+
+.lang-zh .eyebrow {
+  letter-spacing: 0.3em;
+}
+
+/* 中文长标题在手机端不溢出 */
+.lang-zh h1,
+.lang-zh h2,
+.lang-zh h3 {
+  overflow-wrap: anywhere;
+}

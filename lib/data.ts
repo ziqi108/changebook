@@ -93,9 +93,19 @@ export type Article = {
   authorInitials: string;
   featured?: boolean;
   body?: ArticleBlock[];
+  /**
+   * i18n 字段：
+   * - locale：文章语言（'en' | 'zh-CN'），每篇文章单一语言，不中英混排
+   * - translationKey：中英文对应文章的稳定关联键（与语言、slug 无关）
+   *   语言切换器和 hreflang 依据 translationKey 查找对应语言版本；
+   *   对应翻译未发布时不得输出指向它的 hreflang/链接。
+   */
+  locale: 'en' | 'zh-CN';
+  translationKey: string;
 };
 
-export const FEATURED_ARTICLES: Article[] = [
+/** 现有英文文章原始数据（locale/translationKey 在导出时统一填充） */
+const RAW_ARTICLES: Omit<Article, 'locale' | 'translationKey'>[] = [
   {
     slug: 'yin-yang-in-modern-life',
     title: 'Yin & Yang in Modern Life: Balancing Doing and Being',
@@ -290,8 +300,35 @@ export const FEATURED_ARTICLES: Article[] = [
   },
 ];
 
+/**
+ * 导出时为每篇文章填充 i18n 字段。
+ * 现有文章均为英文，translationKey 暂取自身 slug；
+ * 新增中文文章时必须显式指定 locale: 'zh-CN'，并用与英文原文相同的
+ * translationKey 关联（届时将英文条的 translationKey 改为共同键）。
+ */
+export const FEATURED_ARTICLES: Article[] = RAW_ARTICLES.map((a) => ({
+  ...a,
+  locale: 'en' as const,
+  translationKey: a.slug,
+}));
+
 export const GET_ARTICLE_BY_SLUG = (slug: string) =>
   FEATURED_ARTICLES.find((a) => a.slug === slug);
+
+/**
+ * 按 translationKey 查找另一语言版本的已发布文章。
+ * 不存在时返回 undefined —— 调用方据此不输出 hreflang / 语言切换链接。
+ */
+export const GET_TRANSLATION = (
+  article: Article,
+  targetLocale: 'en' | 'zh-CN'
+): Article | undefined =>
+  FEATURED_ARTICLES.find(
+    (a) =>
+      a.translationKey === article.translationKey &&
+      a.locale === targetLocale &&
+      a.locale !== article.locale
+  );
 
 export type FAQ = {
   question: string;
