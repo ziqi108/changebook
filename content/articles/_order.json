@@ -1,6 +1,7 @@
 {
   "_note": "文章显示顺序清单（数组序 = 站点展示序）。在 CMS 新建的文章默认追加到对应语言列表末尾；如需调整位置，把 slug 移到合适数组位置即可（改完无需发版，下次部署生效）。",
   "en": [
+    "iching-as-a-decision-tool",
     "yin-yang-in-modern-life",
     "hexagram-11-flow",
     "i-ching-vs-tarot",
@@ -15,6 +16,7 @@
     "hexagram-64-beauty-of-the-unfinished"
   ],
   "zh": [
+    "iching-as-a-decision-tool",
     "yin-yang-in-modern-life",
     "hexagram-11-flow",
     "the-eight-trigrams-explained"
