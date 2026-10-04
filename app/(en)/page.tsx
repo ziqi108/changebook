@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: '%s | Yi Wisdom',
   },
   description:
-    'Explore the I Ching through classical sources, clear English explanations, thoughtful reflection, and practical self-cultivation. No false certainty or guaranteed predictions.',
+    'Study the I Ching with classical sources, clear English explanations, and practical self-cultivation — reflection, not prediction.',
   keywords: [
     'I Ching',
     'Book of Changes',
@@ -37,14 +37,23 @@ export const metadata: Metadata = {
     url: SITE_URL,
     title: 'Yi Wisdom | I Ching Philosophy and Self-Cultivation',
     description:
-      'Explore the I Ching through classical sources, clear English explanations, thoughtful reflection, and practical self-cultivation. No false certainty or guaranteed predictions.',
+      'Study the I Ching with classical sources, clear English explanations, and practical self-cultivation — reflection, not prediction.',
     siteName: 'Yi Wisdom',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 675,
+        alt: 'Yi Wisdom — I Ching philosophy and self-cultivation in clear English',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Yi Wisdom | I Ching Philosophy and Self-Cultivation',
     description:
       'Explore the I Ching through classical sources, clear English explanations, thoughtful reflection, and practical self-cultivation.',
+    images: ['/og-image.png'],
   },
   robots: {
     index: true,

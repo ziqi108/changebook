@@ -71,7 +71,7 @@ export function DailyHexagramZh() {
           <div className="mb-8">
             <div className="font-display text-4xl md:text-5xl text-paper mb-2">{hex.nameZh}</div>
             <div className="text-[10px] tracking-[0.45em] uppercase text-paper/35 mt-3">
-              第 {String(hex.id).padStart(2, '0')} 卦 &nbsp;·&nbsp; {hex.namePinyin} &nbsp;·&nbsp; {hex.element}
+              第 {String(hex.id).padStart(2, '0')} 卦 &nbsp;·&nbsp; {hex.element}
             </div>
           </div>
 

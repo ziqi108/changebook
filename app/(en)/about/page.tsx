@@ -6,16 +6,24 @@ import { BackToHome } from '@/components/ui/BackToHome';
 import { buildAlternates, getCounterpart } from '@/lib/i18n';
 
 export const metadata: Metadata = {
-  title: 'About',
+  title: 'About Yi Wisdom — Our Mission & Teachers',
   description: 'Our mission to share authentic Chinese wisdom with the modern world.',
   alternates: buildAlternates('/about', 'en', getCounterpart('/about')),
   openGraph: {
-    title: 'About | Yi Wisdom',
+    title: 'About Yi Wisdom — Our Mission & Teachers | Yi Wisdom',
     description: 'Our mission to share authentic Chinese wisdom with the modern world.',
     url: 'https://www.yiwisdom.org/about',
     locale: 'en_US',
     siteName: 'Yi Wisdom',
     type: 'website',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 675,
+        alt: 'About Yi Wisdom — carrying the living voice of the I Ching into modern life',
+      },
+    ],
   },
 };
 
@@ -24,15 +32,14 @@ const MASTERS = [
     name: 'Liu Xize',
     initials: 'LX',
     title: 'I Ching Practical Mentor',
-    zh: '刘锡泽',
     bio: 'Proficient in BaZi, Purple Star Astrology, He Luo Five Elements, and residential Feng Shui. Free of empty and exaggerated formulas. He interprets destiny based on real-life scenarios including modern careers, property investment, and family life. He analyzes the underlying patterns of career development, wealth fortune, spiritual blessing, and physical health, and teaches practical methods of Five Elements adjustment and spiritual cultivation to gather blessings. Provides systematic I Ching courses for beginners, guiding learners to understand the Yin-Yang laws of the Book of Changes, plan life with ancient wisdom, pursue good fortune, accumulate wealth, and stabilize body and mind.',
   },
 ];
 
 const VALUES = [
-  { zh: '真', en: 'Authenticity', desc: 'Rooted in the classical texts — never diluted, never distorted.' },
-  { zh: '精', en: 'Precision', desc: 'Every word is chosen with care. Every interpretation is earned.' },
-  { zh: '活', en: 'Aliveness', desc: 'The I Ching is a living tradition, not a museum piece.' },
+  { en: 'Authenticity', desc: 'Rooted in the classical texts — never diluted, never distorted.' },
+  { en: 'Precision', desc: 'Every word is chosen with care. Every interpretation is earned.' },
+  { en: 'Aliveness', desc: 'The I Ching is a living tradition, not a museum piece.' },
 ];
 
 export default function AboutPage() {
@@ -43,15 +50,6 @@ export default function AboutPage() {
 
         {/* Hero band */}
         <div className="pt-32 pb-24 px-6 md:px-10 border-b border-ink/8 relative overflow-hidden">
-          <div
-            className="absolute right-0 bottom-0 pointer-events-none select-none opacity-[0.03]"
-            aria-hidden="true"
-          >
-            <span className="font-display text-[22rem] leading-none" style={{ fontFamily: "'Noto Serif SC', serif" }}>
-              道
-            </span>
-          </div>
-
           <div className="relative max-w-[1100px] mx-auto">
             <div className="mb-10">
               <BackToHome />
@@ -59,7 +57,7 @@ export default function AboutPage() {
 
             <div className="flex items-center gap-3 mb-5">
               <span className="h-px w-10 bg-ink/35" />
-              <span className="eyebrow text-ink/45 tracking-[0.38em]">About · 关于</span>
+              <span className="eyebrow text-ink/45 tracking-[0.38em]">About</span>
             </div>
 
             <h1 className="display-lg max-w-3xl mb-8">
@@ -83,16 +81,13 @@ export default function AboutPage() {
           <section>
             <div className="flex items-center gap-3 mb-12">
               <span className="h-px w-10 bg-ink/30" />
-              <span className="eyebrow text-ink/40 tracking-[0.38em]">What we stand for</span>
+              <h2 className="eyebrow text-ink/40 tracking-[0.38em]">What we stand for</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {VALUES.map((v) => (
+              {VALUES.map((v, i) => (
                 <div key={v.en} className="border border-ink/8 rounded-2xl p-10 card-surface">
-                  <div
-                    className="font-display text-6xl text-ink/15 mb-6"
-                    style={{ fontFamily: "'Noto Serif SC', serif" }}
-                  >
-                    {v.zh}
+                  <div className="font-display text-5xl text-ink/15 mb-6">
+                    {String(i + 1).padStart(2, '0')}
                   </div>
                   <h3 className="font-display text-2xl mb-3">{v.en}</h3>
                   <p className="text-sm text-ink/55 leading-relaxed">{v.desc}</p>
@@ -105,7 +100,7 @@ export default function AboutPage() {
           <section>
             <div className="flex items-center gap-3 mb-12">
               <span className="h-px w-10 bg-ink/30" />
-              <span className="eyebrow text-ink/40 tracking-[0.38em]">Our story</span>
+              <h2 className="eyebrow text-ink/40 tracking-[0.38em]">Our story</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
               <div className="space-y-6 text-ink/70 leading-[1.85] text-base">
@@ -140,7 +135,7 @@ export default function AboutPage() {
           <section>
             <div className="flex items-center gap-3 mb-12">
               <span className="h-px w-10 bg-ink/30" />
-              <span className="eyebrow text-ink/40 tracking-[0.38em]">Our teachers</span>
+              <h2 className="eyebrow text-ink/40 tracking-[0.38em]">Our teachers</h2>
             </div>
             <div className="grid grid-cols-1 gap-5">
               {MASTERS.map((m) => (
@@ -151,12 +146,6 @@ export default function AboutPage() {
                     </div>
                     <div>
                       <div className="font-display text-xl leading-tight">{m.name}</div>
-                      <div
-                        className="text-sm text-ink/35 mt-0.5"
-                        style={{ fontFamily: "'Noto Serif SC', serif" }}
-                      >
-                        {m.zh}
-                      </div>
                     </div>
                   </div>
                   <div className="text-[10px] tracking-[0.3em] uppercase text-vermilion">

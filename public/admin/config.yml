@@ -1,0 +1,129 @@
+# Decap CMS 配置 —— 内容事实源为 content/ 目录，发布 = commit 到 main → Vercel 自动部署
+backend:
+  name: github
+  repo: ziqi108/changebook
+  branch: main
+  # OAuth 由本项目 API 路由提供（app/api/auth + app/api/callback）
+  base_url: https://www.yiwisdom.org
+  auth_endpoint: api/auth
+
+# 媒体上传目录（提交进仓库）
+media_folder: public/images/uploads
+public_folder: /images/uploads
+
+site_url: https://www.yiwisdom.org
+show_preview_links: false
+locale: zh
+
+# 中英双语：每个条目落盘为 <slug>.en.<ext> 与 <slug>.zh.<ext>，basename 即中英关联键
+i18n:
+  structure: multiple_files
+  locales: [en, zh]
+  default_locale: en
+
+collections:
+  # —— 文章：Markdown + frontmatter ——
+  - name: articles
+    label: 文章
+    label_singular: 文章
+    folder: content/articles
+    create: true
+    extension: md
+    format: frontmatter
+    slug: '{{slug}}'
+    sortable_fields: [date, title]
+    summary: '{{title}} — {{date}}'
+    i18n: true
+    editor:
+      preview: false
+    fields:
+      - { label: 标题, name: title, widget: string, i18n: true }
+      - { label: 副标题, name: subtitle, widget: string, i18n: true }
+      - { label: 摘要, name: excerpt, widget: text, i18n: true }
+      - label: 日期
+        name: date
+        widget: datetime
+        format: 'YYYY-MM-DD'
+        picker_utc: true
+        i18n: duplicate
+      - { label: 阅读时长, name: readTime, widget: string, i18n: true, hint: '英文如 “7 min read”，中文如 “7 分钟阅读”' }
+      - { label: 标签, name: tags, widget: list, i18n: true, hint: '文章列表页按标签筛选，每篇 2 个左右' }
+      - label: 封面渐变色
+        name: coverGradient
+        widget: select
+        options:
+          - from-ink to-ink-soft
+          - from-vermilion to-vermilion-deep
+          - from-jade to-jade-soft
+          - from-gold to-vermilion
+          - from-ink-deep to-jade
+          - from-vermilion-soft to-gold
+          - from-jade-deep to-ink
+          - from-gold to-vermilion-deep
+          - from-ink-soft to-gold
+          - from-ink-deep to-vermilion-soft
+          - from-jade-deep to-gold
+          - from-vermilion-soft to-jade
+          - from-paper to-paper-soft
+        i18n: duplicate
+      - { label: 首页推荐, name: featured, widget: boolean, default: false, required: false, i18n: duplicate }
+      - { label: 作者, name: author, widget: string, default: 'Liu Xize', i18n: true }
+      - { label: 作者缩写, name: authorInitials, widget: string, default: 'LX', i18n: true }
+      - label: 正文
+        name: body
+        widget: markdown
+        required: false
+        i18n: true
+        hint: '仅支持普通段落与行首 “>” 引用两种格式，段落间空行分隔；不要插入图片或标题/列表语法'
+
+  # —— 课程：JSON 数据文件（固定 4 门，不允许新建；consult 无中文页） ——
+  - name: courses
+    label: 课程
+    label_singular: 课程
+    folder: content/courses
+    create: false
+    extension: json
+    format: json
+    identifier_field: slug
+    i18n: true
+    editor:
+      preview: false
+    sortable_fields: [slug]
+    fields:
+      - { label: Slug, name: slug, widget: string, i18n: duplicate }
+      - { label: 课程名, name: title, widget: string, i18n: true }
+      - { label: 副标题, name: subtitle, widget: text, i18n: true }
+      - label: 封面渐变色
+        name: heroImage
+        widget: select
+        options:
+          - from-ink to-ink-deep
+          - from-gold to-vermilion
+          - from-jade to-jade-deep
+          - from-vermilion-soft to-jade
+        i18n: duplicate
+      - { label: 等级(英文), name: level, widget: string, i18n: duplicate }
+      - { label: 等级(中文), name: levelZh, widget: string, i18n: true }
+      - { label: 课程包含, name: includes, widget: list, i18n: true }
+      - { label: 价格, name: price, widget: string, i18n: duplicate }
+      - { label: 币种, name: currency, widget: string, required: false, i18n: duplicate }
+      - { label: 班期, name: nextCohort, widget: string, i18n: true }
+      - label: 章节
+        name: chapters
+        widget: list
+        collapsed: true
+        minimize_collapsed: true
+        i18n: true
+        fields:
+          - { label: 章节 ID, name: id, widget: string }
+          - { label: 章节标题, name: title, widget: string }
+          - label: 课时
+            name: lessons
+            widget: list
+            collapsed: true
+            minimize_collapsed: true
+            fields:
+              - { label: 课时 ID, name: id, widget: string }
+              - { label: 课时标题, name: title, widget: string }
+              - { label: 时长, name: duration, widget: string }
+              - { label: 内容, name: description, widget: text, hint: '**加粗** 与 --- 分隔线按纯文本原样存储' }

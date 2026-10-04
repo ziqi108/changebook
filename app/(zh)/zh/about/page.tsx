@@ -10,15 +10,24 @@ const SELF_PATH = '/zh/about';
 export const metadata: Metadata = {
   title: '关于我们',
   description:
-    'Yi Wisdom 的使命：以诚恳、忠实于经典的方式，把《易经》的智慧带进现代生活。',
+    'Yi Wisdom 的使命：以诚恳、忠实于经典的方式，把《易经》的智慧带进现代生活。在这里了解我们的初衷、所珍视的价值，以及授课老师。',
   alternates: buildAlternates(SELF_PATH, 'zh-CN', getCounterpart(SELF_PATH)),
   openGraph: {
     title: '关于我们 | Yi Wisdom',
-    description: '以诚恳、忠实于经典的方式，把《易经》的智慧带进现代生活。',
+    description:
+      'Yi Wisdom 的使命：以诚恳、忠实于经典的方式，把《易经》的智慧带进现代生活。在这里了解我们的初衷、所珍视的价值，以及授课老师。',
     url: 'https://www.yiwisdom.org/zh/about',
     locale: 'zh_CN',
     siteName: 'Yi Wisdom',
     type: 'website',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 675,
+        alt: '关于 Yi Wisdom——把《易经》的智慧带进现代生活',
+      },
+    ],
   },
 };
 
@@ -63,7 +72,7 @@ export default function ZhAboutPage() {
 
             <div className="flex items-center gap-3 mb-5">
               <span className="h-px w-10 bg-ink/35" />
-              <span className="eyebrow text-ink/45 tracking-[0.38em]">关于 · About</span>
+              <span className="eyebrow text-ink/45 tracking-[0.38em]">关于</span>
             </div>
 
             <h1 className="display-lg max-w-3xl mb-8">
@@ -85,7 +94,7 @@ export default function ZhAboutPage() {
           <section>
             <div className="flex items-center gap-3 mb-12">
               <span className="h-px w-10 bg-ink/30" />
-              <span className="eyebrow text-ink/40 tracking-[0.38em]">我们珍视什么</span>
+              <h2 className="eyebrow text-ink/40 tracking-[0.38em]">我们珍视什么</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {VALUES.map((v) => (
@@ -107,7 +116,7 @@ export default function ZhAboutPage() {
           <section>
             <div className="flex items-center gap-3 mb-12">
               <span className="h-px w-10 bg-ink/30" />
-              <span className="eyebrow text-ink/40 tracking-[0.38em]">我们的由来</span>
+              <h2 className="eyebrow text-ink/40 tracking-[0.38em]">我们的由来</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
               <div className="space-y-6 text-ink/70 leading-[1.85] text-base">
@@ -139,15 +148,15 @@ export default function ZhAboutPage() {
             <div>
               <h2 className="font-display text-3xl md:text-4xl mb-2">准备开始了吗？</h2>
               <p className="text-sm text-ink/50">
-                从初阶课程开始（英文），或先了解我们的教育免责声明。
+                从初阶课程开始，或先了解我们的教育免责声明。
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
-                href="/beginner-course"
+                href="/zh/beginner-course"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-ink text-paper rounded-full text-sm tracking-wide hover:bg-vermilion transition-all duration-300"
               >
-                开始学习（英文） →
+                开始学习 →
               </Link>
               <Link
                 href="/zh/educational-disclaimer"

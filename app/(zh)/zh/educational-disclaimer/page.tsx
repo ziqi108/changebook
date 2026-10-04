@@ -9,15 +9,25 @@ const SELF_PATH = '/zh/educational-disclaimer';
 
 export const metadata: Metadata = {
   title: '教育免责声明',
-  description: 'Yi Wisdom 的内容属教育与探索性质，不构成任何形式的专业建议。',
+  description:
+    '教育免责声明：Yi Wisdom 的内容属教育与探索性质，用于自我反思与学习，不构成医疗、法律、财务等专业建议，亦不作任何预测结果的保证。',
   alternates: buildAlternates(SELF_PATH, 'zh-CN', getCounterpart(SELF_PATH)),
   openGraph: {
     title: '教育免责声明 | Yi Wisdom',
-    description: 'Yi Wisdom 的内容属教育与探索性质，不构成任何形式的专业建议。',
+    description:
+    '教育免责声明：Yi Wisdom 的内容属教育与探索性质，用于自我反思与学习，不构成医疗、法律、财务等专业建议，亦不作任何预测结果的保证。',
     url: 'https://www.yiwisdom.org/zh/educational-disclaimer',
     locale: 'zh_CN',
     siteName: 'Yi Wisdom',
     type: 'website',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 675,
+        alt: 'Yi Wisdom 教育免责声明',
+      },
+    ],
   },
 };
 
@@ -35,7 +45,7 @@ export default function ZhEducationalDisclaimerPage() {
 
             <div className="flex items-center gap-3 mb-5">
               <span className="h-px w-10 bg-ink/35" />
-              <span className="eyebrow text-ink/45 tracking-[0.38em]">Disclaimer · 免责</span>
+              <span className="eyebrow text-ink/45 tracking-[0.38em]">免责声明</span>
             </div>
 
             <h1 className="display-lg max-w-3xl mb-8">教育免责声明</h1>

@@ -9,15 +9,25 @@ const SELF_PATH = '/zh/privacy';
 
 export const metadata: Metadata = {
   title: '隐私政策',
-  description: 'Yi Wisdom 如何收集、使用和保护您与我们分享的极少量个人数据。',
+  description:
+    '隐私政策：Yi Wisdom 如何收集、使用与保护您分享的极少量个人数据——收集内容、使用方式与保留期限。',
   alternates: buildAlternates(SELF_PATH, 'zh-CN', getCounterpart(SELF_PATH)),
   openGraph: {
     title: '隐私政策 | Yi Wisdom',
-    description: 'Yi Wisdom 如何收集、使用和保护您与我们分享的极少量个人数据。',
+    description:
+    '隐私政策：Yi Wisdom 如何收集、使用与保护您分享的极少量个人数据——收集内容、使用方式与保留期限。',
     url: 'https://www.yiwisdom.org/zh/privacy',
     locale: 'zh_CN',
     siteName: 'Yi Wisdom',
     type: 'website',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 675,
+        alt: 'Yi Wisdom 隐私政策',
+      },
+    ],
   },
 };
 
@@ -35,7 +45,7 @@ export default function ZhPrivacyPage() {
 
             <div className="flex items-center gap-3 mb-5">
               <span className="h-px w-10 bg-ink/35" />
-              <span className="eyebrow text-ink/45 tracking-[0.38em]">Privacy · 隐私</span>
+              <span className="eyebrow text-ink/45 tracking-[0.38em]">隐私</span>
             </div>
 
             <h1 className="display-lg max-w-3xl mb-8">隐私政策</h1>
@@ -51,8 +61,7 @@ export default function ZhPrivacyPage() {
             <h2 className="font-display text-2xl md:text-3xl text-ink">概述</h2>
             <div className="space-y-5 text-ink/70 leading-[1.85] text-base">
               <p>
-                Yi Wisdom（&ldquo;本网站&rdquo;）是一个关于《易经》（Book of
-                Changes）的教育项目。本政策说明我们收集哪些个人数据、收集的原因，以及您可以作出的选择。它适用于 <Link href="/zh" className="underline decoration-ink/30 hover:decoration-ink/70 underline-offset-4">yiwisdom.org</Link> 的所有访客。
+                Yi Wisdom（&ldquo;本网站&rdquo;）是一个关于《易经》的教育项目。本政策说明我们收集哪些个人数据、收集的原因，以及您可以作出的选择。它适用于 <Link href="/zh" className="underline decoration-ink/30 hover:decoration-ink/70 underline-offset-4">yiwisdom.org</Link> 的所有访客。
               </p>
             </div>
           </section>
@@ -67,8 +76,8 @@ export default function ZhPrivacyPage() {
                   <Link href="/zh/contact" className="underline decoration-ink/30 hover:decoration-ink/70 underline-offset-4">联系页面</Link>与我们联系时提供的姓名、电子邮箱和留言内容。
                 </li>
                 <li>
-                  <span className="text-ink">Newsletter 订阅邮箱</span> ——
-                  您在首页订阅 newsletter 时提交的电子邮箱地址。
+                  <span className="text-ink">邮件订阅邮箱</span> ——
+                  您在首页订阅邮件通讯时提交的电子邮箱地址。
                 </li>
               </ul>
               <p>

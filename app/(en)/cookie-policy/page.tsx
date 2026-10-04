@@ -6,10 +6,27 @@ import { BackToHome } from '@/components/ui/BackToHome';
 import { buildAlternates, getCounterpart } from '@/lib/i18n';
 
 export const metadata: Metadata = {
-  title: 'Cookie Policy',
+  title: 'Cookie Policy — What We Use and How to Manage It',
   description:
     'The types of cookies Yi Wisdom uses and how to manage them in your browser.',
   alternates: buildAlternates('/cookie-policy', 'en', getCounterpart('/cookie-policy')),
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    title: 'Cookie Policy — What We Use and How to Manage It | Yi Wisdom',
+    description:
+      'The types of cookies Yi Wisdom uses and how to manage them in your browser.',
+    url: 'https://www.yiwisdom.org/cookie-policy',
+    siteName: 'Yi Wisdom',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 675,
+        alt: 'Yi Wisdom Cookie Policy',
+      },
+    ],
+  },
 };
 
 export default function CookiePolicyPage() {
@@ -26,7 +43,7 @@ export default function CookiePolicyPage() {
 
             <div className="flex items-center gap-3 mb-5">
               <span className="h-px w-10 bg-ink/35" />
-              <span className="eyebrow text-ink/45 tracking-[0.38em]">Cookies · Cookie</span>
+              <span className="eyebrow text-ink/45 tracking-[0.38em]">Cookies</span>
             </div>
 
             <h1 className="display-lg max-w-3xl mb-8">Cookie Policy</h1>

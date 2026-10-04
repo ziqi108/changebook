@@ -1,8 +1,12 @@
 import Link from 'next/link';
 import { BackToHome } from '@/components/ui/BackToHome';
+import { HexagramSvg } from '@/components/hexagram/HexagramSvg';
 
 export const metadata = {
   title: 'Sign-in Temporarily Unavailable',
+  description:
+    'Sign-in is temporarily unavailable at Yi Wisdom. Please return to the homepage to explore free I Ching courses and articles.',
+  alternates: { canonical: 'https://www.yiwisdom.org/login' },
   robots: { index: false, follow: false },
 };
 
@@ -25,12 +29,12 @@ export default function LoginPage() {
           </Link>
         </div>
         <div className="relative">
-          <div
-            className="font-display text-[11rem] leading-none text-paper/[0.06] select-none mb-8"
-            style={{ fontFamily: "'Noto Serif SC', serif" }}
-            aria-hidden="true"
-          >
-            易
+          <div className="opacity-20 select-none mb-8" aria-hidden="true">
+            <HexagramSvg
+              lines={['yin', 'yin', 'yin', 'yin', 'yin', 'yang']}
+              size={150}
+              color="#F5F1E8"
+            />
           </div>
           <blockquote className="font-display text-2xl italic leading-relaxed text-paper/70">
             &ldquo;The superior man makes his character correct

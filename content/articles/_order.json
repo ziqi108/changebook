@@ -1,0 +1,22 @@
+{
+  "_note": "文章显示顺序清单（数组序 = 站点展示序）。在 CMS 新建的文章默认追加到对应语言列表末尾；如需调整位置，把 slug 移到合适数组位置即可（改完无需发版，下次部署生效）。",
+  "en": [
+    "yin-yang-in-modern-life",
+    "hexagram-11-flow",
+    "i-ching-vs-tarot",
+    "decision-making-64-hexagrams",
+    "burnout-as-yin-deficit",
+    "career-cycles-hexagram-24",
+    "synchronicity-and-the-i-ching",
+    "reading-hexagrams-for-creatives",
+    "the-eight-trigrams-explained",
+    "casting-the-coins-evening-ritual",
+    "i-ching-and-stoicism-two-maps",
+    "hexagram-64-beauty-of-the-unfinished"
+  ],
+  "zh": [
+    "yin-yang-in-modern-life",
+    "hexagram-11-flow",
+    "the-eight-trigrams-explained"
+  ]
+}

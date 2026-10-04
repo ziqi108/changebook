@@ -6,10 +6,27 @@ import { BackToHome } from '@/components/ui/BackToHome';
 import { buildAlternates, getCounterpart } from '@/lib/i18n';
 
 export const metadata: Metadata = {
-  title: 'Refund Policy',
+  title: 'Refund Policy — Free Courses & Reflection Sessions',
   description:
     'Yi Wisdom currently offers free courses and unavailable Reflection Sessions, so no refund is applicable at this time.',
   alternates: buildAlternates('/refund-policy', 'en', getCounterpart('/refund-policy')),
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    title: 'Refund Policy — Free Courses & Reflection Sessions | Yi Wisdom',
+    description:
+      'Yi Wisdom currently offers free courses and unavailable Reflection Sessions, so no refund is applicable at this time.',
+    url: 'https://www.yiwisdom.org/refund-policy',
+    siteName: 'Yi Wisdom',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 675,
+        alt: 'Yi Wisdom Refund Policy',
+      },
+    ],
+  },
 };
 
 export default function RefundPolicyPage() {
@@ -26,7 +43,7 @@ export default function RefundPolicyPage() {
 
             <div className="flex items-center gap-3 mb-5">
               <span className="h-px w-10 bg-ink/35" />
-              <span className="eyebrow text-ink/45 tracking-[0.38em]">Refunds · 退款</span>
+              <span className="eyebrow text-ink/45 tracking-[0.38em]">Refunds</span>
             </div>
 
             <h1 className="display-lg max-w-3xl mb-8">Refund Policy</h1>

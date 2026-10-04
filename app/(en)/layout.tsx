@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import '../globals.css';
 import { ClientProviders } from '@/components/auth/ClientProviders';
-import { DevHydrationGuard } from '@/components/dev/DevHydrationGuard';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.yiwisdom.org'),
@@ -31,7 +30,15 @@ export const metadata: Metadata = {
     url: 'https://www.yiwisdom.org',
     siteName: 'Yi Wisdom',
     type: 'website',
-    images: [{ url: '/og-image.png' }],
+    locale: 'en_US',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 675,
+        alt: 'Yi Wisdom — I Ching philosophy and self-cultivation in clear English',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
@@ -42,13 +49,19 @@ export const metadata: Metadata = {
   },
 };
 
+const FONT_STYLESHEET =
+  'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@300;400;500;600;700&display=swap';
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="stylesheet" href={FONT_STYLESHEET} />
+      </head>
       <body className="grain-overlay" suppressHydrationWarning>
-        <DevHydrationGuard>
-          <ClientProviders>{children}</ClientProviders>
-        </DevHydrationGuard>
+        <ClientProviders>{children}</ClientProviders>
       </body>
     </html>
   );

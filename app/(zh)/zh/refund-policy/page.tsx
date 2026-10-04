@@ -10,16 +10,24 @@ const SELF_PATH = '/zh/refund-policy';
 export const metadata: Metadata = {
   title: '退款政策',
   description:
-    'Yi Wisdom 目前的课程均为免费提供，静思会谈暂未开放，因此现阶段不涉及退款。',
+    '退款政策：Yi Wisdom 目前的课程均免费提供，静思会谈暂未开放，现阶段不涉及任何退款；未来若推出付费服务，将在本页明确说明。',
   alternates: buildAlternates(SELF_PATH, 'zh-CN', getCounterpart(SELF_PATH)),
   openGraph: {
     title: '退款政策 | Yi Wisdom',
     description:
-      'Yi Wisdom 目前的课程均为免费提供，静思会谈暂未开放，因此现阶段不涉及退款。',
+      '退款政策：Yi Wisdom 目前的课程均免费提供，静思会谈暂未开放，现阶段不涉及任何退款；未来若推出付费服务，将在本页明确说明。',
     url: 'https://www.yiwisdom.org/zh/refund-policy',
     locale: 'zh_CN',
     siteName: 'Yi Wisdom',
     type: 'website',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 675,
+        alt: 'Yi Wisdom 退款政策',
+      },
+    ],
   },
 };
 
@@ -37,7 +45,7 @@ export default function ZhRefundPolicyPage() {
 
             <div className="flex items-center gap-3 mb-5">
               <span className="h-px w-10 bg-ink/35" />
-              <span className="eyebrow text-ink/45 tracking-[0.38em]">Refunds · 退款</span>
+              <span className="eyebrow text-ink/45 tracking-[0.38em]">退款</span>
             </div>
 
             <h1 className="display-lg max-w-3xl mb-8">退款政策</h1>
@@ -53,8 +61,7 @@ export default function ZhRefundPolicyPage() {
             <h2 className="font-display text-2xl md:text-3xl text-ink">目前状况</h2>
             <div className="space-y-5 text-ink/70 leading-[1.85] text-base">
               <p>
-                Yi Wisdom 目前的所有课程均免费提供，静思会谈（Reflection
-                Sessions）目前暂停开放。由于两者均未收取任何费用，现阶段不存在需要退款的事项。
+                Yi Wisdom 目前的所有课程均免费提供，静思会谈目前暂停开放。由于两者均未收取任何费用，现阶段不存在需要退款的事项。
               </p>
             </div>
           </section>

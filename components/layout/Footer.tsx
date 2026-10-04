@@ -30,11 +30,19 @@ const FOOTER_LINKS: Record<Locale, { group: string; items: { label: string; href
   ],
   'zh-CN': [
     {
+      group: '学习',
+      items: [
+        { label: '初阶课程', href: '/zh/beginner-course' },
+        { label: '进阶课程', href: '/zh/intermediate-course' },
+        { label: '高阶研习', href: '/zh/advanced-course' },
+        { label: '文章', href: '/zh/articles' },
+      ],
+    },
+    {
       group: '关于',
       items: [
         { label: '我们的使命', href: '/zh/about' },
         { label: '联系', href: '/zh/contact' },
-        { label: '文章', href: '/zh/articles' },
       ],
     },
   ],
@@ -61,18 +69,20 @@ export function Footer({ locale = 'en' }: { locale?: Locale }) {
   const isZh = locale === 'zh-CN';
   return (
     <footer className="relative bg-paper border-t border-ink/10 overflow-hidden">
-      {/* Background large seal character */}
-      <div
-        className="absolute right-0 bottom-0 pointer-events-none select-none"
-        aria-hidden="true"
-      >
-        <span
-          className="font-display seal text-[28rem] leading-none text-ink/[0.018]"
-          style={{ fontFamily: "'Noto Serif SC', serif" }}
+      {/* Background large seal character（中文站专属装饰） */}
+      {isZh && (
+        <div
+          className="absolute right-0 bottom-0 pointer-events-none select-none"
+          aria-hidden="true"
         >
-          易
-        </span>
-      </div>
+          <span
+            className="font-display seal text-[28rem] leading-none text-ink/[0.018]"
+            style={{ fontFamily: "'Noto Serif SC', serif" }}
+          >
+            易
+          </span>
+        </div>
+      )}
 
       <div className="relative max-w-[1200px] mx-auto px-6 md:px-10 pt-20 pb-10">
         {/* Top row */}
@@ -100,9 +110,9 @@ export function Footer({ locale = 'en' }: { locale?: Locale }) {
           {/* Link columns */}
           {FOOTER_LINKS[locale].map(({ group, items }) => (
             <div key={group}>
-              <h4 className="text-[10px] tracking-[0.4em] uppercase text-ink/35 mb-6 font-medium">
+              <p className="text-[10px] tracking-[0.4em] uppercase text-ink/35 mb-6 font-medium">
                 {group}
-              </h4>
+              </p>
               <ul className="space-y-3.5">
                 {items.map((l) => (
                   <li key={l.label}>

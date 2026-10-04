@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { BackToHome } from '@/components/ui/BackToHome';
-import { FEATURED_ARTICLES, Article } from '@/lib/data';
+import { EN_ARTICLES, Article } from '@/lib/data';
 
 const SITE_URL = 'https://www.yiwisdom.org';
 
@@ -26,16 +26,25 @@ export const metadata: Metadata = {
       'Contemporary articles on the I Ching, Chinese philosophy, and daily practice. New essays periodically.',
     url: `${SITE_URL}/articles`,
     siteName: 'Yi Wisdom',
+    images: [
+      {
+        url: '/og-article.png',
+        width: 1200,
+        height: 675,
+        alt: 'The Journal — I Ching articles and readings from Yi Wisdom',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'The Journal — I Ching Articles & Readings',
     description:
       'Contemporary articles on the I Ching, Chinese philosophy, and daily practice.',
+    images: ['/og-article.png'],
   },
 };
 
-const ALL_TAGS = Array.from(new Set(FEATURED_ARTICLES.flatMap((a) => a.tags)));
+const ALL_TAGS = Array.from(new Set(EN_ARTICLES.flatMap((a) => a.tags)));
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -47,7 +56,7 @@ const jsonLd = {
       description:
         'Contemporary articles on the I Ching, Chinese philosophy, daily practice, and hexagram readings.',
       url: `${SITE_URL}/articles`,
-      blogPost: FEATURED_ARTICLES.map((a) => ({
+      blogPost: EN_ARTICLES.map((a) => ({
         '@type': 'BlogPosting',
         headline: a.title,
         url: `${SITE_URL}/articles/${a.slug}`,
@@ -67,8 +76,8 @@ const jsonLd = {
 };
 
 export default function ArticlesListPage() {
-  const featured = FEATURED_ARTICLES[0];
-  const rest = FEATURED_ARTICLES.slice(1);
+  const featured = EN_ARTICLES[0];
+  const rest = EN_ARTICLES.slice(1);
 
   return (
     <>
@@ -88,7 +97,7 @@ export default function ArticlesListPage() {
           {/* Page header */}
           <div className="flex items-center gap-3 mb-5">
             <span className="h-px w-10 bg-ink/35" />
-            <span className="eyebrow text-ink/45 tracking-[0.38em]">The Journal · 雜誌</span>
+            <span className="eyebrow text-ink/45 tracking-[0.38em]">The Journal</span>
           </div>
 
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-6">
@@ -132,9 +141,9 @@ export default function ArticlesListPage() {
                 >
                   <span
                     className="font-display text-6xl text-paper/30 select-none"
-                    style={{ fontFamily: "'Noto Serif SC', serif" }}
+                    aria-hidden="true"
                   >
-                    易
+                    ☰
                   </span>
                 </div>
                 <div className="p-8 md:p-12 flex flex-col justify-between gap-6 flex-1">

@@ -23,12 +23,12 @@ export function DailyHexagram() {
         aria-hidden="true"
       />
 
-      {/* Large background glyph */}
+      {/* Large background hexagram */}
       <div
-        className="absolute right-8 md:right-16 top-1/2 -translate-y-1/2 opacity-[0.025] pointer-events-none select-none"
+        className="absolute right-8 md:right-16 top-1/2 -translate-y-1/2 opacity-[0.04] pointer-events-none select-none"
         aria-hidden="true"
       >
-        <span className="font-display text-[20rem] leading-none seal">{hex.nameZh}</span>
+        <HexagramSvg lines={hex.lines} size={360} color="#F5F1E8" />
       </div>
 
       <div className="relative max-w-[960px] mx-auto px-6 md:px-10 text-center">
@@ -62,10 +62,10 @@ export function DailyHexagram() {
           {/* Name row */}
           <div className="mb-8">
             <div className="font-display text-4xl md:text-5xl text-paper mb-2">
-              {hex.nameZh}
+              {hex.namePinyin}
             </div>
             <div className="text-[10px] tracking-[0.45em] uppercase text-paper/35 mt-3">
-              {hex.namePinyin} &nbsp;·&nbsp; #{String(hex.id).padStart(2, '0')} &nbsp;·&nbsp; {hex.element}
+              #{String(hex.id).padStart(2, '0')} &nbsp;·&nbsp; {hex.nameEn}
             </div>
           </div>
 

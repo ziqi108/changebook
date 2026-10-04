@@ -1,10 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { FEATURED_ARTICLES } from '@/lib/data';
+import { EN_ARTICLES } from '@/lib/data';
 
 export function FeaturedArticles() {
-  const articles = FEATURED_ARTICLES.slice(0, 4);
+  const articles = EN_ARTICLES.slice(0, 4);
 
   return (
     <section className="py-32 md:py-44 bg-paper text-ink">
@@ -43,7 +43,7 @@ export function FeaturedArticles() {
               <div
                 className={`w-full md:w-48 h-40 md:h-auto rounded-xl bg-gradient-to-br ${articles[0].coverGradient} flex-shrink-0 flex items-center justify-center`}
               >
-                <span className="font-display text-4xl text-paper/70 seal">易</span>
+                <span className="font-display text-4xl text-paper/70" aria-hidden="true">☰</span>
               </div>
               {/* Right: content */}
               <div className="flex-1 flex flex-col justify-between gap-6">

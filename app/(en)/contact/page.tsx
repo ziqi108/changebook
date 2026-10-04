@@ -6,18 +6,26 @@ import { BackToHome } from '@/components/ui/BackToHome';
 import { buildAlternates, getCounterpart } from '@/lib/i18n';
 
 export const metadata: Metadata = {
-  title: 'Contact',
+  title: 'Contact Yi Wisdom — Email & Response Times',
   description:
     'How to reach Yi Wisdom, including the newsletter and where to direct questions.',
   alternates: buildAlternates('/contact', 'en', getCounterpart('/contact')),
   openGraph: {
-    title: 'Contact | Yi Wisdom',
+    title: 'Contact Yi Wisdom — Email & Response Times | Yi Wisdom',
     description:
       'How to reach Yi Wisdom, including the newsletter and where to direct questions.',
     url: 'https://www.yiwisdom.org/contact',
     locale: 'en_US',
     siteName: 'Yi Wisdom',
     type: 'website',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 675,
+        alt: 'Contact Yi Wisdom',
+      },
+    ],
   },
 };
 
@@ -35,7 +43,7 @@ export default function ContactPage() {
 
             <div className="flex items-center gap-3 mb-5">
               <span className="h-px w-10 bg-ink/35" />
-              <span className="eyebrow text-ink/45 tracking-[0.38em]">Contact · 联系</span>
+              <span className="eyebrow text-ink/45 tracking-[0.38em]">Contact</span>
             </div>
 
             <h1 className="display-lg max-w-3xl mb-8">Contact</h1>

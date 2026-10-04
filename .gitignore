@@ -9,3 +9,10 @@ out
 .idea
 .vscode
 .trae
+
+# CMS 内容构建产物（事实源在 content/，由 scripts/generate-content.mjs 生成）
+lib/generated
+
+# 本地临时目录
+_content_demo_backup.tmp
+*.tmp

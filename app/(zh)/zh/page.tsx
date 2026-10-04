@@ -4,11 +4,12 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { DailyHexagramZh } from '@/components/home/DailyHexagramZh';
 import { buildAlternates, getCounterpart } from '@/lib/i18n';
+import { ZH_ARTICLES } from '@/lib/data';
 
 const SELF_PATH = '/zh';
 
 export const metadata: Metadata = {
-  title: 'Yi Wisdom｜易经哲学与自我修养',
+  title: { absolute: 'Yi Wisdom｜易经哲学与自我修养' },
   description:
     '通过经典原文、清晰的中文阐释、诚恳的反思与切实的自我修养，学习《易经》。不提供虚假的确定性，不做任何保证结果的预言。',
   alternates: buildAlternates(SELF_PATH, 'zh-CN', getCounterpart(SELF_PATH)),
@@ -20,10 +21,24 @@ export const metadata: Metadata = {
     description:
       '通过经典原文、清晰的中文阐释与诚恳的反思，学习《易经》。不提供虚假的确定性，不做保证结果的预言。',
     siteName: 'Yi Wisdom',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 675,
+        alt: 'Yi Wisdom｜易经哲学与自我修养',
+      },
+    ],
   },
 };
 
 const SITE_URL = 'https://www.yiwisdom.org';
+
+/** ISO 日期 → 「2026年5月28日」 */
+const fmtDate = (iso: string) =>
+  new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' }).format(
+    new Date(iso)
+  );
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -72,19 +87,19 @@ const COURSES = [
     title: '初阶课程',
     status: '开放报名',
     desc: '阴阳的基础、八卦、铜钱起卦法与你的第一个卦象。为零基础学习者设计。',
-    href: '/beginner-course',
+    href: '/zh/beginner-course',
   },
   {
     title: '进阶课程',
     status: '开放报名',
     desc: '系统研读全部六十四卦，将《易经》带入关系、事业与自我修养等现代生活场景。',
-    href: '/intermediate-course',
+    href: '/zh/intermediate-course',
   },
   {
     title: '高阶研习',
     status: '开发中',
     desc: '面向《系辞》《说卦》等经典文本的深度研读。加入通讯以获取后续课程计划的更新。',
-    href: '/advanced-course',
+    href: '/zh/advanced-course',
   },
   {
     title: '反思谈话',
@@ -141,10 +156,10 @@ export default function ZhHomePage() {
 
             <div className="fade-in-delay-4 flex flex-col sm:flex-row items-center gap-4">
               <Link
-                href="/beginner-course"
+                href="/zh/beginner-course"
                 className="group inline-flex items-center gap-3 px-9 py-4 bg-ink text-paper rounded-full text-sm tracking-wide hover:bg-vermilion transition-all duration-300 shadow-md hover:shadow-lg hover:shadow-vermilion/20"
               >
-                开始学习（英文课程）
+                开始学习
                 <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
               </Link>
               <Link
@@ -185,10 +200,10 @@ export default function ZhHomePage() {
             </div>
             <div className="text-center">
               <Link
-                href="/beginner-course"
+                href="/zh/beginner-course"
                 className="group inline-flex items-center gap-3 px-9 py-4 bg-ink text-paper rounded-full text-sm tracking-wide hover:bg-vermilion transition-all duration-300 shadow-md hover:shadow-lg hover:shadow-vermilion/20"
               >
-                开始学习（英文课程）
+                开始学习
                 <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
               </Link>
             </div>
@@ -205,12 +220,9 @@ export default function ZhHomePage() {
               <span className="h-px w-10 bg-ink/30" />
               <span className="eyebrow text-ink/40 tracking-[0.38em]">课程与谈话</span>
             </div>
-            <h2 className="display-lg max-w-2xl mb-6">
+            <h2 className="display-lg max-w-2xl mb-16">
               按自己的<span className="italic" style={{ color: 'rgba(14,20,25,0.50)' }}>节奏</span>学习。
             </h2>
-            <p className="text-sm text-ink/50 leading-relaxed max-w-xl mb-16">
-              以下课程页面目前为英文版；中文版课程页面正在筹备中。
-            </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {COURSES.map((c) => (
@@ -233,7 +245,7 @@ export default function ZhHomePage() {
                   </div>
                   <p className="text-sm text-ink/55 leading-relaxed flex-1">{c.desc}</p>
                   <span className="mt-8 text-[11px] tracking-[0.3em] uppercase text-ink/35 group-hover:text-vermilion transition-colors">
-                    查看页面（英文） →
+                    查看详情 →
                   </span>
                 </Link>
               ))}
@@ -247,6 +259,64 @@ export default function ZhHomePage() {
               </Link>
               。
             </p>
+          </div>
+        </section>
+
+        {/* —— 文章 —— */}
+        <section className="py-32 md:py-44 bg-paper text-ink border-t border-ink/8">
+          <div className="max-w-[1100px] mx-auto px-6 md:px-10">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16">
+              <div>
+                <div className="flex items-center gap-3 mb-5">
+                  <span className="h-px w-10 bg-ink/35" />
+                  <span className="eyebrow text-ink/45 tracking-[0.38em]">文章与随笔</span>
+                </div>
+                <h2 className="display-lg max-w-xl">
+                  在文字中<span className="italic" style={{ color: 'rgba(14,20,25,0.50)' }}>静读</span>。
+                </h2>
+              </div>
+              <Link
+                href="/zh/articles"
+                className="hidden md:inline-flex items-center gap-2 text-xs tracking-[0.3em] text-ink/45 hover:text-ink border-b border-ink/20 hover:border-ink pb-0.5 transition-all duration-200"
+              >
+                全部文章 →
+              </Link>
+            </div>
+
+            <ul className="divide-y divide-ink/8 border-t border-ink/8">
+              {ZH_ARTICLES.map((a) => (
+                <li key={a.slug}>
+                  <Link
+                    href={`/zh/articles/${a.slug}`}
+                    className="group grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-10 py-8 items-baseline transition-colors hover:bg-ink/[0.012] px-2 -mx-2 rounded-xl"
+                  >
+                    <div className="md:col-span-2 text-[10px] tracking-[0.3em] text-vermilion">
+                      {a.tags[0]}
+                    </div>
+                    <div className="md:col-span-7">
+                      <h3 className="font-display text-2xl md:text-[1.65rem] leading-snug group-hover:text-vermilion transition-colors duration-300">
+                        {a.title}
+                      </h3>
+                    </div>
+                    <div className="md:col-span-3 flex items-center justify-start md:justify-end gap-3 text-[11px] text-ink/40">
+                      <span>{fmtDate(a.date)}</span>
+                      <span className="text-ink/15">·</span>
+                      <span>{a.readTime}</span>
+                      <span className="text-ink/25 group-hover:text-vermilion transition-colors">→</span>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-10 md:hidden text-center">
+              <Link
+                href="/zh/articles"
+                className="inline-flex items-center gap-2 text-xs tracking-[0.3em] text-ink/50 hover:text-ink border-b border-ink/20 pb-0.5 transition-colors"
+              >
+                全部文章 →
+              </Link>
+            </div>
           </div>
         </section>
       </main>

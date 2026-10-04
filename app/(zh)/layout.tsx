@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import '../globals.css';
 import { ClientProviders } from '@/components/auth/ClientProviders';
-import { DevHydrationGuard } from '@/components/dev/DevHydrationGuard';
 
 /**
  * 简体中文根布局（路由组 (zh)）
@@ -38,7 +37,14 @@ export const metadata: Metadata = {
     siteName: 'Yi Wisdom',
     type: 'website',
     locale: 'zh_CN',
-    images: [{ url: '/og-image.png' }],
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 675,
+        alt: 'Yi Wisdom｜易经哲学与自我修养',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
@@ -48,13 +54,19 @@ export const metadata: Metadata = {
   },
 };
 
+const FONT_STYLESHEET =
+  'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@300;400;500;600;700&display=swap';
+
 export default function ZhRootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="zh-CN" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="stylesheet" href={FONT_STYLESHEET} />
+      </head>
       <body className="grain-overlay lang-zh" suppressHydrationWarning>
-        <DevHydrationGuard>
-          <ClientProviders>{children}</ClientProviders>
-        </DevHydrationGuard>
+        <ClientProviders>{children}</ClientProviders>
       </body>
     </html>
   );

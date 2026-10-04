@@ -32,6 +32,9 @@ export type RoutePair = { en: string; zh: string };
  */
 export const ROUTE_MAP: RoutePair[] = [
   { en: '/', zh: '/zh' },
+  { en: '/beginner-course', zh: '/zh/beginner-course' },
+  { en: '/intermediate-course', zh: '/zh/intermediate-course' },
+  { en: '/advanced-course', zh: '/zh/advanced-course' },
   { en: '/about', zh: '/zh/about' },
   { en: '/contact', zh: '/zh/contact' },
   { en: '/privacy', zh: '/zh/privacy' },

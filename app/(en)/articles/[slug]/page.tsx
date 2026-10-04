@@ -9,6 +9,35 @@ import { buildAlternates } from '@/lib/i18n';
 
 const SITE_URL = 'https://www.yiwisdom.org';
 
+/**
+ * Per-article SERP overrides: display titles/excerpts stay untouched in the UI;
+ * these only tighten <title>/meta description for Google's length limits.
+ */
+const SEO_META: Record<string, { title?: string; description: string }> = {
+  'career-cycles-hexagram-24': {
+    description:
+      'Hexagram 24 (The Return) describes the smallest return — a single light emerging from darkness. How career rock-bottoms can begin a more authentic path.',
+  },
+  'synchronicity-and-the-i-ching': {
+    title: "Synchronicity and the I Ching: Jung's Connection",
+    description:
+      'Long before the Red Book was published, Carl Jung consulted the I Ching daily — and it shaped his ideas of synchronicity and the collective unconscious.',
+  },
+  'reading-hexagrams-for-creatives': {
+    title: 'Reading Hexagrams for Creatives: A Practical Guide',
+    description:
+      'For artists, writers, and musicians, the I Ching is a mirror for the creative process itself — plus a casting ritual for working through creative blocks.',
+  },
+  'i-ching-and-stoicism-two-maps': {
+    description:
+      'Stoicism and the I Ching share one insight: we cannot control events, only our response. A comparative reading of Marcus Aurelius and the Book of Changes.',
+  },
+  'hexagram-64-beauty-of-the-unfinished': {
+    description:
+      'Hexagram 64, Wèi Jì (Before Completion), ends the Book of Changes on the brink of becoming — a meditation on why the unfinished is not failure.',
+  },
+};
+
 type Params = { slug: string };
 
 export function generateStaticParams(): Params[] {
@@ -16,16 +45,18 @@ export function generateStaticParams(): Params[] {
 }
 
 export function generateMetadata({ params }: { params: Params }): Metadata {
-  const article = FEATURED_ARTICLES.find((a) => a.slug === params.slug);
+  const article = FEATURED_ARTICLES.find((a) => a.slug === params.slug && a.locale === 'en');
   if (!article) return {};
   /**
    * 守卫式 hreflang：仅当存在另一语言的已发布对应文章（translationKey 相同）时
    * 才输出双向 hreflang；否则只输出英文自引用 canonical，绝不指向 404/noindex。
    */
   const zhCounterpart = GET_TRANSLATION(article, 'zh-CN');
+  const seoTitle = SEO_META[article.slug]?.title ?? article.title;
+  const seoDescription = SEO_META[article.slug]?.description ?? article.excerpt;
   return {
-    title: article.title,
-    description: article.excerpt,
+    title: seoTitle,
+    description: seoDescription,
     keywords: article.tags,
     alternates: buildAlternates(
       `/articles/${article.slug}`,
@@ -34,24 +65,33 @@ export function generateMetadata({ params }: { params: Params }): Metadata {
     ),
     openGraph: {
       type: 'article',
-      title: article.title,
-      description: article.excerpt,
+      title: seoTitle,
+      description: seoDescription,
       url: `${SITE_URL}/articles/${article.slug}`,
       publishedTime: article.date,
       authors: [article.author],
       tags: article.tags,
       locale: 'en_US',
+      images: [
+        {
+          url: '/og-article.png',
+          width: 1200,
+          height: 675,
+          alt: seoTitle,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: article.title,
-      description: article.excerpt,
+      title: seoTitle,
+      description: seoDescription,
+      images: ['/og-article.png'],
     },
   };
 }
 
 export default function ArticlePage({ params }: { params: Params }) {
-  const article = FEATURED_ARTICLES.find((a) => a.slug === params.slug);
+  const article = FEATURED_ARTICLES.find((a) => a.slug === params.slug && a.locale === 'en');
   if (!article) notFound();
 
   // 语言切换器按 translationKey 查找中文对应文章；不存在则不显示中文链接
@@ -71,7 +111,7 @@ export default function ArticlePage({ params }: { params: Params }) {
         '@type': 'BlogPosting',
         '@id': `${SITE_URL}/articles/${article.slug}#post`,
         headline: article.title,
-        description: article.excerpt,
+        description: SEO_META[article.slug]?.description ?? article.excerpt,
         image: `${SITE_URL}/og-article.png`,
         datePublished: article.date,
         dateModified: article.date,
@@ -183,7 +223,8 @@ export default function ArticlePage({ params }: { params: Params }) {
 
                 <p className="text-base leading-[1.85]">
                   In this article, we explore the deeper dimensions of{' '}
-                  <em>{article.tags[0].toLowerCase()}</em> through the lens of the I Ching&apos;s
+                  {article.tags[0] ? <em>{article.tags[0].toLowerCase()}</em> : 'change'}{' '}
+                  through the lens of the I Ching&apos;s
                   3,000-year-old wisdom tradition. Drawing on classical commentaries and
                   contemporary lived practice, we see how the ancient text remains remarkably
                   alive for the modern reader.
@@ -260,7 +301,7 @@ export default function ArticlePage({ params }: { params: Params }) {
             <div className="max-w-[1100px] mx-auto px-6 md:px-10 pt-16">
               <div className="flex items-center gap-3 mb-10">
                 <span className="h-px w-10 bg-ink/30" />
-                <span className="eyebrow text-ink/40 tracking-[0.38em]">Continue Reading</span>
+                <h2 className="eyebrow text-ink/40 tracking-[0.38em]">Continue Reading</h2>
               </div>
               <ul className="divide-y divide-ink/8">
                 {related.map((a) => (

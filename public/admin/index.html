@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>内容管理后台 · Yi Wisdom</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!--
+      Decap CMS 官方标准引导页（纯静态，无 React —— 避免与 Next.js hydration 冲突）。
+      CMS 脚本自动以相对路径加载同目录 config.yml（本页 URL 为 /admin/index.html，
+      相对解析即 /admin/config.yml）。/admin 由 next.config.js redirects 重定向至此。
+      登录走 GitHub OAuth（app/api/auth → app/api/callback），编辑权限 = 仓库协作者。
+    -->
+    <script src="https://unpkg.com/decap-cms@3.16.3/dist/decap-cms.js"></script>
+  </body>
+</html>

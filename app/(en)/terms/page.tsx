@@ -6,10 +6,27 @@ import { BackToHome } from '@/components/ui/BackToHome';
 import { buildAlternates, getCounterpart } from '@/lib/i18n';
 
 export const metadata: Metadata = {
-  title: 'Terms of Use',
+  title: 'Terms of Use for Yi Wisdom Courses & Content',
   description:
     'The terms under which Yi Wisdom provides its educational content about the I Ching.',
   alternates: buildAlternates('/terms', 'en', getCounterpart('/terms')),
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    title: 'Terms of Use for Yi Wisdom Courses & Content | Yi Wisdom',
+    description:
+      'The terms under which Yi Wisdom provides its educational content about the I Ching.',
+    url: 'https://www.yiwisdom.org/terms',
+    siteName: 'Yi Wisdom',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 675,
+        alt: 'Yi Wisdom Terms of Use',
+      },
+    ],
+  },
 };
 
 export default function TermsPage() {
@@ -26,7 +43,7 @@ export default function TermsPage() {
 
             <div className="flex items-center gap-3 mb-5">
               <span className="h-px w-10 bg-ink/35" />
-              <span className="eyebrow text-ink/45 tracking-[0.38em]">Terms · 条款</span>
+              <span className="eyebrow text-ink/45 tracking-[0.38em]">Terms</span>
             </div>
 
             <h1 className="display-lg max-w-3xl mb-8">Terms of Use</h1>

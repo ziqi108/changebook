@@ -6,10 +6,27 @@ import { BackToHome } from '@/components/ui/BackToHome';
 import { buildAlternates, getCounterpart } from '@/lib/i18n';
 
 export const metadata: Metadata = {
-  title: 'Educational Disclaimer',
+  title: 'Educational Disclaimer — Reflection, Not Prediction',
   description:
     'Yi Wisdom content is educational and exploratory, and is not professional advice of any kind.',
   alternates: buildAlternates('/educational-disclaimer', 'en', getCounterpart('/educational-disclaimer')),
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    title: 'Educational Disclaimer — Reflection, Not Prediction | Yi Wisdom',
+    description:
+      'Yi Wisdom content is educational and exploratory, and is not professional advice of any kind.',
+    url: 'https://www.yiwisdom.org/educational-disclaimer',
+    siteName: 'Yi Wisdom',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 675,
+        alt: 'Yi Wisdom Educational Disclaimer',
+      },
+    ],
+  },
 };
 
 export default function EducationalDisclaimerPage() {
@@ -26,7 +43,7 @@ export default function EducationalDisclaimerPage() {
 
             <div className="flex items-center gap-3 mb-5">
               <span className="h-px w-10 bg-ink/35" />
-              <span className="eyebrow text-ink/45 tracking-[0.38em]">Disclaimer · 免责</span>
+              <span className="eyebrow text-ink/45 tracking-[0.38em]">Disclaimer</span>
             </div>
 
             <h1 className="display-lg max-w-3xl mb-8">Educational Disclaimer</h1>

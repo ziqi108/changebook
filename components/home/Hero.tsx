@@ -103,11 +103,11 @@ export function Hero() {
           </span>
         </h1>
 
-        {/* Chinese subtitle */}
+        {/* Classic title subtitle */}
         <div className="my-12 flex items-center gap-5 fade-in-delay-2">
           <span className="h-px w-20 bg-ink/15" />
-          <span className="text-sm tracking-[0.5em] text-ink/40 font-serif-cn seal">
-            周 · 易 · 經
+          <span className="text-sm tracking-[0.5em] text-ink/40">
+            The Classic of Change
           </span>
           <span className="h-px w-20 bg-ink/15" />
         </div>
@@ -148,7 +148,7 @@ export function Hero() {
               />
             </div>
             <div className="text-left">
-              <div className="font-display text-3xl leading-none mb-1">泰 · Tài</div>
+              <div className="font-display text-3xl leading-none mb-1">Tài</div>
               <div className="text-[10px] tracking-[0.4em] uppercase text-ink/35 mt-2">
                 Hexagram #11 · Flowering
               </div>

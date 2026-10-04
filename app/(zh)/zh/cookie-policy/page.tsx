@@ -9,15 +9,25 @@ const SELF_PATH = '/zh/cookie-policy';
 
 export const metadata: Metadata = {
   title: 'Cookie 政策',
-  description: 'Yi Wisdom 使用的 Cookie 类型，以及如何在您的浏览器中管理它们。',
+  description:
+    'Cookie 政策：Yi Wisdom 使用哪些 Cookie 与类似技术、各自用途，以及如何在主流浏览器中查看、管理或禁用它们。',
   alternates: buildAlternates(SELF_PATH, 'zh-CN', getCounterpart(SELF_PATH)),
   openGraph: {
     title: 'Cookie 政策 | Yi Wisdom',
-    description: 'Yi Wisdom 使用的 Cookie 类型，以及如何在您的浏览器中管理它们。',
+    description:
+    'Cookie 政策：Yi Wisdom 使用哪些 Cookie 与类似技术、各自用途，以及如何在主流浏览器中查看、管理或禁用它们。',
     url: 'https://www.yiwisdom.org/zh/cookie-policy',
     locale: 'zh_CN',
     siteName: 'Yi Wisdom',
     type: 'website',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 675,
+        alt: 'Yi Wisdom Cookie 政策',
+      },
+    ],
   },
 };
 
@@ -35,7 +45,7 @@ export default function ZhCookiePolicyPage() {
 
             <div className="flex items-center gap-3 mb-5">
               <span className="h-px w-10 bg-ink/35" />
-              <span className="eyebrow text-ink/45 tracking-[0.38em]">Cookies · Cookie</span>
+              <span className="eyebrow text-ink/45 tracking-[0.38em]">Cookie</span>
             </div>
 
             <h1 className="display-lg max-w-3xl mb-8">Cookie 政策</h1>

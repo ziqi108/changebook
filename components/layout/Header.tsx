@@ -14,8 +14,9 @@ const NAV_LINKS: Record<Locale, { href: string; label: string }[]> = {
     { href: '/about', label: 'About' },
   ],
   'zh-CN': [
-    { href: '/zh/about', label: '关于' },
+    { href: '/zh/beginner-course', label: '课程' },
     { href: '/zh/articles', label: '文章' },
+    { href: '/zh/about', label: '关于' },
     { href: '/zh/contact', label: '联系' },
   ],
 };
@@ -66,9 +67,11 @@ export function Header({
               </span>
               <span className="absolute -bottom-0.5 left-0 right-0 h-px bg-vermilion scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
             </div>
-            <span className="text-[11px] tracking-[0.45em] text-ink/35 hidden sm:inline font-serif-cn mt-1">
-              易
-            </span>
+            {locale === 'zh-CN' && (
+              <span className="text-[11px] tracking-[0.45em] text-ink/35 hidden sm:inline font-serif-cn mt-1">
+                易
+              </span>
+            )}
           </Link>
 
           {/* Desktop nav */}

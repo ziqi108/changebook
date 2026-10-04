@@ -9,15 +9,25 @@ const SELF_PATH = '/zh/terms';
 
 export const metadata: Metadata = {
   title: '服务条款',
-  description: 'Yi Wisdom 提供《易经》教育内容所依据的条款。',
+  description:
+    '服务条款：使用 Yi Wisdom 网站与《易经》教育内容所依据的条款，涵盖教育性质、知识产权、合理使用与责任边界。',
   alternates: buildAlternates(SELF_PATH, 'zh-CN', getCounterpart(SELF_PATH)),
   openGraph: {
     title: '服务条款 | Yi Wisdom',
-    description: 'Yi Wisdom 提供《易经》教育内容所依据的条款。',
+    description:
+    '服务条款：使用 Yi Wisdom 网站与《易经》教育内容所依据的条款，涵盖教育性质、知识产权、合理使用与责任边界。',
     url: 'https://www.yiwisdom.org/zh/terms',
     locale: 'zh_CN',
     siteName: 'Yi Wisdom',
     type: 'website',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 675,
+        alt: 'Yi Wisdom 服务条款',
+      },
+    ],
   },
 };
 
@@ -35,7 +45,7 @@ export default function ZhTermsPage() {
 
             <div className="flex items-center gap-3 mb-5">
               <span className="h-px w-10 bg-ink/35" />
-              <span className="eyebrow text-ink/45 tracking-[0.38em]">Terms · 条款</span>
+              <span className="eyebrow text-ink/45 tracking-[0.38em]">条款</span>
             </div>
 
             <h1 className="display-lg max-w-3xl mb-8">服务条款</h1>
@@ -60,8 +70,7 @@ export default function ZhTermsPage() {
             <h2 className="font-display text-2xl md:text-3xl text-ink">教育性质</h2>
             <div className="space-y-5 text-ink/70 leading-[1.85] text-base">
               <p>
-                本网站的所有内容——包括课程、文章与静思会谈（Reflection
-                Sessions）——均属教育与探索性质。它将《易经》呈现为一种富有生命力的反思与自我修养传统，不构成专业建议，也不能替代合资质专业人员的服务。完整说明请参阅我们的{' '}
+                本网站的所有内容——包括课程、文章与静思会谈——均属教育与探索性质。它将《易经》呈现为一种富有生命力的反思与自我修养传统，不构成专业建议，也不能替代合资质专业人员的服务。完整说明请参阅我们的{' '}
                 <Link href="/zh/educational-disclaimer" className="underline decoration-ink/30 hover:decoration-ink/70 underline-offset-4">
                   教育免责声明
                 </Link>

@@ -100,13 +100,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  /** 中文页面：仅收录 ROUTE_MAP 登记的中英文均已发布页面 */
-  const zhEntries: MetadataRoute.Sitemap = ROUTE_MAP.map((pair) => ({
-    url: absoluteUrl(pair.zh),
-    lastModified: LASTMOD,
-    changeFrequency: pair.zh === '/zh' ? ('weekly' as const) : ('yearly' as const),
-    priority: pair.zh === '/zh' ? 0.9 : 0.3,
-  }));
+  /** 中文页面：仅收录 ROUTE_MAP 登记的中英文均已发布页面（课程页权重与英文一致） */
+  const zhEntries: MetadataRoute.Sitemap = ROUTE_MAP.map((pair) => {
+    const isHome = pair.zh === '/zh';
+    const isCourse = pair.zh.endsWith('-course');
+    return {
+      url: absoluteUrl(pair.zh),
+      lastModified: LASTMOD,
+      changeFrequency: isHome ? ('weekly' as const) : isCourse ? ('monthly' as const) : ('yearly' as const),
+      priority: isHome || isCourse ? 0.9 : 0.3,
+    };
+  });
+
+  /** 中文文章索引页（已正式发布，独立于英文 Journal 收录） */
+  const zhArticleIndex: MetadataRoute.Sitemap = [
+    {
+      url: `${SITE_URL}/zh/articles`,
+      lastModified: LASTMOD,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+  ];
 
   /** 英文文章页 */
   const articlePages: MetadataRoute.Sitemap = FEATURED_ARTICLES.filter(
@@ -118,6 +132,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  // 未来：中文文章页加入 zhEntries（仅当文章已发布且可索引时）
-  return [...enEntries, ...zhEntries, ...articlePages];
+  /** 中文文章详情页（仅收录已发布的中文文章） */
+  const zhArticlePages: MetadataRoute.Sitemap = FEATURED_ARTICLES.filter(
+    (a) => a.locale === 'zh-CN'
+  ).map((a) => ({
+    url: `${SITE_URL}/zh/articles/${a.slug}`,
+    lastModified: new Date(a.date),
+    changeFrequency: 'never' as const,
+    priority: 0.7,
+  }));
+
+  return [...enEntries, ...zhEntries, ...zhArticleIndex, ...articlePages, ...zhArticlePages];
 }
