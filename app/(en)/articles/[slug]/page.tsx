@@ -14,6 +14,11 @@ const SITE_URL = 'https://www.yiwisdom.org';
  * these only tighten <title>/meta description for Google's length limits.
  */
 const SEO_META: Record<string, { title?: string; description: string }> = {
+  'iching-as-a-decision-tool': {
+    title: 'The I Ching as a Modern Decision Tool',
+    description:
+      'The I Ching is a structured reflection framework, not fortune-telling. How its 64 situations clarify decisions, with examples and psychology research.',
+  },
   'career-cycles-hexagram-24': {
     description:
       'Hexagram 24 (The Return) describes the smallest return — a single light emerging from darkness. How career rock-bottoms can begin a more authentic path.',
@@ -97,6 +102,10 @@ export default function ArticlePage({ params }: { params: Params }) {
   // 语言切换器按 translationKey 查找中文对应文章；不存在则不显示中文链接
   const zhCounterpart = GET_TRANSLATION(article, 'zh-CN');
 
+  // 与 generateMetadata 保持一致的 SERP 覆盖
+  const seoTitle = SEO_META[article.slug]?.title ?? article.title;
+  const seoDescription = SEO_META[article.slug]?.description ?? article.excerpt;
+
   const related = FEATURED_ARTICLES.filter(
     (a) =>
       a.locale === 'en' &&
@@ -110,8 +119,8 @@ export default function ArticlePage({ params }: { params: Params }) {
       {
         '@type': 'BlogPosting',
         '@id': `${SITE_URL}/articles/${article.slug}#post`,
-        headline: article.title,
-        description: SEO_META[article.slug]?.description ?? article.excerpt,
+        headline: seoTitle,
+        description: seoDescription,
         image: `${SITE_URL}/og-article.png`,
         datePublished: article.dateIso,
         dateModified: article.dateIso,

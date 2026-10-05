@@ -9,6 +9,14 @@ import { buildAlternates } from '@/lib/i18n';
 
 const SITE_URL = 'https://www.yiwisdom.org';
 
+/** 中文文章 SERP 覆盖：仅收紧 <title>/meta description，页面展示文本不变 */
+const SEO_META: Record<string, { title?: string; description: string }> = {
+  'iching-as-a-decision-tool': {
+    description:
+      '易经是一套结构化的决策反思框架，而非占卜。六十四个典型处境如何辅助现代决策与个人成长，结合心理学研究与实例分析。',
+  },
+};
+
 const fmtDate = (iso: string) =>
   new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' }).format(
     new Date(iso)
@@ -28,9 +36,11 @@ export function generateMetadata({ params }: { params: Params }): Metadata {
    * 才输出双向 hreflang；否则只输出中文自引用 canonical。
    */
   const enCounterpart = GET_TRANSLATION(article, 'en');
+  const seoTitle = SEO_META[article.slug]?.title ?? article.title;
+  const seoDescription = SEO_META[article.slug]?.description ?? article.excerpt;
   return {
-    title: article.title,
-    description: article.excerpt,
+    title: seoTitle,
+    description: seoDescription,
     keywords: article.tags,
     alternates: buildAlternates(
       `/zh/articles/${article.slug}`,
@@ -39,8 +49,8 @@ export function generateMetadata({ params }: { params: Params }): Metadata {
     ),
     openGraph: {
       type: 'article',
-      title: article.title,
-      description: article.excerpt,
+      title: seoTitle,
+      description: seoDescription,
       url: `${SITE_URL}/zh/articles/${article.slug}`,
       publishedTime: article.dateIso,
       authors: [article.author],
@@ -51,14 +61,14 @@ export function generateMetadata({ params }: { params: Params }): Metadata {
           url: '/og-article.png',
           width: 1200,
           height: 675,
-          alt: article.title,
+          alt: seoTitle,
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: article.title,
-      description: article.excerpt,
+      title: seoTitle,
+      description: seoDescription,
       images: ['/og-article.png'],
     },
   };
@@ -71,6 +81,10 @@ export default function ZhArticlePage({ params }: { params: Params }) {
   // 语言切换器按 translationKey 查找英文对应文章；不存在则不显示英文链接
   const enCounterpart = GET_TRANSLATION(article, 'en');
 
+  // 与 generateMetadata 保持一致的 SERP 覆盖
+  const seoTitle = SEO_META[article.slug]?.title ?? article.title;
+  const seoDescription = SEO_META[article.slug]?.description ?? article.excerpt;
+
   const related = ZH_ARTICLES.filter(
     (a) => a.slug !== article.slug && a.tags.some((t) => article.tags.includes(t))
   ).slice(0, 3);
@@ -81,8 +95,8 @@ export default function ZhArticlePage({ params }: { params: Params }) {
       {
         '@type': 'BlogPosting',
         '@id': `${SITE_URL}/zh/articles/${article.slug}#post`,
-        headline: article.title,
-        description: article.excerpt,
+        headline: seoTitle,
+        description: seoDescription,
         image: `${SITE_URL}/og-article.png`,
         datePublished: article.dateIso,
         dateModified: article.dateIso,

@@ -23,11 +23,13 @@ const ZH_ROUTES = [
   '/zh/articles/yin-yang-in-modern-life',
   '/zh/articles/the-eight-trigrams-explained',
   '/zh/articles/hexagram-11-flow',
+  '/zh/articles/iching-as-a-decision-tool',
 ];
 const PAIRED_EN = [
   '/', '/about', '/contact', '/privacy', '/terms', '/cookie-policy', '/refund-policy', '/educational-disclaimer',
   '/beginner-course', '/intermediate-course', '/advanced-course',
   '/articles/yin-yang-in-modern-life', '/articles/the-eight-trigrams-explained', '/articles/hexagram-11-flow',
+  '/articles/iching-as-a-decision-tool',
 ];
 const PAIRED = new Set([
   ...PAIRED_EN,
