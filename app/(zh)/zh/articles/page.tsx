@@ -60,7 +60,7 @@ const jsonLd = {
         '@type': 'BlogPosting',
         headline: a.title,
         url: `${SITE_URL}/zh/articles/${a.slug}`,
-        datePublished: a.date,
+        datePublished: a.dateIso,
         author: { '@type': 'Person', name: a.author },
         keywords: a.tags.join(', '),
         inLanguage: 'zh-CN',

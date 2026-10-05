@@ -127,7 +127,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     (a) => a.locale === 'en'
   ).map((a) => ({
     url: `${SITE_URL}/articles/${a.slug}`,
-    lastModified: new Date(a.date),
+    lastModified: new Date(a.dateIso),
     changeFrequency: 'never' as const,
     priority: 0.7,
   }));
@@ -137,7 +137,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     (a) => a.locale === 'zh-CN'
   ).map((a) => ({
     url: `${SITE_URL}/zh/articles/${a.slug}`,
-    lastModified: new Date(a.date),
+    lastModified: new Date(a.dateIso),
     changeFrequency: 'never' as const,
     priority: 0.7,
   }));

@@ -89,6 +89,8 @@ export type Article = {
   excerpt: string;
   coverGradient: string;
   date: string;
+  /** ISO 8601 日期（YYYY-MM-DD），供 metadata / JSON-LD / sitemap 使用；date 为展示文本 */
+  dateIso: string;
   readTime: string;
   tags: string[];
   author: string;

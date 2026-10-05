@@ -93,6 +93,8 @@ function loadLocaleArticles(suffix, localeValue) {
         coverGradient: data.coverGradient,
         // EN 页面直接展示 date 字符串：转成与历史数据一致的 en-US 长格式
         date: localeValue === 'en' ? fmtEn(iso) : iso,
+        // ISO 原文保留：metadata / JSON-LD / sitemap 需要机器可读日期
+        dateIso: iso,
         // i18n 字段在新建语言版本时若留空，Decap 会整字段省略，按站点惯例兜底；
         // readTime 兜底为空串（不编造时长，提示编辑在后台补填）
         readTime: data.readTime ?? '',
