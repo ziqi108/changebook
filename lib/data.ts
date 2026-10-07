@@ -26,7 +26,7 @@ export const MODULES: ModuleItem[] = [
     accent: 'ink',
     hexagramIds: [1, 2],
     duration: '',
-    lessons: 3,
+    lessons: 5,
     features: ['Yin & Yang foundations', 'Eight trigrams', 'Coin casting practice', 'Your first hexagrams', 'Daily ritual guide'],
     price: 'Free',
     status: 'Available',
