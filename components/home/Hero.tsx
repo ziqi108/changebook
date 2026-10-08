@@ -80,12 +80,35 @@ export function Hero() {
       <div className="absolute left-[8%] top-0 bottom-0 w-px bg-ink/5 hidden lg:block" aria-hidden="true" />
       <div className="absolute right-[8%] top-0 bottom-0 w-px bg-ink/5 hidden lg:block" aria-hidden="true" />
 
+      {/* 竖排古典引文（《系辞》："一阴一阳之谓道"），附英文释义 */}
+      <div
+        className="absolute left-[3.5%] top-1/2 -translate-y-1/2 hidden xl:flex flex-col items-center gap-6 pointer-events-none select-none"
+        aria-hidden="true"
+      >
+        <span className="text-vertical font-display text-lg text-ink/25" style={{ fontFamily: "'Noto Serif SC', serif" }}>
+          一陰一陽之謂道
+        </span>
+        <span className="w-px h-10 bg-ink/10" />
+        <span className="text-[9px] tracking-[0.3em] uppercase text-ink/20" style={{ writingMode: 'vertical-rl' }}>
+          the alternation of yin and yang
+        </span>
+      </div>
+      <div
+        className="absolute right-[3.5%] top-1/2 -translate-y-1/2 hidden xl:flex flex-col items-center gap-6 pointer-events-none select-none"
+        aria-hidden="true"
+      >
+        <span className="text-vertical font-display text-lg text-ink/25" style={{ fontFamily: "'Noto Serif SC', serif" }}>
+          形而上者謂之道
+        </span>
+        <span className="w-px h-10 bg-ink/10" />
+      </div>
+
       <div className="relative max-w-[1200px] mx-auto px-6 md:px-10 py-40 flex flex-col items-center text-center">
         {/* Eyebrow */}
-        <div className="fade-in flex items-center gap-4 mb-14">
-          <span className="h-px w-10 bg-ink/20" />
-          <span className="eyebrow text-ink/40 tracking-[0.5em]">Vol. I · MMXXVI</span>
-          <span className="h-px w-10 bg-ink/20" />
+        <div className="fade-in ornament-rule mb-14">
+          <span className="ornament-rule-dot" aria-hidden="true" />
+          <span className="eyebrow text-ink/45 tracking-[0.5em]">Vol. I · MMXXVI</span>
+          <span className="ornament-rule-dot" aria-hidden="true" />
         </div>
 
         {/* Headline */}
@@ -103,17 +126,22 @@ export function Hero() {
           </span>
         </h1>
 
-        {/* Classic title subtitle */}
-        <div className="my-12 flex items-center gap-5 fade-in-delay-2">
-          <span className="h-px w-20 bg-ink/15" />
-          <span className="text-sm tracking-[0.5em] text-ink/40">
+        {/* Classic title subtitle：中文原名 + 英文译名 */}
+        <div className="my-12 flex flex-col items-center gap-4 fade-in-delay-2">
+          <div className="flex items-center gap-5">
+            <span className="h-px w-20 bg-ink/15" />
+            <span className="text-base tracking-[0.6em] text-ink/55 seal" style={{ fontFamily: "'Noto Serif SC', serif" }}>
+              易 · 經
+            </span>
+            <span className="h-px w-20 bg-ink/15" />
+          </div>
+          <span className="text-[11px] tracking-[0.45em] uppercase text-ink/35">
             The Classic of Change
           </span>
-          <span className="h-px w-20 bg-ink/15" />
         </div>
 
         {/* Descriptor */}
-        <p className="fade-in-delay-3 text-base md:text-lg text-ink/55 leading-relaxed max-w-lg mb-14 font-light">
+        <p className="fade-in-delay-3 text-base md:text-lg text-ink/70 leading-relaxed max-w-lg mb-14">
           A living philosophy of change, harmony, and self‑mastery — now
           accessible in clear English. Study the 64 hexagrams, practice
           daily, and reflect with its help when the path seems unclear.

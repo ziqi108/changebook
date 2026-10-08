@@ -120,11 +120,31 @@ export default function ZhHomePage() {
           <div className="absolute left-[8%] top-0 bottom-0 w-px bg-ink/5 hidden lg:block" aria-hidden="true" />
           <div className="absolute right-[8%] top-0 bottom-0 w-px bg-ink/5 hidden lg:block" aria-hidden="true" />
 
+          {/* 竖排古典引文（《系辞》）*/}
+          <div
+            className="absolute left-[3.5%] top-1/2 -translate-y-1/2 hidden xl:flex flex-col items-center gap-6 pointer-events-none select-none"
+            aria-hidden="true"
+          >
+            <span className="text-vertical font-display text-lg text-ink/25">
+              一陰一陽之謂道
+            </span>
+            <span className="w-px h-10 bg-ink/10" />
+          </div>
+          <div
+            className="absolute right-[3.5%] top-1/2 -translate-y-1/2 hidden xl:flex flex-col items-center gap-6 pointer-events-none select-none"
+            aria-hidden="true"
+          >
+            <span className="text-vertical font-display text-lg text-ink/25">
+              形而上者謂之道
+            </span>
+            <span className="w-px h-10 bg-ink/10" />
+          </div>
+
           <div className="relative max-w-[1200px] mx-auto px-6 md:px-10 py-40 flex flex-col items-center text-center">
-            <div className="fade-in flex items-center gap-4 mb-14">
-              <span className="h-px w-10 bg-ink/20" />
-              <span className="eyebrow text-ink/40 tracking-[0.5em]">易 · 經 · 智 · 慧</span>
-              <span className="h-px w-10 bg-ink/20" />
+            <div className="fade-in ornament-rule mb-14">
+              <span className="ornament-rule-dot" aria-hidden="true" />
+              <span className="eyebrow text-ink/45 tracking-[0.5em]">易 · 經 · 智 · 慧</span>
+              <span className="ornament-rule-dot" aria-hidden="true" />
             </div>
 
             <h1 className="relative fade-in-delay-1">
@@ -148,7 +168,7 @@ export default function ZhHomePage() {
               <span className="h-px w-20 bg-ink/15" />
             </div>
 
-            <p className="fade-in-delay-3 text-base md:text-lg text-ink/55 leading-relaxed max-w-lg mb-14 font-light">
+            <p className="fade-in-delay-3 text-base md:text-lg text-ink/65 leading-relaxed max-w-lg mb-14">
               《易经》是一门关于变化、和谐与自我修养的活的哲学。我们以经典原文为根基，
               用清晰的中文阐释它，让三千年前的智慧照进今天的生活——
               用于反思，而非预测。

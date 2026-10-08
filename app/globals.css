@@ -15,6 +15,7 @@
   body {
     @apply bg-paper text-ink font-sans;
     font-feature-settings: 'ss01', 'cv11';
+    text-rendering: optimizeLegibility;
   }
 
   ::selection {
@@ -43,7 +44,7 @@
   }
 
   .eyebrow {
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     letter-spacing: 0.38em;
     text-transform: uppercase;
     font-weight: 500;
@@ -51,18 +52,44 @@
 
   .display-xl {
     font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
+    font-weight: 400;
     line-height: 0.92;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.045em;
     font-size: clamp(3.5rem, 10vw, 8.5rem);
   }
 
   .display-lg {
     font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
+    font-weight: 400;
     line-height: 0.97;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.032em;
     font-size: clamp(2.75rem, 6.5vw, 5.5rem);
+  }
+
+  /* 竖排中文装饰文字（古典引文背景元素） */
+  .text-vertical {
+    writing-mode: vertical-rl;
+    letter-spacing: 0.5em;
+  }
+
+  /* 装饰性分隔线：渐变发线 + 中心圆点（编辑部式 ornament） */
+  .ornament-rule {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .ornament-rule::before,
+  .ornament-rule::after {
+    content: '';
+    height: 1px;
+    width: 5rem;
+    background: linear-gradient(90deg, transparent, rgba(14, 20, 25, 0.22), transparent);
+  }
+  .ornament-rule-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 9999px;
+    background-color: rgba(192, 57, 43, 0.55);
   }
 
   .display-md {
@@ -203,13 +230,32 @@
 
 /* —— 简体中文页面（.lang-zh，由 app/(zh)/layout.tsx 挂载）—— */
 .lang-zh {
-  font-family: 'Inter', 'Noto Serif SC', 'PingFang SC', 'Hiragino Sans GB',
-    'Microsoft YaHei', sans-serif;
+  /* 中文正文用无衬线（屏幕阅读更清晰），衬线只留给标题/印章字 */
+  font-family: 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Inter', sans-serif;
+  font-weight: 400;
+  /* 关闭灰度抗锯齿——中文笔画在 antialiased 下边缘发虚 */
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+}
+
+/* 中文正文不使用 300 细字重 */
+.lang-zh .font-light,
+.lang-zh .font-thin {
+  font-weight: 400;
 }
 
 .lang-zh .font-display {
   font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
   letter-spacing: 0.02em;
+}
+
+/* 中文大标题加粗一档，避免笔画发虚 */
+.lang-zh .display-xl,
+.lang-zh .display-lg {
+  font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+  font-weight: 500;
+  letter-spacing: -0.01em;
 }
 
 .lang-zh .eyebrow {
