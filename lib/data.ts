@@ -80,7 +80,12 @@ export const MODULES: ModuleItem[] = [
 
 export type ArticleBlock =
   | { type: 'p'; text: string }
-  | { type: 'quote'; text: string };
+  | { type: 'quote'; text: string }
+  | { type: 'h2'; text: string }
+  | { type: 'h3'; text: string }
+  | { type: 'ul'; items: string[] }
+  | { type: 'ol'; items: string[] }
+  | { type: 'callout'; text: string };
 
 export type Article = {
   slug: string;

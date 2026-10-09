@@ -6,6 +6,7 @@ import { Footer } from '@/components/layout/Footer';
 import { BackToHome } from '@/components/ui/BackToHome';
 import { FEATURED_ARTICLES, GET_TRANSLATION } from '@/lib/data';
 import { buildAlternates } from '@/lib/i18n';
+import { ArticleBody } from '@/components/article/ArticleBody';
 
 const SITE_URL = 'https://www.yiwisdom.org';
 
@@ -197,25 +198,13 @@ export default function ArticlePage({ params }: { params: Params }) {
           </header>
 
           {/* Article body */}
-          <div className="space-y-7 text-ink/80">
+          <div className="space-y-7 text-ink/80" style={{ maxWidth: '70ch' }}>
             <p className="text-xl leading-relaxed font-light text-ink/85">
               {article.excerpt}
             </p>
 
             {article.body ? (
-              article.body.map((block, i) =>
-                block.type === 'quote' ? (
-                  <blockquote key={i} className="border-l-2 border-vermilion pl-8 py-3 my-10">
-                    <p className="font-display text-2xl italic leading-relaxed text-ink/75">
-                      {block.text}
-                    </p>
-                  </blockquote>
-                ) : (
-                  <p key={i} className="text-base leading-[1.85]">
-                    {block.text}
-                  </p>
-                )
-              )
+              <ArticleBody blocks={article.body} />
             ) : (
               <>
                 <p className="text-base leading-[1.85]">

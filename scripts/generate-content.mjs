@@ -33,9 +33,12 @@ function normalizeDate(v) {
 }
 
 /**
- * markdown 正文 → {type:'p'|'quote', text}[] 块数组（与站内渲染器约定一致）：
- * - 空行分段；行首 ">" 的段为 quote；段内软换行折叠为空格
- * - 不做 inline markdown 解析（渲染按纯文本处理）
+ * markdown 正文 → ArticleBlock[] 块数组（与站内渲染器约定一致）：
+ * - 空行分段；行首 ">" 的段为 quote
+ * - "## " → h2，"### " → h3
+ * - "- " 连续行 → ul，"1. " 连续行 → ol
+ * - ":::callout ... :::" → callout
+ * - 段内软换行折叠为空格；不做 inline markdown 解析（渲染层处理 **bold** 等）
  */
 function parseBlocks(md) {
   const blocks = [];
@@ -43,18 +46,49 @@ function parseBlocks(md) {
     const chunk = raw.trim();
     if (!chunk) continue;
     const lines = chunk.split('\n');
+
+    // h2
+    if (/^##\s+/.test(lines[0]) && lines.length === 1) {
+      blocks.push({ type: 'h2', text: lines[0].replace(/^##\s+/, '').trim() });
+      continue;
+    }
+    // h3
+    if (/^###\s+/.test(lines[0]) && lines.length === 1) {
+      blocks.push({ type: 'h3', text: lines[0].replace(/^###\s+/, '').trim() });
+      continue;
+    }
+    // callout: :::callout ... :::
+    if (/^:::callout\b/.test(lines[0])) {
+      const text = lines.slice(1).join(' ').replace(/:::$/, '').replace(/\s+/g, ' ').trim();
+      blocks.push({ type: 'callout', text });
+      continue;
+    }
+    // quote
     if (lines.every((l) => /^\s*>/.test(l))) {
       blocks.push({
         type: 'quote',
-        text: lines
-          .map((l) => l.replace(/^\s*>\s?/, ''))
-          .join(' ')
-          .replace(/\s+/g, ' ')
-          .trim(),
+        text: lines.map((l) => l.replace(/^\s*>\s?/, '')).join(' ').replace(/\s+/g, ' ').trim(),
       });
-    } else {
-      blocks.push({ type: 'p', text: chunk.replace(/\s*\n\s*/g, ' ').trim() });
+      continue;
     }
+    // ul: 全部以 "- " 开头
+    if (lines.every((l) => /^\s*[-*]\s+/.test(l))) {
+      blocks.push({
+        type: 'ul',
+        items: lines.map((l) => l.replace(/^\s*[-*]\s+/, '').trim()),
+      });
+      continue;
+    }
+    // ol: 全部以 "N. " 开头
+    if (lines.every((l) => /^\s*\d+\.\s+/.test(l))) {
+      blocks.push({
+        type: 'ol',
+        items: lines.map((l) => l.replace(/^\s*\d+\.\s+/, '').trim()),
+      });
+      continue;
+    }
+    // 普通段落
+    blocks.push({ type: 'p', text: chunk.replace(/\s*\n\s*/g, ' ').trim() });
   }
   return blocks;
 }
