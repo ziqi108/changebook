@@ -17,18 +17,38 @@ authorInitials: LX
 ---
 There is a particular kind of quiet that arrives at the end of a long day. The emails have been answered, the dishes stacked, the last scroll through the news abandoned. In that quiet, a question often surfaces — one you have been carrying all day without quite noticing.
 
-For nearly three thousand years, readers of the I Ching have met that quiet with a small ritual: three coins, a candle, and a notebook. Not to predict the future, but to hear themselves more clearly. The Book of Changes is, in this sense, less a fortune-telling device than a conversation partner — one that happens to be older than many of the world’s living traditions.
+For nearly three thousand years, readers of the I Ching have met that quiet with a small ritual: three coins, a candle, and a notebook. Not to predict the future, but to hear themselves more clearly. The Book of Changes is, in this sense, less a fortune-telling device than a conversation partner — one that happens to be older than many of the world's living traditions.
 
-You will need very little. A flat surface. Three coins (any coins; the sages were never particular about currency). A candle, if you like. A notebook and a pen. And a question — something real to you, held honestly in the heart rather than performed for an audience.
+## What You'll Need
 
-> “To learn and at due times to practice what one has learned — is that not a pleasure?” — Confucius, Analects 1.1
+You will need very little:
 
-Hold the question lightly in your mind as you shake the three coins in your cupped hands and let them fall. Heads count three, tails count two. Six such throws build a hexagram from the bottom up — six lines, each solid or broken, that together form one of sixty-four patterns. The pattern is your reading. There are apps that will identify the hexagram in seconds; a small printed reference card works just as well.
+- A flat surface
+- Three coins (any coins; the sages were never particular about currency)
+- A candle, if you like
+- A notebook and a pen
+- A question — something real to you, held honestly in the heart rather than performed for an audience
+
+> "To learn and at due times to practice what one has learned — is that not a pleasure?" — Confucius, Analects 1.1
+
+## The Six Throws
+
+Hold the question lightly in your mind as you shake the three coins in your cupped hands and let them fall. Heads count three, tails count two. Six such throws build a hexagram from the bottom up — six lines, each solid or broken, that together form one of sixty-four patterns. The pattern is your reading.
+
+:::callout There are apps that will identify the hexagram in seconds; a small printed reference card works just as well. :::
+
+## After the Reading
 
 Here is the part most beginners skip, and the part that matters most. Do not ask what the hexagram means. Ask instead: where, in the six lines, do you recognize yourself? The Book of Changes will not tell you what to do. It will show you the shape of the moment you are standing inside — and leave the choosing to you.
 
-When you are done, write down three things: the question you asked, the hexagram you received, and the first sentence that came to you as you read it. No more. The goal is not a neat conclusion. The goal is to mark the moment — to place a small stone in the river of an ordinary evening, so that the next morning, looking back, you can find it again.
+When you are done, write down three things:
 
-> “The I Ching does not offer itself to be mastered. It offers itself to be entered, line by line, over a lifetime.”
+1. The question you asked
+2. The hexagram you received
+3. The first sentence that came to you as you read it
+
+No more. The goal is not a neat conclusion. The goal is to mark the moment — to place a small stone in the river of an ordinary evening, so that the next morning, looking back, you can find it again.
+
+> "The I Ching does not offer itself to be mastered. It offers itself to be entered, line by line, over a lifetime."
 
 Three coins. Six lines. One honest question. That is the whole of it. The rest is practice.
