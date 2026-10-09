@@ -42,7 +42,9 @@ function normalizeDate(v) {
  */
 function parseBlocks(md) {
   const blocks = [];
-  for (const raw of md.split(/\n{2,}/)) {
+  // 统一 Windows 换行符为 \n，确保空行分段正则正确匹配
+  const normalized = md.replace(/\r\n/g, '\n');
+  for (const raw of normalized.split(/\n{2,}/)) {
     const chunk = raw.trim();
     if (!chunk) continue;
     const lines = chunk.split('\n');
