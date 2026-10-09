@@ -22,6 +22,7 @@ export type CourseDetail = {
   levelZh: string;
   chapters: CourseChapter[];
   includes: string[];
+  objectives: string[];
   price: string;
   currency: string;
   nextCohort: string;

@@ -20,6 +20,7 @@ const UI = {
     emptyPrep: 'Content is currently being prepared',
     emptyNote: 'Enrolled students receive early access.',
     includes: "What's included",
+    objectives: 'Course Objectives',
     curriculum: 'Curriculum',
     instructor: 'Your Instructor',
     studying: 'Begin studying',
@@ -42,6 +43,7 @@ const UI = {
     emptyPrep: '内容正在准备中',
     emptyNote: '已报名学员将提前获得访问权限。',
     includes: '课程包含',
+    objectives: '课程目标',
     curriculum: '课程大纲',
     instructor: '授课讲师',
     studying: '开始学习',
@@ -277,6 +279,22 @@ export function CourseBody({ course, instructor, hasContent, hasIncludes, locale
               <li key={i} className="flex items-start gap-3 py-4" style={{ borderBottom: '1px solid rgba(14,20,25,0.08)' }}>
                 <CheckCircle2 size={15} className="text-vermilion mt-0.5 flex-shrink-0" />
                 <span className="text-sm leading-relaxed" style={{ color: 'rgba(14,20,25,0.75)' }}>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {course.objectives.length > 0 && (
+        <section className="mb-20">
+          <SectionLabel>{t.objectives}</SectionLabel>
+          <ul className="space-y-4">
+            {course.objectives.map((obj, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="font-display text-vermilion text-lg leading-none mt-0.5 flex-shrink-0">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span className="text-sm leading-relaxed" style={{ color: 'rgba(14,20,25,0.75)' }}>{obj}</span>
               </li>
             ))}
           </ul>

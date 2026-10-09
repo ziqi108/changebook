@@ -127,6 +127,7 @@ function normalizeCourse(raw) {
     level: str(raw.level),
     levelZh: str(raw.levelZh),
     includes: Array.isArray(raw.includes) ? raw.includes.map(str) : [],
+    objectives: Array.isArray(raw.objectives) ? raw.objectives.map(str) : [],
     price: str(raw.price),
     currency: str(raw.currency),
     nextCohort: str(raw.nextCohort),
